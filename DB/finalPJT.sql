@@ -210,6 +210,29 @@ CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`Reply` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `finalMountainPJT`.`ChatUserManager`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`ChatUserManager` (
+  `serial` INT NOT NULL AUTO_INCREMENT,
+  `chatmanager_serial` INT NULL,
+  `user_serial` INT NULL,
+  PRIMARY KEY (`serial`),
+  INDEX `fk_chatmanager_serial_idx` (`chatmanager_serial` ASC) VISIBLE,
+  INDEX `fk_user_serial_idx` (`user_serial` ASC) VISIBLE,
+  CONSTRAINT `fk_chatmanager_serial`
+    FOREIGN KEY (`chatmanager_serial`)
+    REFERENCES `finalMountainPJT`.`ChatManager` (`serial`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_serial`
+    FOREIGN KEY (`user_serial`)
+    REFERENCES `finalMountainPJT`.`User` (`serial`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
