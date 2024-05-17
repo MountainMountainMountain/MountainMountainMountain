@@ -3,109 +3,111 @@ package com.mountain.model.dto;
 import java.sql.Timestamp;
 
 public class User {
-	private int serial;
-	private String id;
-	private String password;
-	private String name;
-	private Timestamp birthDate;
-	private String gender;
-	private String email;
-	private Timestamp regDate;
-	private int point;
 
-	public User() {
-	}
+    private int serial;
+    private String id;
+    private String password;
+    private String name;
+    private Timestamp birthDate;
+    private String gender;
+    private String email;
+    private Timestamp regDate;
+    private int point;
 
-	public User(int serial, String id, String password, String name, Timestamp birthDate, String gender, String email,
-			Timestamp regDate, int point) {
-		this.serial = serial;
-		this.id = id;
-		this.password = password;
-		this.name = name;
-		this.birthDate = birthDate;
-		this.gender = gender;
-		this.email = email;
-		this.regDate = regDate;
-		this.point = point;
-	}
+    public User() {
+    }
 
-	public int getSerial() {
-		return serial;
-	}
+    public User(int serial, String id, String password, String name, Timestamp birthDate, String gender, String email,
+            Timestamp regDate, int point) {
+        this.serial = serial;
+        this.id = id;
+        this.password = password;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.gender = gender;
+        this.email = email;
+        this.regDate = regDate;
+        this.point = point;
+    }
 
-	public void setSerial(int serial) {
-		this.serial = serial;
-	}
+    public int getSerial() {
+        return serial;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public void setSerial(int serial) {
+        this.serial = serial;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Timestamp getBirthDate() {
-		return birthDate;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setBirthDate(Timestamp birthDate) {
-		this.birthDate = birthDate;
-	}
+    public Timestamp getBirthDate() {
+        return birthDate;
+    }
 
-	public String getGender() {
-		return gender;
-	}
+    public void setBirthDate(Timestamp birthDate) {
+        this.birthDate = birthDate;
+    }
 
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
+    public String getGender() {
+        return gender;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public Timestamp getRegDate() {
-		return regDate;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setRegDate(Timestamp regDate) {
-		this.regDate = regDate;
-	}
+    public Timestamp getRegDate() {
+        return regDate;
+    }
 
-	public int getPoint() {
-		return point;
-	}
+    public void setRegDate(Timestamp regDate) {
+        this.regDate = regDate;
+    }
 
-	public void setPoint(int point) {
-		this.point = point;
-	}
+    public int getPoint() {
+        return point;
+    }
 
-	@Override
-	public String toString() {
-		return "User [serial=" + serial + ", id=" + id + ", password=" + password + ", name=" + name + ", birthDate="
-				+ birthDate + ", gender=" + gender + ", email=" + email + ", regDate=" + regDate + ", point=" + point
-				+ "]";
-	}
+    public void setPoint(int point) {
+        this.point = point;
+    }
+
+    @Override
+    public String toString() {
+        return "User [serial=" + serial + ", id=" + id + ", password=" + password + ", name=" + name + ", birthDate="
+                + birthDate + ", gender=" + gender + ", email=" + email + ", regDate=" + regDate + ", point=" + point
+                + "]";
+    }
+
 
 }
