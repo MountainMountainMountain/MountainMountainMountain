@@ -11,7 +11,7 @@
 		WHERE chatInfo_serial = #{chatInfoSerial}
 	</select>
 	
-	<insert id="joinChat" parameterMap="int">
+	<insert id="joinChat" parameterType="int">
 		INSERT INTO ChatUserManager (chatInfo_serial, user_serial)
 		VALUE (chatInfoSerial, userSerial)
 	</insert>
