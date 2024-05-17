@@ -1,11 +1,14 @@
 package com.mountain.controller;
 
-import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mountain.model.dto.User;
 import com.mountain.model.service.UserService;
+import com.mountain.util.JwtUtil;
+
 
 @RestController
 @RequestMapping("/api-user")
@@ -24,6 +29,13 @@ public class UserRESTController {
 	private final UserService userService;
 
 	@Autowired
+	private JwtUtil jwtUtil;
+
+	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
+
+	@Autowired
+
 	public UserRESTController(UserService userService) {
 		this.userService = userService;
 	}
@@ -44,6 +56,7 @@ public class UserRESTController {
 	}
 
 	// 사용자 아이디 검색
+
 	@GetMapping("/user/search/id/{id}")
 	public ResponseEntity<List<User>> searchById(@PathVariable("id") String id) {
 		List<User> userList = userService.searchById(id);
@@ -56,6 +69,7 @@ public class UserRESTController {
 	}
 
 	// 사용자 이름 검색
+
 	@GetMapping("/user/search/name/{name}")
 	public ResponseEntity<List<User>> searchByName(@PathVariable("name") String name) {
 		List<User> userList = userService.searchByName(name);
@@ -75,6 +89,7 @@ public class UserRESTController {
 	}
 
 	// 사용자 아이디 확인
+
 	@GetMapping("/user/join/check/id/{id}")
 	public ResponseEntity<?> checkId(@PathVariable("id") String id) {
 		// 아이디가 존재합니다.
@@ -98,10 +113,30 @@ public class UserRESTController {
 		}
 	}
 
+
+
 	// 로그인
 	// 수정해야 해 jwt 해야 해
 	@PostMapping("/user/login")
 	public ResponseEntity<?> login(@RequestBody User user) {
-		return new ResponseEntity<>(HttpStatus.OK);
+
+		HttpStatus status = null;
+		Map<String, Object> result = new HashMap<>();
+		System.out.println(user);
+		// 서비스 -> 다오 -> DB
+		// 엄청난 검증을 끝내고 온거다.
+		if (user.getId() != null) {
+			// 토큰 만들어서 줘야되는데?
+			result.put("message", SUCCESS);
+			result.put("access-token", jwtUtil.createToken(user.getId()));
+			// id도 같이 넘겨주면 번거로운 작업을 할 필요는 없어
+			status = HttpStatus.ACCEPTED;
+		} else {
+			result.put("message", FAIL);
+			status = HttpStatus.NO_CONTENT;
+		}
+		return new ResponseEntity<Map<String, Object>>(result, status);
+//		return new ResponseEntity<>(HttpStatus.OK);
+
 	}
 }

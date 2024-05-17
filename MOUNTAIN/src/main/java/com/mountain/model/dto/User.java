@@ -3,6 +3,7 @@ package com.mountain.model.dto;
 import java.sql.Timestamp;
 
 public class User {
+
     private int serial;
     private String id;
     private String password;
@@ -107,5 +108,6 @@ public class User {
                 + birthDate + ", gender=" + gender + ", email=" + email + ", regDate=" + regDate + ", point=" + point
                 + "]";
     }
+
 
 }
