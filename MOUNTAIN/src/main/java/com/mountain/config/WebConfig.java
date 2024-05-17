@@ -28,12 +28,11 @@ public class WebConfig implements WebMvcConfigurer {
 	// 인터셉터 등 처리 가능
 	@Autowired
 	private JwtInterceptor jwtInterceptor;
-	
-	
+
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(jwtInterceptor).addPathPatterns("/**")
-		.excludePathPatterns("/api-chat/**", "/api-comment/**", "/api-mountain/**", "/api-user/**", "/swagger-ui/**", "/v3/api-docs/**");
+		registry.addInterceptor(jwtInterceptor).addPathPatterns("/**").excludePathPatterns("/api-chat/**",
+				"/api-comment/**", "/api-mountain/**", "/api-user/**", "/swagger-ui/**", "/v3/api-docs/**");
 	}
 	
 	
