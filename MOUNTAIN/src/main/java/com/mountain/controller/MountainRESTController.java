@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mountain.model.dto.Mountain;
+import com.mountain.model.dto.SearchCondition;
 import com.mountain.model.service.MountainService;
 
 @RestController
@@ -58,7 +60,7 @@ public class MountainRESTController {
 	}
 
 	@PostMapping("/")
-	public ResponseEntity<?> postMethodName(@RequestBody Mountain mountain) {
+	public ResponseEntity<?> createMountain(@RequestBody Mountain mountain) {
 //		if((mountain.getAltitude()==null||
 //		mountain.getCourse()
 //		mountain.getDifficulty()
@@ -69,9 +71,17 @@ public class MountainRESTController {
 //		mountain.getState()
 //		mountain.getTown()
 //		if(mountain.get)
-		
+
 		mountainService.createMountain(mountain);
 
+		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+	}
+
+	@GetMapping("/mountain")
+	public ResponseEntity<?> getMountainBySearchCondition(@RequestParam SearchCondition searchCondition) {
+		List<Mountain> list = mountainService.selectMountainBySearch(searchCondition);
+		
+		
 		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 	}
 
