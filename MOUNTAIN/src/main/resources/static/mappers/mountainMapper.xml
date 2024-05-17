@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 네임스페이스에 DAO 풀패키지명을 작성 -->
+<mapper namespace="com.mountain.model.dao.MountainDao">
+
+	<select id="selectAll" resultType="Mountain">
+		SELECT *
+		FROM Mountain;
+	</select>
+
+	<select id="selectMountainByState" parameterType="String"
+		resultType="Mountain">
+		SELECT *
+		FROM Mountain
+		WHERE state = #{state};
+	</select>
+
+	<select id="selectOne" parameterType="int"
+		resultType="Mountain">
+		SELECT *
+		FROM Mountain
+		WHERE serial = #{mountainSerial};
+	</select>
+
+	<insert id="createMountain">
+		INSERT INTO Mountain (`name`, latitude, longitude,
+		altitude, course, difficulty, fee, state, town, point)
+		VALUE (#{name},
+		#{latitude}, #{longitude}, #{altitude}, #{course}, #{difficulty},
+		#{fee}, #{state}, #{town}, #{point})
+	</insert>
+
+	<update id="modifyMountain">
+		UPDATE Mountain
+		SET name = #{name}, latitude =
+		#{latitude}, longitude = #{longitude}, altitude = #{altitude}, course
+		= #{course}, difficulty = #{difficulty}, fee = #{fee}, state =
+		#{state}, town = #{town}, point = #{point}
+		WHERE serial = #{serial};
+	</update>
+
+	<delete id="deleteMountain" parameterType="int">
+		DELETE FROM Mountain
+		WHERE serial = #{mountainSerial};
+	</delete>
+
+	<select id="selectMountainBySearch" parameterType="SearchCondition" resultType="Mountain">
+		SELECT *
+		FROM Mountain
+		<!-- 동적쿼리(검색 조건) -->
+		<if test="key != null">
+			WHERE ${key} LIKE concat( '%', #{word}, '%' )
+		</if>
+		<!-- 동적쿼리(정렬 조건) -->
+		<if test="orderBy != null">
+			ORDER BY ${orderBy} ${orderByDir}
+		</if>
+	</select>
+
+	
+</mapper>
