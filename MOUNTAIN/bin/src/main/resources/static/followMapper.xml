@@ -13,7 +13,7 @@
 			WHERE to_serial = user.serial);
 	</select>
 
-	<insert id="createFollow" parameterType="int">
+	<insert id="insertFollow" parameterType="int">
 		INSERT INTO Follow
 		(from_serial, to_serial)
 		VALUE (#{fromFollow), #{toFollow));

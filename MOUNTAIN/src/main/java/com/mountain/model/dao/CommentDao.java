@@ -17,7 +17,7 @@ public interface CommentDao {
 	Comment selectOne(int commentSerial);
 
 	// 게시글 등록
-	void insertComment(Comment comment);
+	void createComment(Comment comment);
 
 	// 게시글 삭제
 	void deleteComment(int commentSerial);
@@ -26,7 +26,7 @@ public interface CommentDao {
 	void modifyComment(Comment comment);
 
 	// 조회수 증가
-	void updateViewCnt(int commentSerial);
+	void modifyViewCnt(int commentSerial);
 
 	// 검색 기능
 	List<Comment> selectCommentBySearch(SearchCondition searchCondition);

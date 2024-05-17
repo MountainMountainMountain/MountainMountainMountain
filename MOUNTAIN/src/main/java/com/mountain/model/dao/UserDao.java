@@ -13,7 +13,7 @@ public interface UserDao {
 	List<User> userList();
 
 	// 사용자 등록
-	void signUpUser(User user);
+	void createUser(User user);
 
 	// 사용자 아이디 검색
 	List<User> selectUserById(String userId);
@@ -28,10 +28,10 @@ public interface UserDao {
 	void deleteUser(int userSerial);
 
 	// 사용자 아이디 
-	int userIdCheck(String userId);
+	int isIdExist(String userId);
 	
 	// 이메일 중복체크
-	int userEmailCheck(String userEmail);
+	int isEmailExist(String userEmail);
 	
 	// 로그인
 	User login(Map<String, String> info);

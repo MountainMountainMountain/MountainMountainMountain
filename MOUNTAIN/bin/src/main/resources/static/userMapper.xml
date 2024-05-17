@@ -10,7 +10,7 @@
 		FROM User;
 	</select>
 
-	<insert id="createUser" parameterType="User">
+	<insert id="signUpUser" parameterType="User">
 		INSERT INTO User (id,
 		`password`, name, birth_date, gender, email)
 		VALUES (#{id},
@@ -44,13 +44,13 @@
 		serial = #{userSerial};
 	</delete>
 
-	<select id="isIdExist">
+	<select id="userIdCheck">
 		SELECT COUNT(id)
 		FROM User
 		WHERE id = #{userId};
 	</select>
 
-	<select id="isEmailExist">
+	<select id="userEmailCheck">
 		SELECT COUNT(*)
 		FROM User
 		WHERE email = #{userEmail};

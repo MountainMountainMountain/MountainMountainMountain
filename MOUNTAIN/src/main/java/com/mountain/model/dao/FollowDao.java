@@ -10,7 +10,7 @@ public interface FollowDao {
 	List<User> followList(String userId);
 
 	// 팔로우 하기
-	void insertFollow(int fromFollow, int toFollow);
+	void createFollow(int fromFollow, int toFollow);
 
 	// 팔로우 취소
 	void deleteFollow(int fromFollow, int toFollow);

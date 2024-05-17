@@ -1,12 +1,7 @@
 package com.mountain.model.dto;
 
-import java.sql.Timestamp;
-
-public class Chat {
+public class ChatUserManager {
 	private int serial;
 	private int chatInfoSerial;
 	private int userSerial;
-	private String content;
-	private Timestamp createDate;
-
 }

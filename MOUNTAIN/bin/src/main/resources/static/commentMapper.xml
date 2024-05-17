@@ -44,7 +44,7 @@
 		= #{turnaround}
 	</update>
 
-	<update id="modifyViewCnt" parameterType="int">
+	<update id="updateViewCnt" parameterType="int">
 		UPDATE Comment
 		SET
 		view_count = view_count + 1
@@ -64,36 +64,31 @@
 			ORDER BY ${orderBy} ${orderByDir}
 		</if>
 	</select>
-
+	
 	<select id="selectStar" parameterType="int" resultType="int">
 		SELECT COUNT(*)
 		FROM Comment
-		WHERE mountain_serial = #{mountainSerial} AND star
-		= #{starNumber};
+		WHERE mountain_serial = #{mountainSerial} AND star = #{starNumber};
 	</select>
-
+	
 	<select id="turnAroundTime" parameterType="int" resultType="int">
 		SELECT COUNT(turnaround)
 		FROM Comment
-		WHERE mountain_serial =
-		#{mountainSerial}
+		WHERE mountain_serial = #{mountainSerial}
 	</select>
-
+	
 	<select id="averageCalorie" parameterType="int" resultType="int">
 		SELECT AVG(calorie)
 		FROM Comment
-		WHERE mountain_serial =
-		#{mountainSerial}
+		WHERE mountain_serial = #{mountainSerial}
 	</select>
-
-	<select id="averageTurnAround" parameterType="int"
-		resultType="int">
+	
+	<select id="averageTurnAround" parameterType="int" resultType="int">
 		SELECT AVG(turnaround)
 		FROM Comment
-		WHERE mountain_serial =
-		#{mountainSerial}
+		WHERE mountain_serial = #{mountainSerial}
 	</select>
-
+	
 	<insert id="insertFile">
 
 	</insert>
