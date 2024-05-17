@@ -10,6 +10,7 @@ import Footer from "./components/layout/Footer.vue";
 <template>
   <div>
     <nav-bar />
+    <div style="height: 1000px;"></div>
     <router-view />
     <Footer />
   </div>
