@@ -26,12 +26,12 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	public List<Comment> selectCommentByMountainSerial(int mountainSerial) {
-		SearchCondition searchCondition = new SearchCondition();
-		searchCondition.setKey(mountainSerial + "");
-		searchCondition.setWord(mountainSerial + "");
-		return commentDao.selectCommentBySearch(searchCondition);
+//		SearchCondition searchCondition = new SearchCondition();
+//		searchCondition.setKey(mountainSerial + "");
+//		searchCondition.setWord(mountainSerial + "");
+//		return commentDao.selectCommentBySearch(searchCondition);
 		// selectCommentByMountain 사용할지 말지 나중에 고민
-//		return commentDao.selectCommentByMountain(mountainSerial);
+		return commentDao.selectCommentByMountain(mountainSerial);
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public Map<String, Integer> selectStar(int mountainSerial, int starNumber) {
+	public Map<String, Integer> selectStar(int mountainSerial) {
 		Map<String, Integer> starInfo = new HashMap<String, Integer>();
 		starInfo.put("1", commentDao.selectStar(mountainSerial, 1));
 		starInfo.put("2", commentDao.selectStar(mountainSerial, 2));

@@ -35,7 +35,6 @@ public class UserRESTController {
 	private static final String FAIL = "fail";
 
 	@Autowired
-
 	public UserRESTController(UserService userService) {
 		this.userService = userService;
 	}
@@ -50,9 +49,8 @@ public class UserRESTController {
 	// 사용자 등록
 	@PostMapping("/user/join")
 	public ResponseEntity<Void> signup(@RequestBody User user) {
-		System.out.println(user);
 		userService.signup(user);
-		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
 
 	// 사용자 아이디 검색

@@ -14,7 +14,7 @@ public interface CommentService {
 	// 산의 게시글 조회
 	public List<Comment> selectCommentByMountainSerial(int mountainSerial);
 
-	// ID에 해당하는 게시글 하나 가져오기
+	// Serial에 해당하는 게시글 하나 가져오기
 	public Comment selectOne(int commentSerial);
 
 	// 게시글 등록
@@ -30,7 +30,7 @@ public interface CommentService {
 	public List<Comment> selectCommentBySearch(SearchCondition searchCondition);
 
 	// 평점 구하기
-	public Map<String, Integer> selectStar(int mountainSerial, int starNumber);
+	public Map<String, Integer> selectStar(int mountainSerial);
 
 	// 등반 횟수 구하기
 	public int turnAroundTime(int mountainSerial);
