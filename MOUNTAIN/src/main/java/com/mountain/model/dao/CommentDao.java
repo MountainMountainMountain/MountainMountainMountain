@@ -13,7 +13,7 @@ public interface CommentDao {
 	// 산의 게시글 조회
 	List<Comment> selectCommentByMountain(int mountainSerial);
 
-	// ID에 해당하는 게시글 하나 가져오기
+	// Serial에 해당하는 게시글 하나 가져오기
 	Comment selectOne(int commentSerial);
 
 	// 게시글 등록

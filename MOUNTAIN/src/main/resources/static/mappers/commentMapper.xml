@@ -18,7 +18,7 @@
 		#{mountainSerial}
 	</select>
 
-	<select id="SelectOne" parameterType="int" resultType="Comment">
+	<select id="selectOne" parameterType="int" resultType="Comment">
 		SELECT *
 		FROM Comment
 		WHERE serial = #{commentSerial}
@@ -32,7 +32,7 @@
 		#{turnaround})
 	</insert>
 
-	<delete id="deleteMountain" parameterType="int">
+	<delete id="deleteComment" parameterType="int">
 		DELETE FROM Comment
 		WHERE serial = #{commentSerial};
 	</delete>
