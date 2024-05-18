@@ -30,4 +30,19 @@ public interface UserService {
 	// 로그인
 	public User login(String id, String password);
 
+	// 팔로우 여부 체크
+	boolean checkAlreadyFollowing(int fromFollow, int toFollow);
+	
+	// 팔로우 하기
+	void createFollow(int fromFollow, int toFollow);
+
+	// 팔로우 취소
+	void deleteFollow(int fromFollow, int toFollow);
+
+	// 팔로잉 리스트(나의 기준 내가 팔로잉 하고 있는 리스트)
+	List<User> followingList(int toFollow);
+
+	// 팔로워 리스트(나의 기준 나를 팔로잉 하는 리스트)
+	List<User> followerList(int fromFollow);
+	
 }

@@ -10,13 +10,19 @@
 		VALUE (#{mountainSerial}, #{date})
 	</insert>
 	
-	<select id="selectChatInfo" parameterType="Map" resultType="ChatInfo">
+	<select id="selectChatInfoByMap" parameterType="Map" resultType="ChatInfo">
 		SELECT *
 		FROM ChatInfo
 		WHERE mountain_serial = #{mountainSerial} AND date = #{date};
 	</select>
+
+	<select id="selectChatInfoByChatInfoSerial" parameterType="int" resultType="ChatInfo">
+		SELECT *
+		FROM ChatInfo
+		WHERE serial = #{chatInfoSerial}
+	</select>
 	
-	<update id="updateChatInfo" parameterType="ChatInfo">
+	<update id="modifyChatInfo" parameterType="ChatInfo">
 		UPDATE ChatInfo
 		SET mountain_serial = #{mountainSerial}, date = #{date}
 		WHERE serial = #{serial}

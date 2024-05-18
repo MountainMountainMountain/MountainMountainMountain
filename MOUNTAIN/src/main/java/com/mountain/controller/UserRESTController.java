@@ -1,14 +1,11 @@
 package com.mountain.controller;
 
-
-import org.apache.ibatis.annotations.Delete;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +19,6 @@ import com.mountain.model.dto.User;
 import com.mountain.model.service.UserService;
 import com.mountain.util.JwtUtil;
 
-
 @RestController
 @RequestMapping("/api-user")
 public class UserRESTController {
@@ -34,7 +30,6 @@ public class UserRESTController {
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
 
-	@Autowired
 	public UserRESTController(UserService userService) {
 		this.userService = userService;
 	}
@@ -111,8 +106,6 @@ public class UserRESTController {
 		}
 	}
 
-
-
 	// 로그인
 	// 수정해야 해 jwt 해야 해
 	@PostMapping("/user/login")
@@ -135,6 +128,46 @@ public class UserRESTController {
 		}
 		return new ResponseEntity<Map<String, Object>>(result, status);
 //		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
+	// 팔로우 하기
+	@GetMapping("/follow/{fromFollow}/{toFollow}")
+	public ResponseEntity<?> createFollow(@PathVariable("fromFollow") int fromFollow,
+			@PathVariable("toFollow") int toFollow) {
+
+		if (userService.checkAlreadyFollowing(fromFollow, toFollow)) {
+			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+		}
+		userService.createFollow(fromFollow, toFollow);
+
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+
+	// 팔로우 취소
+	@DeleteMapping("/follow/{fromFollow}/{toFollow}")
+	public ResponseEntity<?> deleteFollow(@PathVariable("fromFollow") int fromFollow,
+			@PathVariable("toFollow") int toFollow) {
+		if (!userService.checkAlreadyFollowing(fromFollow, toFollow)) {
+			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+		}
+		userService.deleteFollow(fromFollow, toFollow);
+
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+
+	// 팔로잉 리스트
+	@GetMapping("/follow/followingList/{toFollow}")
+	public ResponseEntity<?> followingList(@PathVariable("toFollow") int toFollow) {
+		List<User> list = userService.followingList(toFollow);
+
+		return new ResponseEntity<List<User>>(list, HttpStatus.OK);
+	}
+
+	// 팔로워 리스트
+	@GetMapping("/follow/followerList/{fromFollow}")
+	public ResponseEntity<?> followerList(@PathVariable("fromFollow") int fromFollow) {
+		List<User> list = userService.followerList(fromFollow);
+
+		return new ResponseEntity<List<User>>(list, HttpStatus.OK);
 	}
 }

@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +28,7 @@ public class MountainRESTController {
 		this.mountainService = mountainService;
 	}
 
+	// 전체 산 조회
 	@GetMapping("/")
 	public ResponseEntity<?> getAllMountains() {
 		List<Mountain> list = mountainService.selectAllMountain();
@@ -37,6 +40,7 @@ public class MountainRESTController {
 		return new ResponseEntity<List<Mountain>>(list, HttpStatus.OK);
 	}
 
+	// 산 도를 검색하여 조회
 	@GetMapping("/state/{mountainState}")
 	public ResponseEntity<?> getMountainsByState(@PathVariable("mountainState") String mountainState) {
 		List<Mountain> list = mountainService.selectMountainByState(mountainState);
@@ -48,6 +52,7 @@ public class MountainRESTController {
 		return new ResponseEntity<List<Mountain>>(list, HttpStatus.OK);
 	}
 
+	// 산 Serial 번호를 통해 조회
 	@GetMapping("/{mountainSerial}")
 	public ResponseEntity<?> getMountainsBySerial(@PathVariable("mountainSerial") int mountainSerial) {
 		Mountain mountain = mountainService.selectOneMountain(mountainSerial);
@@ -59,6 +64,7 @@ public class MountainRESTController {
 		return new ResponseEntity<Mountain>(mountain, HttpStatus.OK);
 	}
 
+	// 산 생성
 	@PostMapping("/")
 	public ResponseEntity<?> createMountain(@RequestBody Mountain mountain) {
 //		if((mountain.getAltitude()==null||
@@ -74,15 +80,36 @@ public class MountainRESTController {
 
 		mountainService.createMountain(mountain);
 
-		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<Mountain>(mountain, HttpStatus.OK);
+//		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 	}
 
+	// 산 searchcondition에 따라 조회
 	@GetMapping("/mountain")
 	public ResponseEntity<?> getMountainBySearchCondition(@RequestParam SearchCondition searchCondition) {
 		List<Mountain> list = mountainService.selectMountainBySearch(searchCondition);
-		
-		
+
 		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+	}
+
+	// 산 업데이트
+	@PutMapping("/{mountainSerial}")
+	public ResponseEntity<?> updateMountain(@PathVariable("mountainSerial") int mountainSerial,
+			@RequestBody Mountain mountain) {
+		mountain.setSerial(mountainSerial);
+
+		mountainService.modifyMountain(mountain);
+
+		return new ResponseEntity<Mountain>(mountain, HttpStatus.OK);
+//		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+	}
+
+	// 산 삭제
+	@DeleteMapping("/{mountainSerial}")
+	public ResponseEntity<?> deleteMountain(@PathVariable("mountainSerial") int mountainSerial) {
+		mountainService.deleteMountain(mountainSerial);
+
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 }

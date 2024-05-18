@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mountain.model.dao.FollowDao;
 import com.mountain.model.dao.UserDao;
 import com.mountain.model.dto.User;
 
@@ -14,10 +14,11 @@ import com.mountain.model.dto.User;
 public class UserServiceImpl implements UserService {
 
 	private final UserDao userDao;
+	private final FollowDao followDao;
 
-	@Autowired
-	public UserServiceImpl(UserDao userDao) {
+	public UserServiceImpl(UserDao userDao, FollowDao followDao) {
 		this.userDao = userDao;
+		this.followDao = followDao;
 	}
 
 	@Override
@@ -63,6 +64,31 @@ public class UserServiceImpl implements UserService {
 		info.put("id", id);
 		info.put("password", password);
 		return userDao.login(info);
+	}
+
+	@Override
+	public boolean checkAlreadyFollowing(int fromFollow, int toFollow) {
+		return followDao.checkAlreadyFollowing(fromFollow, toFollow) == 1;
+	}
+
+	@Override
+	public void createFollow(int fromFollow, int toFollow) {
+		followDao.createFollow(fromFollow, toFollow);
+	}
+
+	@Override
+	public void deleteFollow(int fromFollow, int toFollow) {
+		followDao.deleteFollow(fromFollow, toFollow);
+	}
+
+	@Override
+	public List<User> followingList(int toFollow) {
+		return followDao.followingList(toFollow);
+	}
+
+	@Override
+	public List<User> followerList(int fromFollow) {
+		return followDao.followerList(fromFollow);
 	}
 
 }
