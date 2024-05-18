@@ -1,7 +1,7 @@
 <script setup>
 // import { RouterLink, RouterView } from 'vue-router'
-import NavBar from "./components/layout/NavBar.vue";
-import Footer from "./components/layout/Footer.vue";
+import NavBar from "./components/common/NavBar.vue";
+import FooterBar from "./components/common/FooterBar.vue";
 
 
 
@@ -12,7 +12,7 @@ import Footer from "./components/layout/Footer.vue";
     <nav-bar />
     <div style="height: 1000px;"></div>
     <router-view />
-    <Footer />
+    <FooterBar />
   </div>
 </template>
 
