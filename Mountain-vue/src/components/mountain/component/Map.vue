@@ -1,18 +1,13 @@
 <template>
     <div id="app">
-        <MainNavBar />
-        <search/>
         <div id="background">
             <div id="jido"></div>
-            <router-view />
         </div>
     </div>
 </template>
 
 
 <script setup>
-import MainNavBar from '@/components/common/MainNavBar.vue';
-import Search from '@/components/Mountain/MountainHome/Search.vue';
 </script>
 
 <style scoped>
@@ -26,7 +21,7 @@ import Search from '@/components/Mountain/MountainHome/Search.vue';
 #background {
     flex: 1;
     /* 남은 공간을 꽉 채우도록 설정 */
-    background-image: url('../assets/images/mountain1.jpg');
+    background-image: url('@/assets/images/mountain1.jpg');
     background-size: cover;
     /* 이미지를 요소에 맞게 조정 */
     background-position: center;
@@ -39,7 +34,7 @@ import Search from '@/components/Mountain/MountainHome/Search.vue';
 }
 
 #jido {
-    image-rendering: url('../assets/map/KoreaMap.png');
+    image-rendering: url('@/assets/map/KoreaMap.png');
     background-size: contain;
     /* 이미지를 요소 내에 맞게 조정 */
     /* background-position: center; */

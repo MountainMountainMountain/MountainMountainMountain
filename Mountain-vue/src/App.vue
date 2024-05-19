@@ -3,8 +3,6 @@
 import NavBar from "./components/common/NavBar.vue";
 import FooterBar from "./components/common/FooterBar.vue";
 
-
-
 </script>
 
 <template>
@@ -14,11 +12,9 @@ import FooterBar from "./components/common/FooterBar.vue";
       <RouterLink to="/">mountain</RouterLink>
       <RouterLink to="/login">login</RouterLink>
     </nav> -->
-    <router-view />
+    <RouterView />
     <FooterBar />
   </div>
 </template>
 
-<style>
-
-</style>
+<style></style>
