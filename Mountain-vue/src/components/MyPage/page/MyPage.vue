@@ -1,12 +1,12 @@
 <template>
     <div>
-        <MainNavBar />
+        <MyState />
         <RouterView />
     </div>
 </template>
 
 <script setup>
-import MainNavBar from '@/components/common/MainNavBar.vue';
+import MyState from "../component/MyState.vue"
 </script>
 
 <style scoped>

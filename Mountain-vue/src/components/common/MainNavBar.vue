@@ -8,8 +8,9 @@
                         <img style="width: 64px;" src="" alt="이미지">
                     </router-link>
                 </div>
-                <router-link class="nav-link" to="/login">로그인</router-link>
-                &nbsp;<router-link class="nav-link" to="/signUp"><i class="fas fa-user-plus"></i></router-link>
+                <router-link class="nav-link" :to="{ name: 'Login' }">로그인</router-link>
+                &nbsp;<router-link class="nav-link" :to="{ name: 'SignUp' }"> <i class=" fas
+                    fa-user-plus"></i></router-link>
 
             </div>
         </div>
@@ -47,11 +48,12 @@
     margin-bottom: 20px;
 } */
 
-a{
+a {
     text-decoration: none;
     color: black;
 }
-a:hover{
+
+a:hover {
     color: blue;
 }
 </style>
