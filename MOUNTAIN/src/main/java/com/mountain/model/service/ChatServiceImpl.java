@@ -25,26 +25,31 @@ public class ChatServiceImpl implements ChatService {
 		this.chatUserManagerDao = chatUserManagerDao;
 	}
 
+	// 채팅 info 생성
 	@Override
 	public void createChat(Chat Chat) {
 		chatDao.createChat(Chat);
 	}
 
+	// 채팅 info 읽기
 	@Override
 	public Chat selectChat(int chatSerial) {
 		return chatDao.selectOne(chatSerial);
 	}
 
+	// 채팅 info 수정
 	@Override
 	public void modifyChat(Chat chat) {
 		chatDao.modifyChat(chat);
 	}
 
+	// 채팅 info 삭제
 	@Override
 	public void deleteChat(int chatSerial) {
 		chatDao.deleteChat(chatSerial);
 	}
 
+	// 채팅 manager 생성
 	@Override
 	public void createChatInfo(ChatInfo chatInfo) {
 		Map<String, Object> paramMap = new HashMap<>();
@@ -55,36 +60,43 @@ public class ChatServiceImpl implements ChatService {
 		chatInfoDao.createChatInfo(paramMap);
 	}
 
+	// 채팅 manager 읽기
 	@Override
 	public ChatInfo selectChatInfo(int chatInfoSerial) {
 		return chatInfoDao.selectChatInfoByChatInfoSerial(chatInfoSerial);
 	}
 
+	// 채팅 manager 수정
 	@Override
 	public void modifyChatInfo(ChatInfo chatInfo) {
 		chatInfoDao.modifyChatInfo(chatInfo);
 	}
 
+	// 채팅 manager 삭제
 	@Override
 	public void deleteChatInfo(int chatInfoSerial) {
 		chatInfoDao.deleteChatInfo(chatInfoSerial);
 	}
 
+	// 채팅 생성
 	@Override
 	public void createChatUserManager(ChatUserManager chatUserManager) {
 		chatUserManagerDao.joinChat(chatUserManager.getChatInfoSerial(), chatUserManager.getUserSerial());
 	}
 
+	// 채팅 읽기
 	@Override
 	public ChatUserManager selectChatUserManager(int chatUserManagerSerial) {
 		return chatUserManagerDao.selectOneByChatInfoSerial(chatUserManagerSerial);
 	}
 
+	// 채팅 수정
 	@Override
 	public void modifyChatUserManager(ChatUserManager chatUserManager) {
 		chatUserManagerDao.modifyChatUserManager(chatUserManager);
 	}
 
+	// 채팅 삭제
 	@Override
 	public void deleteChatUserManager(int chatUserManagerSerial, int userSerial) {
 		chatUserManagerDao.leaveChat(chatUserManagerSerial, userSerial);

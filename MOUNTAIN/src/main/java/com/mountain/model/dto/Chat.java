@@ -11,6 +11,11 @@ public class Chat {
 
 	public Chat() {
 	}
+	public Chat(int chatInfoSerial, int userSerial, String content) {
+		this.chatInfoSerial = chatInfoSerial;
+		this.userSerial = userSerial;
+		this.content = content;
+	}
 
 	public Chat(int serial, int chatInfoSerial, int userSerial, String content, Timestamp createDate) {
 		this.serial = serial;
