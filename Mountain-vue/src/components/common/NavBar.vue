@@ -1,4 +1,4 @@
-<!-- 로그인 전 화면 -->
+<!-- 메인화면 외 NAVBAR -->
 <template>
     <div>
         <div class="container">
@@ -22,7 +22,7 @@
 
 <style scoped>
 .container {
-    background-color: rgba(195, 232, 184, 0.33);
+    background-color: rgba(74, 75, 73, 0.33);
     display: flex;
     align-items: center;
     height: 60px;
@@ -46,4 +46,7 @@
     font-size: large;
     margin-bottom: 20px;
 } */
+a {
+    text-decoration: none;
+}
 </style>

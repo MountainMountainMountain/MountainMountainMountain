@@ -1,5 +1,4 @@
-<!-- 로그인 하고 난 navbar -->
-
+<!-- 메인화면 외 NAVBAR -->
 <template>
     <div>
         <div class="container">
@@ -9,14 +8,9 @@
                         <img style="width: 64px;" src="" alt="이미지">
                     </router-link>
                 </div>
-                <router-link class="navbar-brand" to="/">
-                    <img style="width: 64px;" src="" alt="프로필이미지">
-                </router-link>
-                &nbsp;{{ name }}님 환영합니다.
-                &nbsp;<router-link class="nav-link" to="/chat"><i class="fas fa-comments"></i></router-link>
+                <router-link class="nav-link" to="/login">로그인</router-link>
+                &nbsp;<router-link class="nav-link" to="/signUp"><i class="fas fa-user-plus"></i></router-link>
 
-                <!-- &nbsp;<a class="" @click="onClickLogout">로그아웃</a> -->
-                &nbsp;<router-link class="nav-link" to="/">로그아웃</router-link>
             </div>
         </div>
     </div>
@@ -28,7 +22,7 @@
 
 <style scoped>
 .container {
-    background-color: rgba(195, 232, 184, 0.33);
+    background-color: rgba(74, 75, 73, 0.33);
     display: flex;
     align-items: center;
     height: 60px;
@@ -52,4 +46,12 @@
     font-size: large;
     margin-bottom: 20px;
 } */
+
+a{
+    text-decoration: none;
+    color: black;
+}
+a:hover{
+    color: blue;
+}
 </style>
