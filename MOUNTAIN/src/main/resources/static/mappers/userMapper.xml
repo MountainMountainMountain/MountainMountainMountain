@@ -28,7 +28,7 @@
 		resultType="User">
 		SELECT *
 		FROM User
-		WHERE name = #{userName};
+		WHERE name LIKE concat( '%', #{userName}, '%' )
 	</select>
 
 	<update id="modifyUser" parameterType="User">

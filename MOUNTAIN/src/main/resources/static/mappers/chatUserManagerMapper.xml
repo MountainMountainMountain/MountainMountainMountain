@@ -15,6 +15,18 @@
 		INSERT INTO ChatUserManager (chatInfo_serial, user_serial)
 		VALUE (chatInfoSerial, userSerial)
 	</insert>
+	
+	<select id="selectOneByChatUserManagerSerial" parameterType="int" resultType="ChatUserManager">
+		SELECT *
+		FROM ChatUserManager
+		WHERE serial = #{ChatUserManagerSerial}
+	</select>
+	
+	<select id="selectOneByChatInfoSerial" parameterType="int" resultType="ChatUserManager">
+		SELECT *
+		FROM ChatUserManager
+		WHERE chatInfo_serial = #{ChatInfoSerial}
+	</select>
 
 	<update id="updateChatUserManager" parameterType="ChatUserManager">
 		UPDATE ChatUserManager

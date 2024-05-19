@@ -16,6 +16,12 @@
 		WHERE chatinfo_serial = #{chatInfoSerial};
 	</select>
 	
+	<select id="selectOne" parameterType="int" resultType="Chat">
+		SELECT *
+		FROM Chat
+		WHERE serial = #{chatSerial}
+	</select>
+	
 	<insert id="createChat" parameterType="Chat">
 		INSERT INTO Chat (chatInfo_serial, user_serial, content)
 		VALUE (#{chatInfoSerial}, #{userSerial}, #{content})
