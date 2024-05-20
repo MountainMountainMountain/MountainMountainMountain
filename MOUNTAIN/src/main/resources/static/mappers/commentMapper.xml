@@ -57,7 +57,7 @@
 		FROM Comment
 		<!-- 동적쿼리(검색 조건) -->
 		<if test="key != null">
-			WHERE ${key} LIKE concat( '%', #{word}, '%' )
+			WHERE ${key} LIKE concat( '%', #{word}, '%' ) AND mountain_serial = #{mountainSerial}
 		</if>
 		<!-- 동적쿼리(정렬 조건) -->
 		<if test="orderBy != null">

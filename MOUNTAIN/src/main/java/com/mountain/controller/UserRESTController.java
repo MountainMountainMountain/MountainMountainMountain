@@ -36,35 +36,34 @@ public class UserRESTController {
 
 	// 사용자 전체 목록
 	@GetMapping("/user")
-	public ResponseEntity<List<User>> getUserList() {
+	public ResponseEntity<?> getUserList() {
 		List<User> userList = userService.getUserList();
-		return new ResponseEntity<>(userList, HttpStatus.OK);
+		return new ResponseEntity<List<User>>(userList, HttpStatus.OK);
 	}
 
 	// 사용자 등록
 	@PostMapping("/user/join")
-	public ResponseEntity<Void> signup(@RequestBody User user) {
+	public ResponseEntity<?> signup(@RequestBody User user) {
 		userService.signup(user);
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
 
 	// 사용자 아이디 검색
-
 	@GetMapping("/user/search/id/{id}")
-	public ResponseEntity<List<User>> searchById(@PathVariable("id") String id) {
+	public ResponseEntity<?> searchById(@PathVariable("id") String id) {
 		List<User> userList = userService.searchById(id);
 		if (userList == null) {
 			// 검색했는데 없다면
 			return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
 		} else {
+			System.out.println(userList);
 			return new ResponseEntity<List<User>>(userList, HttpStatus.OK);
 		}
 	}
 
 	// 사용자 이름 검색
-
 	@GetMapping("/user/search/name/{name}")
-	public ResponseEntity<List<User>> searchByName(@PathVariable("name") String name) {
+	public ResponseEntity<?> searchByName(@PathVariable("name") String name) {
 		List<User> userList = userService.searchByName(name);
 		if (userList == null) {
 			// 검색했는데 없다면
@@ -76,7 +75,7 @@ public class UserRESTController {
 
 	// 사용자 삭제
 	@DeleteMapping("/user/{serial}")
-	public ResponseEntity<Void> deleteUser(@PathVariable("serial") int serial) {
+	public ResponseEntity<?> deleteUser(@PathVariable("serial") int serial) {
 		userService.deleteUser(serial);
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
@@ -87,10 +86,10 @@ public class UserRESTController {
 	public ResponseEntity<?> checkId(@PathVariable("id") String id) {
 		// 아이디가 존재합니다.
 		if (userService.checkId(id)) {
-			return new ResponseEntity<>(HttpStatus.CONFLICT);
+			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		} else {
 			// 아이디가 존재하지 않다면,
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<Void>(HttpStatus.OK);
 		}
 	}
 
@@ -99,10 +98,10 @@ public class UserRESTController {
 	public ResponseEntity<?> checkEmail(@PathVariable("email") String email) {
 		// 이메일이 존재 -> 회원이 존재한다.
 		if (userService.checkEmail(email)) {
-			return new ResponseEntity<>(HttpStatus.CONFLICT);
+			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		} else {
 			// 이메일 존재하지 않으면,
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<Void>(HttpStatus.OK);
 		}
 	}
 
@@ -147,6 +146,7 @@ public class UserRESTController {
 	@DeleteMapping("/follow/{fromFollow}/{toFollow}")
 	public ResponseEntity<?> deleteFollow(@PathVariable("fromFollow") int fromFollow,
 			@PathVariable("toFollow") int toFollow) {
+
 		if (!userService.checkAlreadyFollowing(fromFollow, toFollow)) {
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 		}

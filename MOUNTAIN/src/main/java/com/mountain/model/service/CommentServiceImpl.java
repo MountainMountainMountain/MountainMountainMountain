@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.mountain.model.dao.CommentDao;
 import com.mountain.model.dto.Comment;
-import com.mountain.model.dto.SearchCondition;
+import com.mountain.model.dto.SearchConditionForComment;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -56,7 +56,7 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public List<Comment> selectCommentBySearch(SearchCondition searchCondition) {
+	public List<Comment> selectCommentBySearch(SearchConditionForComment searchCondition) {
 		return commentDao.selectCommentBySearch(searchCondition);
 	}
 
