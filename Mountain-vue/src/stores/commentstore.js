@@ -15,6 +15,7 @@ export const useCommentStore = defineStore('comment', () => {
     axios.get(`${REST_COMMENT_API}/mountain/${mountainSerial}`)
       .then((response) => {
         CommentList.value = response.data
+        console.log(CommentList.value)
       })
   }
 
