@@ -12,6 +12,9 @@ public interface UserService {
 	// 사용자 등록
 	public void signup(User user);
 
+	// 사용자 수정
+	void modifyUser(User user);
+
 	// 사용자 아이디 검색
 	public List<User> searchById(String id);
 
@@ -32,7 +35,7 @@ public interface UserService {
 
 	// 팔로우 여부 체크
 	boolean checkAlreadyFollowing(int fromFollow, int toFollow);
-	
+
 	// 팔로우 하기
 	void createFollow(int fromFollow, int toFollow);
 
@@ -44,5 +47,5 @@ public interface UserService {
 
 	// 팔로워 리스트(나의 기준 나를 팔로잉 하는 리스트)
 	List<User> followerList(int fromFollow);
-	
+
 }
