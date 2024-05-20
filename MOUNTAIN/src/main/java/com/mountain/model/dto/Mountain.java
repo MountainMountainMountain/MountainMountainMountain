@@ -14,12 +14,13 @@ public class Mountain {
 	private int fee;
 	private String state;
 	private String town;
+	private int point;
 
 	public Mountain() {
 	}
 
 	public Mountain(int serial, String name, int latitude, int longitude, int altitude, int course, float difficulty,
-			Timestamp regDate, int fee, String state, String town) {
+			Timestamp regDate, int fee, String state, String town, int point) {
 		this.serial = serial;
 		this.name = name;
 		this.latitude = latitude;
@@ -31,6 +32,7 @@ public class Mountain {
 		this.fee = fee;
 		this.state = state;
 		this.town = town;
+		this.point = point;
 	}
 
 	public int getSerial() {
@@ -121,11 +123,19 @@ public class Mountain {
 		this.town = town;
 	}
 
+	public int getPoint() {
+		return point;
+	}
+
+	public void setPoint(int point) {
+		this.point = point;
+	}
+
 	@Override
 	public String toString() {
 		return "Mountain [serial=" + serial + ", name=" + name + ", latitude=" + latitude + ", longitude=" + longitude
 				+ ", altitude=" + altitude + ", course=" + course + ", difficulty=" + difficulty + ", regDate="
-				+ regDate + ", fee=" + fee + ", state=" + state + ", town=" + town + "]";
+				+ regDate + ", fee=" + fee + ", state=" + state + ", town=" + town + ", point=" + point + "]";
 	}
 
 }

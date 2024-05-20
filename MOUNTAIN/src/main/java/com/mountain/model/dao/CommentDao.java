@@ -3,7 +3,7 @@ package com.mountain.model.dao;
 import java.util.List;
 
 import com.mountain.model.dto.Comment;
-import com.mountain.model.dto.SearchCondition;
+import com.mountain.model.dto.SearchConditionForComment;
 
 public interface CommentDao {
 
@@ -29,17 +29,17 @@ public interface CommentDao {
 	void modifyViewCnt(int commentSerial);
 
 	// 검색 기능
-	List<Comment> selectCommentBySearch(SearchCondition searchCondition);
+	List<Comment> selectCommentBySearch(SearchConditionForComment searchCondition);
 
 	// 평점 구하기
 	int selectStar(int mountainSerial, int starNumber);
 
 	// 등반 횟수 구하기
 	int turnAroundTime(int mountainSerial);
-	
+
 	// 칼로리 평균 구하기
 	int averageCalorie(int mountainSerial);
-	
+
 	// 평균 시간 구하기
 	int averageTurnAround(int mountainSerial);
 

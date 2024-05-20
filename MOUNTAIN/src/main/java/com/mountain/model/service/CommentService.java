@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.mountain.model.dto.Comment;
-import com.mountain.model.dto.SearchCondition;
+import com.mountain.model.dto.SearchConditionForComment;
 
 public interface CommentService {
 
@@ -27,7 +27,7 @@ public interface CommentService {
 	public void modifyComment(Comment comment);
 
 	// 검색 기능
-	public List<Comment> selectCommentBySearch(SearchCondition searchCondition);
+	public List<Comment> selectCommentBySearch(SearchConditionForComment searchCondition);
 
 	// 평점 구하기
 	public Map<String, Integer> selectStar(int mountainSerial);
