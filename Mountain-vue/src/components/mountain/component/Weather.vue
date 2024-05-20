@@ -11,13 +11,18 @@
 </template>
 
 <script setup>
+import { useRoute, useRouter } from "vue-router";
 import { onMounted, ref } from "vue";
 import axios from "axios";
+const route = useRoute();
 const tmp = ref(null);
 const sky = ref(null);
 const pty = ref(null);
 const pop = ref(0);
+import { useMountainStore } from "@/stores/mountainstore";
+const mountainStore = useMountainStore();
 onMounted(() => {
+    mountainStore.getMountainSerial(route.params.mountainSerial)
     const API_URL = `http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst`;
 
     const today = new Date();
