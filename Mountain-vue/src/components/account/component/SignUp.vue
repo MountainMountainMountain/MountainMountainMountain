@@ -1,9 +1,5 @@
 <template>
-    <div class="brand">
-        <router-link class="navbar-brand" to="/">
-            <img style="width: 64px;" src="" alt="이미지">
-        </router-link>
-    </div>
+
     <div id="signup-container">
         <form id="signup">
             <fieldset id="signupbox">
@@ -168,7 +164,7 @@
                 </table>
                 <hr>
                 <div class="underbar">
-                    <router-link to="/">
+                    <router-link :to="{name:'Login'}">
                         <button type="button" class="btn btn-primary"
                             style="width: 30%; height: 30px; background-color: greenyellow; border: none; ">회원가입</button>
                     </router-link>
