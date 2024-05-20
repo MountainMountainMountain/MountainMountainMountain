@@ -1,6 +1,6 @@
 <template>
     <div>
-
+        <h1>mountaininfo</h1>
     </div>
 </template>
 

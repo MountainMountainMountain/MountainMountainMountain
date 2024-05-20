@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>complete</h1>
+        <h1>chatlist</h1>
     </div>
 </template>
 
@@ -8,6 +8,6 @@
 
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>

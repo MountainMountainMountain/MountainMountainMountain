@@ -5,6 +5,10 @@ import MountainMainPage from "@/components/mountain/page/MountainMainPage.vue";
 import MountainListPage from "@/components/mountain/page/MountainListPage.vue";
 import MountainDetailPage from "@/components/mountain/page/MountainDetailPage.vue";
 
+import MountainInfo from "@/components/mountain/component/MountainInfo.vue";
+import MountainLocation from "@/components/mountain/component/MountainLocation.vue";
+import Book from "@/components/mountain/component/Book.vue";
+
 import MypageView from "@/views/MypageView.vue";
 import MyPage from "@/components/mypage/page/MyPage.vue";
 import MyInfo from "@/components/mypage/component/MyInfo.vue";
@@ -17,6 +21,7 @@ import CommentDetailPage from "@/components/comment/page/CommentDetailPage.vue";
 import CommentModifyPage from "@/components/comment/page/CommentModifyPage.vue";
 
 import ChatView from "@/views/ChatView.vue";
+import ChatList from "@/components/chat/page/ChatList.vue";
 import DetailChat from "@/components/chat/page/DetailChat.vue";
 import JoinChat from "@/components/chat/page/JoinChat.vue";
 
@@ -46,6 +51,23 @@ const router = createRouter({
           path: 'mountain/:mountainSerial',
           name: 'MountainDetailPge',
           component: MountainDetailPage,
+          children: [
+            {
+              path: 'mountainInfo',
+              name: 'MountainInfo',
+              component: MountainInfo,
+            },
+            {
+              path: 'mountainLocation',
+              name: 'MountainLocation',
+              component: MountainLocation,
+            },
+            {
+              path: 'book',
+              name: 'Book',
+              component: Book,
+            },
+          ]
         },
       ],
     },
@@ -56,17 +78,17 @@ const router = createRouter({
       children: [
         {
           path: '/',
-          name: 'myInfo',
+          name: 'MyInfo',
           component: MyInfo,
         },
         {
           path: 'myFriends',
-          name: 'myFriends',
+          name: 'MyFriends',
           component: MyFriends,
         },
         {
           path: 'myComplete',
-          name: 'myComplete',
+          name: 'MyComplete',
           component: MyComplete,
         },
         // { 이거는 모달이나 그 자체에서 바꿀까?
@@ -87,12 +109,12 @@ const router = createRouter({
           component: CommentCreatePage,
         },
         {
-          path: 'commentDetail',
+          path: 'commentDetail/:commentSerial',
           name: "CommentDetailPage",
           component: CommentDetailPage,
         },
         {
-          path: 'commentModify',
+          path: 'commentModify/:commentSerial',
           name: 'CommentModifyPage',
           component: CommentModifyPage,
         },
@@ -103,6 +125,11 @@ const router = createRouter({
       name: 'Chat',
       component: ChatView,
       children: [
+        {
+          path: 'chatList',
+          name: 'ChatList',
+          component: ChatList,
+        },
         {
           path: 'detailChat',
           name: 'DetailChat',
