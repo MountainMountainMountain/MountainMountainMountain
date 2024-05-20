@@ -135,7 +135,7 @@ public class UserRESTController {
 	public ResponseEntity<?> createFollow(@PathVariable("fromFollow") int fromFollow,
 			@PathVariable("toFollow") int toFollow) {
 
-		if (userService.checkAlreadyFollowing(fromFollow, toFollow)) {
+		if (userService.checkAlreadyFollowing(fromFollow, toFollow) || fromFollow == toFollow) {
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 		}
 		userService.createFollow(fromFollow, toFollow);
@@ -147,7 +147,7 @@ public class UserRESTController {
 	@DeleteMapping("/follow/{fromFollow}/{toFollow}")
 	public ResponseEntity<?> deleteFollow(@PathVariable("fromFollow") int fromFollow,
 			@PathVariable("toFollow") int toFollow) {
-		if (!userService.checkAlreadyFollowing(fromFollow, toFollow)) {
+		if (!userService.checkAlreadyFollowing(fromFollow, toFollow) || fromFollow == toFollow) {
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 		}
 		userService.deleteFollow(fromFollow, toFollow);
