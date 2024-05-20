@@ -10,10 +10,18 @@
 </template>
 
 <script setup>
+import { useRoute, useRouter } from "vue-router";
 import { onMounted, ref, toRaw } from 'vue';
+import axios from "axios";
+const route = useRoute();
+const router = useRouter();
+import { useMountainStore } from "@/stores/mountainstore";
+const mountainStore = useMountainStore();
+
 let map = null;
 const initMap = function () {
-    let myCenter = new kakao.maps.LatLng(37.365146, 128.055632); //카카오본사
+    let myCenter = new kakao.maps.LatLng(`${mountainStore.mountain.latitude}`, `${mountainStore.mountain.longitude}`); //카카오본사
+    // `${mountainStore.mountain.latitude}`, `${mountainStore.mountain.longitude}`
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
             // 여기가 현재 위치 불러오는 곳임
@@ -45,6 +53,7 @@ const initMap = function () {
 };
 
 onMounted(() => {
+    mountainStore.getMountainSerial(route.params.mountainSerial)
     if (window.kakao && window.kakao.maps) {
         initMap();
     } else {

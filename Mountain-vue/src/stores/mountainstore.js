@@ -50,9 +50,7 @@ export const useMountainStore = defineStore('mountain', () => {
   const getMountainSerial = function (mountainSerial) {
     axios.get(`${REST_MOUNTAIN_API}${mountainSerial}`)
       .then((response) => {
-        // console.log('Mountain data fetched successfully', response.data);
         mountain.value = response.data;
-        // console.log(mountain.value)
       })
       .catch((err) => {
         console.error('Error fetching mountain data', err);
