@@ -13,7 +13,9 @@
 	<select id="selectChatByChatInfoSerial" parameterType="int" resultType="Chat">
 		SELECT *
 		FROM Chat
-		WHERE chatinfo_serial = #{chatInfoSerial};
+		WHERE ChatUserManager_serial In (SELECT serial
+										FROM ChatUserManager
+										WHERE chatInfo_serial = #{chatInfoSerial});
 	</select>
 	
 	<select id="selectOne" parameterType="int" resultType="Chat">

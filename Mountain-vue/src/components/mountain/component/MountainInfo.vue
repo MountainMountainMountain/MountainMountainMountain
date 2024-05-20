@@ -55,4 +55,8 @@ function deleteMountain() {
 }
 </script>
 
+<<<<<<< HEAD
 <style scoped></style>
+=======
+<style scoped></style>
+>>>>>>> fc7b166ae5fb2fd73f2564928bd1e0bf23225441

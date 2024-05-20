@@ -5,8 +5,8 @@ import java.sql.Timestamp;
 public class Mountain {
 	private int serial;
 	private String name;
-	private int latitude;
-	private int longitude;
+	private float latitude;
+	private float longitude;
 	private int altitude;
 	private int course;
 	private float difficulty;
@@ -15,12 +15,15 @@ public class Mountain {
 	private String state;
 	private String town;
 	private int point;
+	private int weatherNX;
+	private int weatherNY;
 
 	public Mountain() {
 	}
 
-	public Mountain(int serial, String name, int latitude, int longitude, int altitude, int course, float difficulty,
-			Timestamp regDate, int fee, String state, String town, int point) {
+	public Mountain(int serial, String name, float latitude, float longitude, int altitude, int course,
+			float difficulty, Timestamp regDate, int fee, String state, String town, int point, int weatherNX,
+			int weatherNY) {
 		this.serial = serial;
 		this.name = name;
 		this.latitude = latitude;
@@ -33,6 +36,8 @@ public class Mountain {
 		this.state = state;
 		this.town = town;
 		this.point = point;
+		this.weatherNX = weatherNX;
+		this.weatherNY = weatherNY;
 	}
 
 	public int getSerial() {
@@ -51,19 +56,19 @@ public class Mountain {
 		this.name = name;
 	}
 
-	public int getLatitude() {
+	public float getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(int latitude) {
+	public void setLatitude(float latitude) {
 		this.latitude = latitude;
 	}
 
-	public int getLongitude() {
+	public float getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(int longitude) {
+	public void setLongitude(float longitude) {
 		this.longitude = longitude;
 	}
 
@@ -131,11 +136,28 @@ public class Mountain {
 		this.point = point;
 	}
 
+	public int getWeatherNX() {
+		return weatherNX;
+	}
+
+	public void setWeatherNX(int weatherNX) {
+		this.weatherNX = weatherNX;
+	}
+
+	public int getWeatherNY() {
+		return weatherNY;
+	}
+
+	public void setWeatherNY(int weatherNY) {
+		this.weatherNY = weatherNY;
+	}
+
 	@Override
 	public String toString() {
 		return "Mountain [serial=" + serial + ", name=" + name + ", latitude=" + latitude + ", longitude=" + longitude
 				+ ", altitude=" + altitude + ", course=" + course + ", difficulty=" + difficulty + ", regDate="
-				+ regDate + ", fee=" + fee + ", state=" + state + ", town=" + town + ", point=" + point + "]";
+				+ regDate + ", fee=" + fee + ", state=" + state + ", town=" + town + ", point=" + point + ", weatherNX="
+				+ weatherNX + ", weatherNY=" + weatherNY + "]";
 	}
 
 }
