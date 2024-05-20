@@ -24,7 +24,7 @@
 	<insert id="createFollow" parameterType="int">
 		INSERT INTO Follow
 		(from_serial, to_serial)
-		VALUE (#{fromFollow), #{toFollow));
+		VALUE (#{fromFollow}, #{toFollow});
 	</insert>
 
 	<delete id="deleteFollow" parameterType="int">
