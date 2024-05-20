@@ -35,9 +35,9 @@
 
 	<select id="followingList" parameterType="int" resultType="User">
 		SELECT * FROM User
-		WHERE `serial` In (SELECT to_serial
+		WHERE `serial` In (SELECT from_serial
 			FROM Follow
-			WHERE to_serial = #{toFollow});
+			WHERE to_serial = #{toSerial});
 	</select>
 
 	<select id="followerList" parameterType="int" resultType="User">

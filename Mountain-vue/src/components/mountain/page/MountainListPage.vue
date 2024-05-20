@@ -1,6 +1,7 @@
 <template>
     <div>
         <MainLoginNavBar />
+        <Search />
         <h1>list</h1>
         <!-- <RouterLink :to="{ name: 'MountainDetailPage', params: { mountainSerial: '1' } }">1</RouterLink> -->
 
@@ -22,6 +23,7 @@
 import MainLoginNavBar from '@/components/common/MainLoginNavBar.vue';
 import { onMounted } from 'vue';
 import { useMountainStore } from '@/stores/mountainstore';
+import Search from "../component/Search.vue"
 
 const mountainStore = useMountainStore()
 onMounted(() => {

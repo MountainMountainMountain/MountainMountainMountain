@@ -54,5 +54,3 @@ function deleteMountain() {
     });
 }
 </script>
-
-<style scoped></style>
