@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mountain.model.dto.Mountain;
@@ -85,11 +84,14 @@ public class MountainRESTController {
 	}
 
 	// 산 searchcondition에 따라 조회
-	@GetMapping("/mountain")
-	public ResponseEntity<?> getMountainBySearchCondition(@RequestParam SearchCondition searchCondition) {
+	@PostMapping("/mountain")
+	public ResponseEntity<?> getMountainBySearchCondition(@RequestBody SearchCondition searchCondition) {
+		System.out.println(searchCondition);
 		List<Mountain> list = mountainService.selectMountainBySearch(searchCondition);
+		if (list == null || list.size() == 0)
+			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 
-		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<List<Mountain>>(list, HttpStatus.OK);
 	}
 
 	// 산 업데이트

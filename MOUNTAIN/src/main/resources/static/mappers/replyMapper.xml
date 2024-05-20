@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 네임스페이스에 DAO 풀패키지명을 작성 -->
-<mapper namespace="com.mountain.model.dao.CommentDao">
+<mapper namespace="com.mountain.model.dao.ReplyDao">
 
 	<select id="selectByCommentSerial" parameterType="int"
 		resultType="Reply">
@@ -13,7 +13,7 @@
 	</select>
 
 	<select id="selectOneReply" parameterType="int"
-		resultType="Comment">
+		resultType="Reply">
 		SELECT *
 		FROM Reply
 		WHERE serial = #{replySerial}
@@ -26,7 +26,7 @@
 		#{userSerial}, #{content})
 	</insert>
 
-	<update id="modifyReply" parameterType="Comment">
+	<update id="modifyReply" parameterType="Reply">
 		UPDATE Reply SET
 		comment_serial = #{commentSerial}, user_serial = #{userSerial},
 		content = #{content}
