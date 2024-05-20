@@ -12,8 +12,9 @@
                 <router-link class="navbar-brand" :to="{ name: 'MyInfo' }">
                     <img style="width: 64px;" src="" alt="프로필이미지">
                 </router-link>
-                &nbsp;{{ name }}님 환영합니다.
-                &nbsp;<router-link class="nav-link" :to="{name: 'ChatList'}"><i class="fas fa-comments"></i></router-link>
+                &nbsp;{{ userName }}님 환영합니다.
+                &nbsp;
+                <router-link class="nav-link" :to="{ name: 'ChatList' }"><i class="fas fa-comments"></i></router-link>
 
                 <!-- &nbsp;<a class="" @click="onClickLogout">로그아웃</a> -->
                 &nbsp;<router-link class="nav-link" to="/">로그아웃</router-link>

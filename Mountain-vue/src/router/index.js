@@ -49,7 +49,7 @@ const router = createRouter({
         },
         {
           path: 'mountain/:mountainSerial',
-          name: 'MountainDetailPge',
+          name: 'MountainDetailPage',
           component: MountainDetailPage,
           children: [
             {
