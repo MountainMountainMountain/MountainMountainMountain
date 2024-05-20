@@ -91,8 +91,4 @@ export const useMountainStore = defineStore('mountain', () => {
   };
 
   return { createMountain, mountainList, mountain, getMountainList, searchMountainList, getMountainSerial, getMountainState, updateMountain, deleteMountain };
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> fc7b166ae5fb2fd73f2564928bd1e0bf23225441

@@ -22,6 +22,7 @@ export default {
 .background-image {
     width: 100%;
     height: auto;
+    opacity: 0.88;
 }
 
 .overlay-image {
@@ -29,7 +30,7 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 430px;
+    width: 500px;
     /* 원하는 크기로 설정 */
     height: 790px;
     /* 원하는 크기로 설정 */
