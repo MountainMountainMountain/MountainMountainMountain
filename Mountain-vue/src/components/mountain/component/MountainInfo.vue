@@ -38,7 +38,7 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 const mountainStore = useMountainStore();
 // const mountainSerial = route.params.mountainSerial;
-const mountainSerial = 1;
+const mountainSerial = route.params.mountainSerial;
 
 onMounted(() => {
     mountainStore.getMountainSerial(mountainSerial);
