@@ -45,7 +45,7 @@ public class ChatRESTController {
 
 	// 채팅 수정
 	@PutMapping("/chat/{chatSerial}")
-	public ResponseEntity<?> modifyChat(@PathVariable("chatSerial") int chatSerial, @RequestBody Chat chat) {
+	public ResponseEntity<?> modifyChat(@PathVariable("chatSerial") long chatSerial, @RequestBody Chat chat) {
 		chat.setSerial(chatSerial);
 		chatService.modifyChat(chat);
 

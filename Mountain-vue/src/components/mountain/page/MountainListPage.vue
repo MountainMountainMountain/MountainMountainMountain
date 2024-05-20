@@ -2,7 +2,7 @@
     <div>
         <MainLoginNavBar />
         <h1>list</h1>
-        <RouterLink :to="{ name: 'MountainDetailPge', params: { mountainSerial: '1' } }">1</RouterLink>
+        <RouterLink :to="{ name: 'MountainDetailPage', params: { mountainSerial: '1' } }">1</RouterLink>
 
     </div>
 </template>

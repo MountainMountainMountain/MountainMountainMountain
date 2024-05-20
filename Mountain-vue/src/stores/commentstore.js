@@ -1,12 +1,19 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import axios from 'axios'
+import router from '@/router'
+
+const REST_COMMENT_API = `http://localhost:8080/api-comment`
 
 export const useCommentStore = defineStore('comment', () => {
-  const count = ref(0)
-  const doubleCount = computed(() => count.value * 2)
-  function increment() {
-    count.value++
+
+  const Comment = ref({})
+  const CommentList = ref([])
+
+  const getCommentList = function (id) {
+    axios.get(`${REST_COMMENT_API}/`)
   }
 
-  return { count, doubleCount, increment }
+
+  return { Comment, CommentList }
 })

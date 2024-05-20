@@ -3,50 +3,40 @@ package com.mountain.model.dto;
 import java.sql.Timestamp;
 
 public class Chat {
-	private int serial;
-	private int chatInfoSerial;
-	private int userSerial;
+	private Long serial;
+	private int chatUserManagerSerial;
 	private String content;
 	private Timestamp createDate;
 
 	public Chat() {
 	}
-	public Chat(int chatInfoSerial, int userSerial, String content) {
-		this.chatInfoSerial = chatInfoSerial;
-		this.userSerial = userSerial;
+
+	public Chat(int chatUserManagerSerial, String content) {
+		this.chatUserManagerSerial = chatUserManagerSerial;
 		this.content = content;
 	}
 
-	public Chat(int serial, int chatInfoSerial, int userSerial, String content, Timestamp createDate) {
+	public Chat(Long serial, int chatUserManagerSerial, String content, Timestamp createDate) {
 		this.serial = serial;
-		this.chatInfoSerial = chatInfoSerial;
-		this.userSerial = userSerial;
+		this.chatUserManagerSerial = chatUserManagerSerial;
 		this.content = content;
 		this.createDate = createDate;
 	}
 
-	public int getSerial() {
+	public Long getSerial() {
 		return serial;
 	}
 
-	public void setSerial(int serial) {
+	public void setSerial(Long serial) {
 		this.serial = serial;
 	}
 
-	public int getChatInfoSerial() {
-		return chatInfoSerial;
+	public int getChatUserManagerSerial() {
+		return chatUserManagerSerial;
 	}
 
-	public void setChatInfoSerial(int chatInfoSerial) {
-		this.chatInfoSerial = chatInfoSerial;
-	}
-
-	public int getUserSerial() {
-		return userSerial;
-	}
-
-	public void setUserSerial(int userSerial) {
-		this.userSerial = userSerial;
+	public void setChatUserManagerSerial(int chatUserManagerSerial) {
+		this.chatUserManagerSerial = chatUserManagerSerial;
 	}
 
 	public String getContent() {
@@ -67,8 +57,8 @@ public class Chat {
 
 	@Override
 	public String toString() {
-		return "Chat [serial=" + serial + ", chatInfoSerial=" + chatInfoSerial + ", userSerial=" + userSerial
-				+ ", content=" + content + ", createDate=" + createDate + "]";
+		return "Chat [serial=" + serial + ", chatUserManagerSerial=" + chatUserManagerSerial + ", content=" + content
+				+ ", createDate=" + createDate + "]";
 	}
 
 }

@@ -1,3 +1,5 @@
+DROP SCHEMA IF EXISTS `finalMountainPJT`;
+
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -40,8 +42,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`Mountain` (
   `serial` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `latitude` INT NOT NULL,
-  `longitude` INT NOT NULL,
+  `latitude` FLOAT NOT NULL,
+  `longitude` FLOAT NOT NULL,
   `altitude` INT NOT NULL,
   `course` INT NOT NULL DEFAULT 1,
   `difficulty` FLOAT NOT NULL DEFAULT 0,
@@ -50,6 +52,8 @@ CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`Mountain` (
   `state` VARCHAR(45) NOT NULL,
   `town` VARCHAR(45) NOT NULL,
   `point` INT UNSIGNED NOT NULL,
+  `weather_NX` INT NULL,
+  `weather_NY` INT NULL,
   PRIMARY KEY (`serial`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) INVISIBLE,
   UNIQUE INDEX `course_UNIQUE` (`course` ASC) VISIBLE,
@@ -76,26 +80,43 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `finalMountainPJT`.`Chat`
+-- Table `finalMountainPJT`.`ChatUserManager`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`Chat` (
+CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`ChatUserManager` (
   `serial` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `chatInfo_serial` INT UNSIGNED NOT NULL,
   `user_serial` INT UNSIGNED NOT NULL,
-  `content` TEXT NULL,
-  `create_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`serial`),
   UNIQUE INDEX `serial_UNIQUE` (`serial` ASC) VISIBLE,
-  INDEX `fk_Chat_User1_idx` (`user_serial` ASC) VISIBLE,
-  INDEX `fk_Chat_ChatInfo1_idx` (`chatInfo_serial` ASC) VISIBLE,
-  CONSTRAINT `fk_Chat_User1`
+  INDEX `fk_ChatUserManager_User1_idx` (`user_serial` ASC) VISIBLE,
+  INDEX `fk_ChatUserManager_ChatInfo1_idx` (`chatInfo_serial` ASC) VISIBLE,
+  CONSTRAINT `fk_ChatUserManager_User1`
     FOREIGN KEY (`user_serial`)
     REFERENCES `finalMountainPJT`.`User` (`serial`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Chat_ChatInfo1`
+  CONSTRAINT `fk_ChatUserManager_ChatInfo1`
     FOREIGN KEY (`chatInfo_serial`)
     REFERENCES `finalMountainPJT`.`ChatInfo` (`serial`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `finalMountainPJT`.`Chat`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`Chat` (
+  `serial` BIGINT UNSIGNED NOT NULL,
+  `ChatUserManager_serial` INT UNSIGNED NOT NULL,
+  `content` TEXT NULL,
+  `create_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`serial`),
+  UNIQUE INDEX `serial_UNIQUE` (`serial` ASC) VISIBLE,
+  INDEX `fk_Chat_ChatUserManager1_idx` (`ChatUserManager_serial` ASC) VISIBLE,
+  CONSTRAINT `fk_Chat_ChatUserManager1`
+    FOREIGN KEY (`ChatUserManager_serial`)
+    REFERENCES `finalMountainPJT`.`ChatUserManager` (`serial`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -166,7 +187,7 @@ ENGINE = InnoDB;
 -- Table `finalMountainPJT`.`Follow`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`Follow` (
-  `serial` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `serial` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `from_serial` INT UNSIGNED NOT NULL,
   `to_serial` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`serial`),
@@ -213,132 +234,136 @@ CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`Reply` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `finalMountainPJT`.`ChatUserManager`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`ChatUserManager` (
-  `serial` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `chatInfo_serial` INT UNSIGNED NOT NULL,
-  `user_serial` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`serial`),
-  UNIQUE INDEX `serial_UNIQUE` (`serial` ASC) VISIBLE,
-  INDEX `fk_ChatUserManager_User1_idx` (`user_serial` ASC) VISIBLE,
-  INDEX `fk_ChatUserManager_ChatInfo1_idx` (`chatInfo_serial` ASC) VISIBLE,
-  CONSTRAINT `fk_ChatUserManager_User1`
-    FOREIGN KEY (`user_serial`)
-    REFERENCES `finalMountainPJT`.`User` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ChatUserManager_ChatInfo1`
-    FOREIGN KEY (`chatInfo_serial`)
-    REFERENCES `finalMountainPJT`.`ChatInfo` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
--- 테이블 `finalMountainPJT`.`User`에 데이터 삽입
-INSERT INTO `finalMountainPJT`.`User` (`id`, `password`, `name`, `birth_date`, `gender`, `email`, `point`) VALUES
-('user1', 'pass1', 'John Doe', '1990-01-01', 'M', 'john@example.com', 100),
-('user2', 'pass2', 'Jane Doe', '1992-05-15', 'F', 'jane@example.com', 150),
-('user3', 'pass3', 'Alice Smith', '1985-09-30', 'F', 'alice@example.com', 200),
-('user4', 'pass4', 'Bob Johnson', '1988-07-20', 'M', 'bob@example.com', 50),
-('user5', 'pass5', 'Charlie Brown', '1994-03-12', 'M', 'charlie@example.com', 300),
-('user6', 'pass6', 'Emma Wilson', '1991-11-05', 'F', 'emma@example.com', 75),
-('user7', 'pass7', 'Michael Lee', '1987-04-18', 'M', 'michael@example.com', 220),
-('user8', 'pass8', 'Sophia Garcia', '1996-08-22', 'F', 'sophia@example.com', 180);
+-- User 테이블 데이터 삽입
+INSERT INTO User (id, password, name, birth_date, gender, email, point)
+VALUES
+('user1', 'password1', 'John Doe', '1990-01-01', 'M', 'john@example.com', 100),
+('user2', 'password2', 'Jane Doe', '1992-05-15', 'F', 'jane@example.com', 150),
+('user3', 'password3', 'Alice Smith', '1985-11-20', 'F', 'alice@example.com', 200),
+('user4', 'password4', 'Bob Johnson', '1988-03-10', 'M', 'bob@example.com', 120),
+('user5', 'password5', 'Charlie Brown', '1995-07-05', 'M', 'charlie@example.com', 180),
+('user6', 'password6', 'Emma Watson', '1983-09-30', 'F', 'emma@example.com', 220),
+('user7', 'password7', 'Michael Jordan', '1990-02-17', 'M', 'michael@example.com', 300),
+('user8', 'password8', 'Taylor Swift', '1989-12-13', 'F', 'taylor@example.com', 250),
+('user9', 'password9', 'David Beckham', '1975-05-02', 'M', 'david@example.com', 270),
+('user10', 'password10', 'Adele', '1988-05-05', 'F', 'adele@example.com', 320);
 
--- 테이블 `finalMountainPJT`.`Mountain`에 데이터 삽입
-INSERT INTO `finalMountainPJT`.`Mountain` (`name`, `latitude`, `longitude`, `altitude`, `course`, `difficulty`, `fee`, `state`, `town`, `point`) VALUES
-('Mountain A', 37.1234, 127.5678, 1000, 1, 3.5, 5000, 'California', 'Town A', 1200),
-('Mountain B', 38.2345, 128.6789, 1500, 2, 4.0, 6000, 'New York', 'Town B', 1500),
-('Mountain C', 39.3456, 129.7890, 2000, 3, 4.5, 7000, 'Texas', 'Town C', 1800),
-('Mountain D', 40.4567, 130.8901, 2500, 4, 5.0, 8000, 'Florida', 'Town D', 2000),
-('Mountain E', 41.5678, 131.9012, 3000, 5, 5.5, 9000, 'Washington', 'Town E', 2200),
-('Mountain F', 42.6789, 132.0123, 3500, 6, 6.0, 10000, 'Oregon', 'Town F', 2500),
-('Mountain G', 43.7890, 133.1234, 4000, 7, 6.5, 11000, 'Colorado', 'Town G', 2800),
-('Mountain H', 44.8901, 134.2345, 4500, 8, 7.0, 12000, 'Arizona', 'Town H', 3000);
+-- Mountain 테이블에 한국에 있는 실제 산 데이터 삽입 및 날씨 관측소의 동경과 북위 좌표 추가
+INSERT INTO Mountain (name, latitude, longitude, altitude, course, difficulty, fee, state, town, point, weather_NX, weather_NY)
+VALUES
+('한라산', 33.3617, 126.5292, 1950, 1, 6.0, 3000, '제주특별자치도', '서귀포시', 300, 60, 127),
+('지리산', 35.3542, 127.6667, 1915, 2, 7.0, 2000, '전라남도', '구례군', 280, 63, 124),
+('설악산', 38.1192, 128.4658, 1708, 3, 6.5, 3500, '강원도', '속초시', 320, 66, 131),
+('덕유산', 36.9867, 128.5903, 1614, 4, 5.5, 1500, '경상북도', '영주시', 250, 67, 129),
+('소백산', 36.7000, 128.3583, 1577, 5, 5.0, 1000, '충청북도', '보은군', 220, 68, 130),
+('태백산', 37.1811, 128.9617, 1567, 6, 5.5, 1200, '강원도', '태백시', 230, 69, 133),
+('오대산', 36.7975, 128.1211, 1265, 7, 4.5, 800, '경상북도', '봉화군', 180, 70, 128),
+('내장산', 37.6647, 128.0781, 1241, 8, 4.0, 700, '강원도', '포천시', 160, 71, 126),
+('백두대간', 38.0947, 128.2083, 1236, 9, 6.0, 2000, '강원도', '속초시', 280, 72, 125),
+('가야산', 35.8042, 128.4903, 799, 10, 3.5, 500, '경상남도', '김해시', 120, 73, 123);
 
--- 테이블 `finalMountainPJT`.`ChatInfo`에 데이터 삽입
-INSERT INTO `finalMountainPJT`.`ChatInfo` (`mountain_serial`, `date`) VALUES
-(1, '2024-05-17 09:00:00'),
-(2, '2024-05-17 10:00:00'),
-(3, '2024-05-17 11:00:00'),
-(4, '2024-05-17 12:00:00'),
-(5, '2024-05-17 13:00:00'),
-(6, '2024-05-17 14:00:00'),
-(7, '2024-05-17 15:00:00'),
-(8, '2024-05-17 16:00:00');
+-- ChatInfo 테이블 데이터 삽입
+INSERT INTO ChatInfo (mountain_serial, date)
+VALUES
+(1, '2024-05-01 10:00:00'),
+(2, '2024-05-02 11:00:00'),
+(3, '2024-05-03 12:00:00'),
+(4, '2024-05-04 13:00:00'),
+(5, '2024-05-05 14:00:00'),
+(6, '2024-05-06 15:00:00'),
+(7, '2024-05-07 16:00:00'),
+(8, '2024-05-08 17:00:00'),
+(9, '2024-05-09 18:00:00'),
+(10, '2024-05-10 19:00:00');
 
--- 테이블 `finalMountainPJT`.`Chat`에 데이터 삽입
-INSERT INTO `finalMountainPJT`.`Chat` (`chatInfo_serial`, `user_serial`, `content`, `create_date`) VALUES
-(1, 1, 'Hello from user1', '2024-05-17 09:05:00'),
-(2, 2, 'Hi there!', '2024-05-17 10:15:00'),
-(3, 3, 'Nice weather for hiking!', '2024-05-17 11:25:00'),
-(4, 4, 'Anyone know the trail difficulty?', '2024-05-17 12:35:00'),
-(5, 5, 'Let''s meet at the trailhead.', '2024-05-17 13:45:00'),
-(6, 6, 'Looking forward to the hike!', '2024-05-17 14:55:00'),
-(7, 7, 'Don''t forget water and snacks!', '2024-05-17 15:05:00'),
-(8, 8, 'See you all there!', '2024-05-17 16:15:00');
-
--- 테이블 `finalMountainPJT`.`Comment`에 데이터 이어서 삽입
-INSERT INTO `finalMountainPJT`.`Comment` (`title`, `mountain_serial`, `user_serial`, `content`, `calorie`, `turnaround`, `view_count`, `star`) VALUES
-('Peaceful hike', 1, 2, 'Enjoyed the tranquility of the forest.', 250, 3, 90, 4),
-('Trail markers needed', 2, 3, 'Got lost a few times due to poor signage.', 150, 2, 70, 3),
-('Crowded trail', 3, 4, 'Trail was very crowded, recommend going early.', 100, 1, 40, 3),
-('Wildlife sightings', 4, 5, 'Saw deer and rabbits along the trail.', 300, 4, 120, 4),
-('Trail cleanup', 5, 6, 'Picked up some trash along the trail.', 50, 1, 30, 3),
-('Favorite lookout spot', 6, 7, 'Love stopping at this overlook.', 350, 5, 180, 5),
-('Trail closures', 7, 8, 'Some trails were closed due to maintenance.', 200, 3, 60, 4),
-('Great hike for beginners', 8, 1, 'Took my friends on their first hike, they loved it!', 180, 2, 100, 4);
-
--- 테이블 `finalMountainPJT`.`CommentFile`에 데이터 삽입
-INSERT INTO `finalMountainPJT`.`CommentFile` (`user_serial`, `comment_serial`, `file_name`, `file_size`, `file_content_type`, `file_url`) VALUES
-(1, 1, 'hike_photo1.jpg', 1024, 'image/jpeg', 'https://example.com/hike_photo1.jpg'),
-(2, 2, 'hike_photo2.jpg', 2048, 'image/jpeg', 'https://example.com/hike_photo2.jpg'),
-(3, 3, 'hike_photo3.jpg', 3072, 'image/jpeg', 'https://example.com/hike_photo3.jpg'),
-(4, 4, 'hike_photo4.jpg', 4096, 'image/jpeg', 'https://example.com/hike_photo4.jpg'),
-(5, 5, 'hike_photo5.jpg', 5120, 'image/jpeg', 'https://example.com/hike_photo5.jpg'),
-(6, 6, 'hike_photo6.jpg', 6144, 'image/jpeg', 'https://example.com/hike_photo6.jpg'),
-(7, 7, 'hike_photo7.jpg', 7168, 'image/jpeg', 'https://example.com/hike_photo7.jpg'),
-(8, 8, 'hike_photo8.jpg', 8192, 'image/jpeg', 'https://example.com/hike_photo8.jpg');
-
--- 테이블 `finalMountainPJT`.`Follow`에 데이터 삽입
-INSERT INTO `finalMountainPJT`.`Follow` (`from_serial`, `to_serial`) VALUES
+-- ChatUserManager 테이블 데이터 삽입
+INSERT INTO ChatUserManager (chatInfo_serial, user_serial)
+VALUES
+(1, 1),
 (1, 2),
+(2, 2),
 (2, 3),
+(3, 3),
 (3, 4),
+(4, 4),
 (4, 5),
-(5, 6),
-(6, 7),
-(7, 8),
-(8, 1);
+(5, 5),
+(5, 6);
 
--- 테이블 `finalMountainPJT`.`Reply`에 데이터 삽입
-INSERT INTO `finalMountainPJT`.`Reply` (`comment_serial`, `user_serial`, `content`, `reg_date`) VALUES
-(1, 2, 'Glad you enjoyed it!', '2024-05-17 09:10:00'),
-(2, 3, 'Sorry to hear that, hope you found your way!', '2024-05-17 10:20:00'),
-(3, 4, 'Agreed, it can get busy on weekends.', '2024-05-17 11:30:00'),
-(4, 5, 'Sounds like a fun hike!', '2024-05-17 12:40:00'),
-(5, 6, 'Thank you for helping keep the trails clean!', '2024-05-17 13:50:00'),
-(6, 7, 'One of the best views around!', '2024-05-17 15:00:00'),
-(7, 8, 'Maintenance is important for trail safety.', '2024-05-17 16:10:00'),
-(8, 1, 'Glad your friends enjoyed it!', '2024-05-17 17:00:00');
+-- Chat 테이블 데이터 삽입
+INSERT INTO Chat (serial, ChatUserManager_serial, content)
+VALUES
+(1, 1, 'Hello!'),
+(2, 1, 'Hi there!'),
+(3, 2, 'How are you?'),
+(4, 2, 'I am fine, thanks!'),
+(5, 3, 'What is your plan for the hike?'),
+(6, 3, 'I plan to start early morning.'),
+(7, 4, 'That sounds like a good plan.'),
+(8, 4, 'Yes, I hope to catch the sunrise.'),
+(9, 5, 'Are you bringing any snacks?'),
+(10, 5, 'Yes, I have packed some sandwiches.');
 
--- 테이블 `finalMountainPJT`.`ChatUserManager`에 데이터 삽입
-INSERT INTO `finalMountainPJT`.`ChatUserManager` (`chatInfo_serial`, `user_serial`) VALUES
+-- Comment 테이블 데이터 삽입
+INSERT INTO Comment (title, mountain_serial, user_serial, content, calorie, turnaround, view_count, star)
+VALUES
+('Great hike!', 1, 1, 'I had a wonderful time hiking Everest.', 500, 5, 100, 4),
+('Challenging trail', 2, 2, 'K2 was quite a challenge but worth it!', 600, 6, 120, 5),
+('Beautiful scenery', 3, 3, 'Kangchenjunga offers breathtaking views.', 450, 4, 90, 4),
+('Loved the experience', 4, 4, 'Lhotse was an amazing experience.', 550, 5, 110, 4),
+('Amazing journey', 5, 5, 'Makalu trek was unforgettable.', 480, 5, 96, 4),
+('Enjoyable climb', 6, 6, 'Cho Oyu was a pleasant climb.', 420, 4, 84, 4),
+('Incredible views', 7, 7, 'Dhaulagiri offers stunning views of the Himalayas.', 550, 5, 110, 4),
+('Unique experience', 8, 8, 'Manaslu trek was a unique experience.', 500, 5, 100, 4),
+('Tough but rewarding', 9, 9, 'Nanga Parbat was tough but rewarding.', 650, 7, 130, 5),
+('Unforgettable journey', 10, 10, 'Annapurna trek was an unforgettable journey.', 470, 5, 94, 4);
+
+-- CommentFile 테이블 데이터 삽입
+INSERT INTO CommentFile (user_serial, comment_serial, file_name, file_size, file_content_type, file_url)
+VALUES
+(1, 1, 'everest.jpg', 1024, 'image/jpeg', 'https://example.com/files/everest.jpg'),
+(2, 2, 'k2.jpg', 2048, 'image/jpeg', 'https://example.com/files/k2.jpg'),
+(3, 3, 'kangchenjunga.jpg', 1536, 'image/jpeg', 'https://example.com/files/kangchenjunga.jpg'),
+(4, 4, 'lhotse.jpg', 1280, 'image/jpeg', 'https://example.com/files/lhotse.jpg'),
+(5, 5, 'makalu.jpg', 2560, 'image/jpeg', 'https://example.com/files/makalu.jpg'),
+(6, 6, 'cho_oyu.jpg', 1792, 'image/jpeg', 'https://example.com/files/cho_oyu.jpg'),
+(7, 7, 'dhaulagiri.jpg', 2048, 'image/jpeg', 'https://example.com/files/dhaulagiri.jpg'),
+(8, 8, 'manaslu.jpg', 1536, 'image/jpeg', 'https://example.com/files/manaslu.jpg'),
+(9, 9, 'nanga_parbat.jpg', 3072, 'image/jpeg', 'https://example.com/files/nanga_parbat.jpg'),
+(10, 10, 'annapurna.jpg', 2048, 'image/jpeg', 'https://example.com/files/annapurna.jpg');
+
+-- Follow 테이블 데이터 삽입
+INSERT INTO Follow (from_serial, to_serial)
+VALUES
 (1, 2),
+(1, 3),
+(1, 4),
 (2, 3),
+(2, 4),
+(2, 5),
 (3, 4),
-(4, 5),
-(5, 6),
-(6, 7),
-(7, 8),
-(8, 1);
+(3, 5),
+(3, 6),
+(4, 5);
+
+-- Reply 테이블 데이터 삽입
+INSERT INTO Reply (comment_serial, user_serial, content)
+VALUES
+(1, 2, 'Glad you enjoyed it!'),
+(2, 3, 'It sure is!'),
+(3, 4, 'I am good, thanks!'),
+(4, 5, 'Me too!'),
+(5, 6, 'I plan to start early too.'),
+(6, 7, 'Yes, it is beautiful.'),
+(7, 8, 'Absolutely stunning!'),
+(8, 9, 'I hope you get to see it.'),
+(9, 10, 'Yes, some energy bars.'),
+(10, 1, 'Don''t forget water!');
+
 
 -- User 테이블 조회
 SELECT * FROM User;
@@ -366,3 +391,11 @@ SELECT * FROM Follow;
 
 -- ChatUserManager 테이블 조회
 SELECT * FROM ChatUserManager;
+
+
+SELECT *
+FROM Chat
+WHERE ChatUserManager_serial In (SELECT serial
+								FROM ChatUserManager
+								WHERE chatInfo_serial = 1);
+
