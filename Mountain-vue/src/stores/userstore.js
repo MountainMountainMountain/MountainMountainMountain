@@ -44,14 +44,22 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const checkId = function (id) {
-    axios.get(`${REST_USER_API}/user/join/check/${id}`)
+    axios.get(`${REST_USER_API}/user/join/check/id/${id}`)
       .then((response) => {
-        // httpstatus를 확인해서 처리해야함
+        // HTTP 응답의 상태 코드 확인
+        if (response.status === 200) {
+          // 아이디 사용 가능
+          alert("사용 가능한 아이디입니다.");
+        }
       })
+      .catch((error) => {
+        if (error.response.status === 409)
+          alert("이미 사용 중인 아이디입니다.");
+      });
   }
 
   const checkEmail = function (email) {
-    axios.get(`${REST_USER_API}/user/join/check/${email}`)
+    axios.get(`${REST_USER_API}/user/join/check/email/${email}`)
       .then((response) => {
         // httpstatus를 확인해서 처리해야함
       })
@@ -59,28 +67,28 @@ export const useUserStore = defineStore('user', () => {
 
   const userLogin = function (id, password) {
     return new Promise((resolve, reject) => {
-        axios.post(`${REST_USER_API}/user/login`, {
-            id,
-            password
-        })
+      axios.post(`${REST_USER_API}/user/login`, {
+        id,
+        password
+      })
         .then((res) => {
-            sessionStorage.setItem('access-token', res.data["access-token"]);
+          sessionStorage.setItem('access-token', res.data["access-token"]);
 
-            const token = res.data['access-token'].split('.');
-            headers.value = res.headers;
-            let id = JSON.parse(atob(token[1]))['id'];
+          const token = res.data['access-token'].split('.');
+          headers.value = res.headers;
+          let id = JSON.parse(atob(token[1]))['id'];
 
-            loginUserId.value = id;
-            // loginUserName.value = JSON.parse(atob(token[1]))['name']; // 사용자 이름 설정
+          loginUserId.value = id;
+          // loginUserName.value = JSON.parse(atob(token[1]))['name']; // 사용자 이름 설정
 
-            resolve(); // 성공 시 resolve 호출
+          resolve(); // 성공 시 resolve 호출
         })
         .catch((error) => {
-            console.error(error);
-            reject(error); // 실패 시 reject 호출
+          console.error(error);
+          reject(error); // 실패 시 reject 호출
         });
     });
-}
+  }
 
 
   const logoutUser = function () {
@@ -139,17 +147,19 @@ export const useUserStore = defineStore('user', () => {
 
 
   const createUser = function (user) {
-    axios({
-      url: `${REST_USER_API}/user/join`,
-      method: 'POST',
-      data: user
-    })
-      .then(() => {
-        router.push({ name: 'Login' })
+    return new Promise((resolve, reject) => {
+      axios({
+        url: `${REST_USER_API}/user/join`,
+        method: 'POST',
+        data: user
       })
-      .catch((err) => {
-        console.log(err)
-      })
+        .then(() => {
+          router.push({ name: 'Login' })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    });
   }
 
   const updateUser = function (userSerial) {

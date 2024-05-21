@@ -404,3 +404,7 @@ WHERE ChatUserManager_serial In (SELECT serial
 SELECT u.serial AS userSerial, m.serial AS mountainSerial, m.name AS mountainName, c.reg_date AS commentRegDate, m.difficulty AS difficulty, m.state AS state
 FROM User u, Mountain m, comment c
 WHERE u.serial = c.user_serial AND m.serial = c.mountain_serial AND c.user_serial = 1;
+
+		SELECT COUNT(*)
+		FROM User
+		WHERE id = #{userId};
