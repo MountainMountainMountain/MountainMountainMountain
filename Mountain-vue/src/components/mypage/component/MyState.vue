@@ -7,9 +7,10 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex align-items-center flex-column flex-md-row">
-                                <img src="@/assets/images/daram.jpg" alt="프로필" style="width: 140px; height: 140px;" class="rounded-circle">
+                                <img src="@/assets/images/daram.jpg" alt="프로필" style="width: 140px; height: 140px;"
+                                    class="rounded-circle">
                                 <div class="media-body ms-md-5 m-0 mt-4 mt-md-0 text-md-start text-center">
-                                    <h5 class="font-weight-bold d-inline-block me-2"> </h5>님 
+                                    <h5 class="font-weight-bold d-inline-block me-2"> </h5>{{ userName }}님
                                     <!-- 여기 이름 {{  }} 들어와야 해 -->
                                     <div class="progress">
                                         <div class="progress-bar bg-warning" role="progressbar" style="width: 55%"
@@ -41,13 +42,28 @@
 
 <script setup>
 import { useUserStore } from '@/stores/userstore';
-import { computed, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import MyInfo from './MyInfo.vue';
 
 const userStore = useUserStore();
 
+const userName = ref(''); // 사용자 이름
+const userSerial = ref(''); // 사용자 serial
+const token = sessionStorage.getItem('access-token');
+
+// let id = JSON.parse(atob(token[1]))['id'];
+
+
+const checkUserSerial = () => {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    userName.value = payload.name;
+    userSerial.value = payload.serial;
+    userStore.getUserByid(userSerial.value);
+}
+
 onMounted(() => {
-    userStore.getUser();
+    checkUserSerial();
+    // userStore.getUserByid();
     // userStore.getfollwingList(userStore.User);
     // userStore.getfollwerList(userStore.User);
 })
