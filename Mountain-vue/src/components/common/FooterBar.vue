@@ -1,12 +1,12 @@
 <template>
-    <div class="footer-container">
+
+    <div class="block-header py-3 border-top">
         <div class="container">
             <div class="row">
                 <div class="col">
                     <div id='wrap'>
                         <footer>
-                            <br>
-                            <h3>site name</h3>
+                            <h2>site name</h2>
                             <nav>
                                 <a>이용약관</a> |
                                 <a>개인정보처리방침</a> |
@@ -20,12 +20,12 @@
                         </footer>
                     </div>
                 </div>
-                <div class="end-icon">
-                    <i class="fab fa-facebook fa-2x"></i>&nbsp;&nbsp;
-                    <i class="fab fa-instagram fa-2x"></i>&nbsp;&nbsp;
-                    <i class="fab fa-youtube fa-2x"></i>&nbsp;&nbsp;
-                    <i class="fab fa-twitter fa-2x"></i>
-                </div>
+                    <div class="end-icon">
+                        <i class="fab fa-facebook fa-2x"></i>&nbsp;&nbsp;
+                        <i class="fab fa-instagram fa-2x"></i>&nbsp;&nbsp;
+                        <i class="fab fa-youtube fa-2x"></i>&nbsp;&nbsp;
+                        <i class="fab fa-twitter fa-2x"></i>
+                    </div>
             </div>
         </div>
     </div>
@@ -36,17 +36,12 @@
 </script>
 
 <style scoped>
-.footer-container {
-    width: 100vw; /* Viewport width */
-}
-
 .container {
-    font-size: 0.7rem; /* Smaller font size */
+    font-size: 0.8rem;
     color: #808080;
-    justify-content: space-between;
+    margin-left: 30px;
+    margin-right: 30px;
 }
-
-
 
 footer {
     width: 100%;
@@ -59,6 +54,7 @@ footer a {
     color: #808080;
 }
 
+
 footer p span {
     display: inline-block;
     margin-left: 20px;
@@ -70,7 +66,7 @@ footer p span {
 
 .end-icon {
     text-align: right;
-    /* margin-right: 4%; */
+    margin-right: 4%;
     margin-bottom: 80px;
 }
 </style>

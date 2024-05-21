@@ -16,16 +16,12 @@ export default {
 <style scoped>
 .image-container {
     position: relative;
-    width: 100vw; /* Viewport width */
-    height: 100vh; /* Viewport height */
-    overflow: hidden; /* Hide overflow to prevent scrolling */
+    display: inline-block;
 }
 
 .background-image {
     width: 100%;
-    height: 100%;
-    object-fit: cover; /* Cover the entire container without stretching */
-    opacity: 0.88;
+    height: auto;
 }
 
 .overlay-image {
@@ -33,9 +29,13 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    max-width: 90%; /* Max width to ensure it doesn't overflow */
-    max-height: 90%; /* Max height to ensure it doesn't overflow */
-    pointer-events: all; /* Make the image clickable */
+    width: 430px;
+    /* 원하는 크기로 설정 */
+    height: 790px;
+    /* 원하는 크기로 설정 */
+    text-align: center;
+    pointer-events: all;
+    /* 이미지가 클릭 가능하도록 설정 */
     cursor: pointer;
 }
 </style>

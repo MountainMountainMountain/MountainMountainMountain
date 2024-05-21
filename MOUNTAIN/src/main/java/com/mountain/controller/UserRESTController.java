@@ -120,23 +120,28 @@ public class UserRESTController {
 	@PostMapping("/user/login")
 	public ResponseEntity<?> login(@RequestBody User user) {
 
+		System.out.println(user);
+		
 		HttpStatus status = null;
 		Map<String, Object> result = new HashMap<>();
-		System.out.println(user);
 		// 서비스 -> 다오 -> DB
 		// 엄청난 검증을 끝내고 온거다.
-		if (user.getId() != null) {
+		User loginUser = userService.login(user.getId(), user.getPassword());
+
+		if (loginUser.getSerial() != 0) {
+
 			// 토큰 만들어서 줘야되는데?
 			result.put("message", SUCCESS);
-			result.put("access-token", jwtUtil.createToken(user.getId()));
+			result.put("access-token", jwtUtil.createToken(loginUser));
+
 			// id도 같이 넘겨주면 번거로운 작업을 할 필요는 없어
 			status = HttpStatus.ACCEPTED;
 		} else {
 			result.put("message", FAIL);
 			status = HttpStatus.NO_CONTENT;
 		}
-		return new ResponseEntity<Map<String, Object>>(result, status);
-//		return new ResponseEntity<>(HttpStatus.OK);
+
+		return new ResponseEntity<>(result, status);
 	}
 
 	// 팔로우 하기

@@ -29,11 +29,11 @@ public class WebConfig implements WebMvcConfigurer {
 	@Autowired
 	private JwtInterceptor jwtInterceptor;
 
-//	@Override
-//	public void addInterceptors(InterceptorRegistry registry) {
-//		registry.addInterceptor(jwtInterceptor).addPathPatterns("/**").excludePathPatterns("/api-chat/**",
-//				"/api-comment/**", "/api-mountain/**", "/api-user/**", "/api-reply/**", "/swagger-ui/**",
-//				"/v3/api-docs/**");
-//	}
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(jwtInterceptor).addPathPatterns("/**").excludePathPatterns("/api-user/**",
+				"/api-chat/**", "/api-comment/**", "/api-mountain/**", "/api-reply/**", "/swagger-ui/**",
+				"/v3/api-docs/**");
+	}
 
 }

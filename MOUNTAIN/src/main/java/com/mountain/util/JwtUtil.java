@@ -7,6 +7,8 @@ import javax.crypto.SecretKey;
 
 import org.springframework.stereotype.Component;
 
+import com.mountain.model.dto.User;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -19,14 +21,17 @@ public class JwtUtil {
 
 	// 다양한 데이터를 Map으로 받아서 처리를 할수 도 있지만,
 	// 심플하게 ID만 받아서 토큰을 만들어보자~~
-	public String createToken(String id) {
+	public String createToken(User user) {
 		Date exp = new Date(System.currentTimeMillis() + 1000 * 60 * 60); // 1시간
-		return Jwts.builder().header().add("typ", "JWT").and().claim("id", id).expiration(exp).signWith(secretKey)
-				.compact();
+		return Jwts.builder().header().add("typ", "JWT").and().claim("serial", user.getSerial())
+				.claim("id", user.getId()).claim("name", user.getName()).claim("birthDate", user.getBirthDate())
+				.claim("gender", user.getGender()).claim("email", user.getEmail()).claim("regDate", user.getRegDate())
+				.claim("point", user.getPoint())
+
+				.expiration(exp).signWith(secretKey).compact();
 	}
-	
-	
-	//실제로 확인하려고 하는 용도가 아니고 유효기간이 지났다면 알아서 에러를 발생시키려고 함.
+
+	// 실제로 확인하려고 하는 용도가 아니고 유효기간이 지났다면 알아서 에러를 발생시키려고 함.
 	public Jws<Claims> validate(String token) {
 		return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token);
 	}

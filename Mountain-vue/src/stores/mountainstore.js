@@ -7,7 +7,6 @@ const REST_MOUNTAIN_API = 'http://localhost:8080/api-mountain/';
 
 export const useMountainStore = defineStore('mountain', () => {
 
-
   const mountainList = ref([]);
   const mountain = ref({});
 

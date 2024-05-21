@@ -8,6 +8,7 @@
         placeholder="산을 입력하세요"
       />
       <button type="button" class="btn btn-primary"><i class="fas fa-search" style="color: blue" ></i></button>
+      <button class="btn btn-primary" ><i class="fas fa-search" style="color: red" ></i></button>
     </div>
   </div>
 </template>

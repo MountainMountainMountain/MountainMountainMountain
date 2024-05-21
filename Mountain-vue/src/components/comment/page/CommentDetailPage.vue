@@ -12,6 +12,12 @@
             <!-- <RouterLink :to="{ name: 'MountainDetailPage', params: { mountainSerial: '1' } }">1</RouterLink> -->
         </ul>
 
+        <li v-for="reply in replyStore.ReplyList" :key="reply.serial">
+            <span> userserial: {{ reply.user_serial }}</span>
+            <span> , replycontent: {{ reply.content }}</span>
+            <!-- <RouterLink :to="{ name: 'MountainDetailPage', params: { mountainSerial: '1' } }">1</RouterLink> -->
+        </li>
+
     </div>
 </template>
 
@@ -19,13 +25,18 @@
 import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 import { useCommentStore } from "@/stores/commentstore";
+import { useReplyStore } from "@/stores/replystore";
 import axios from "axios";
 const route = useRoute();
 const router = useRouter();
 const commentStore = useCommentStore();
+const replyStore = useReplyStore();
+
+
 
 onMounted(() => {
-    commentStore.getComment(route.params.commentSerial)
+    commentStore.getComment(route.params.commentSerial);
+    replyStore.getReplyList(route.params.commentSerial);
 })
 
 </script>

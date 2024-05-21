@@ -1,8 +1,8 @@
 <template>
     <div>
-        <MainLoginNavBar />
-        <Search />
+        <!-- <MainLoginNavBar /> -->
         <h1>list</h1>
+        <Search />
         <!-- <RouterLink :to="{ name: 'MountainDetailPage', params: { mountainSerial: '1' } }">1</RouterLink> -->
 
         <ul>
@@ -20,10 +20,10 @@
 </template>
 
 <script setup>
+import Search from "../component/Search.vue"
 import MainLoginNavBar from '@/components/common/MainLoginNavBar.vue';
 import { onMounted } from 'vue';
 import { useMountainStore } from '@/stores/mountainstore';
-import Search from "../component/Search.vue"
 
 const mountainStore = useMountainStore()
 onMounted(() => {
