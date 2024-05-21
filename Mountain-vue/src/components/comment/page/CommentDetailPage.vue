@@ -5,7 +5,7 @@
         <ul>
             <span> 제목: {{ commentStore.Comment.title }}</span>
             <span> , 작성자: {{ commentStore.Comment.name }}</span>
-            <span> , 조회 수: {{ commentStore.Comment.view_count }} </span>
+            <span> , 조회 수: {{ commentStore.Comment.viewCount }} </span>
             <span> , 내용: {{ commentStore.Comment.content }} </span>
             <!-- <RouterLink :to="{ name: 'MountainDetailPage', params: { mountainSerial: '1' } }">1</RouterLink> -->
             <button v-if="commentStore.Comment.userSerial == userSerial">
@@ -16,7 +16,7 @@
         </ul>
 
         <li v-for="reply in replyStore.ReplyList" :key="reply.serial">
-            <span> userserial: {{ reply.user_serial }}</span>
+            <span> userserial: {{ reply.name }}</span>
             <span> , replycontent: {{ reply.content }}</span>
             <!-- <RouterLink :to="{ name: 'MountainDetailPage', params: { mountainSerial: '1' } }">1</RouterLink> -->
         </li>

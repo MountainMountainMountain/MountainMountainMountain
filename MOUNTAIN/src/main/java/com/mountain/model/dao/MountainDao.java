@@ -3,7 +3,7 @@ package com.mountain.model.dao;
 import java.util.List;
 
 import com.mountain.model.dto.Mountain;
-import com.mountain.model.dto.SearchCondition;
+import com.mountain.model.dto.SearchConditionForMountain;
 
 public interface MountainDao {
 
@@ -26,7 +26,7 @@ public interface MountainDao {
 	void deleteMountain(int mountainSerial);
 	
 	// 산 검색
-	List<Mountain> selectMountainBySearch(SearchCondition SearchCondition);
+	List<Mountain> selectMountainBySearch(SearchConditionForMountain SearchCondition);
 
 	// 등산한 산 검색
 	List<Mountain> selectCompleteMountainByUserSerial(int userSerial);

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mountain.model.dto.Reply;
+import com.mountain.model.dto.ReplyResponse;
 import com.mountain.model.service.ReplyService;
 
 @RestController
@@ -28,16 +29,16 @@ public class ReplyRESTController {
 
 	@GetMapping("/{commentSerial}")
 	public ResponseEntity<?> getReplyByCommentSerial(@PathVariable("commentSerial") int commentSerial) {
-		List<Reply> list = replyService.selectByCommentSerial(commentSerial);
+		List<ReplyResponse> list = replyService.selectByCommentSerial(commentSerial);
 
-		return new ResponseEntity<List<Reply>>(list, HttpStatus.OK);
+		return new ResponseEntity<List<ReplyResponse>>(list, HttpStatus.OK);
 	}
 
 	@GetMapping("/reply/{replySerial}")
 	public ResponseEntity<?> getReply(@PathVariable("replySerial") int replySerial) {
-		Reply reply = replyService.selectOneReply(replySerial);
+		ReplyResponse reply = replyService.selectOneReply(replySerial);
 
-		return new ResponseEntity<Reply>(reply, HttpStatus.OK);
+		return new ResponseEntity<ReplyResponse>(reply, HttpStatus.OK);
 	}
 
 	@PostMapping("/reply")

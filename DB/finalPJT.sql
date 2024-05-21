@@ -74,8 +74,8 @@ CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`ChatInfo` (
   CONSTRAINT `fk_ChatManager_Mountain1`
     FOREIGN KEY (`mountain_serial`)
     REFERENCES `finalMountainPJT`.`Mountain` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -93,13 +93,13 @@ CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`ChatUserManager` (
   CONSTRAINT `fk_ChatUserManager_User1`
     FOREIGN KEY (`user_serial`)
     REFERENCES `finalMountainPJT`.`User` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_ChatUserManager_ChatInfo1`
     FOREIGN KEY (`chatInfo_serial`)
     REFERENCES `finalMountainPJT`.`ChatInfo` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -117,8 +117,8 @@ CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`Chat` (
   CONSTRAINT `fk_Chat_ChatUserManager1`
     FOREIGN KEY (`ChatUserManager_serial`)
     REFERENCES `finalMountainPJT`.`ChatUserManager` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -144,13 +144,13 @@ CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`Comment` (
   CONSTRAINT `fk_Comment_User1`
     FOREIGN KEY (`user_serial`)
     REFERENCES `finalMountainPJT`.`User` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Comment_Mountain1`
     FOREIGN KEY (`mountain_serial`)
     REFERENCES `finalMountainPJT`.`Mountain` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -173,13 +173,13 @@ CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`CommentFile` (
   CONSTRAINT `fk_CommentFile_Comment1`
     FOREIGN KEY (`comment_serial`)
     REFERENCES `finalMountainPJT`.`Comment` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_CommentFile_User1`
     FOREIGN KEY (`user_serial`)
     REFERENCES `finalMountainPJT`.`User` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -197,13 +197,13 @@ CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`Follow` (
   CONSTRAINT `fk_Follow_User`
     FOREIGN KEY (`from_serial`)
     REFERENCES `finalMountainPJT`.`User` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Follow_User1`
     FOREIGN KEY (`to_serial`)
     REFERENCES `finalMountainPJT`.`User` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -224,19 +224,21 @@ CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`Reply` (
   CONSTRAINT `fk_Reply_User1`
     FOREIGN KEY (`user_serial`)
     REFERENCES `finalMountainPJT`.`User` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Reply_Comment1`
     FOREIGN KEY (`comment_serial`)
     REFERENCES `finalMountainPJT`.`Comment` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
 
 -- User 테이블 데이터 삽입
 INSERT INTO User (id, password, name, birth_date, gender, email, point)
@@ -406,3 +408,46 @@ WHERE ChatUserManager_serial In (SELECT serial
 SELECT u.serial AS userSerial, m.serial AS mountainSerial, m.name AS mountainName, c.reg_date AS commentRegDate, m.difficulty AS difficulty, m.state AS state
 FROM User u, Mountain m, comment c
 WHERE u.serial = c.user_serial AND m.serial = c.mountain_serial AND c.user_serial = 1;
+
+SELECT * FROM comment, user u
+WHERE comment.user_serial = u.serial;
+
+SELECT 
+    c.serial AS serial,
+    c.title AS title,
+    c.mountain_serial AS mountainSerial,
+    c.user_serial AS userSerial,
+    u.id AS id,
+    u.name AS name,
+    u.gender AS gender,
+    u.point AS point,
+    c.content AS content,
+    c.reg_date AS regDate,
+    c.update_date AS updateDate,
+    c.calorie AS calorie,
+    c.turnaround AS turnaround,
+    c.view_count AS view_count
+FROM 
+    comment c
+JOIN 
+    user u ON c.user_serial = u.serial;
+    
+    		SELECT 
+		    c.serial AS serial,
+		    c.title AS title,
+		    c.mountain_serial AS mountainSerial,
+		    c.user_serial AS userSerial,
+		    u.id AS id,
+		    u.name AS name,
+		    u.gender AS gender,
+		    u.point AS point,
+		    c.content AS content,
+		    c.reg_date AS regDate,
+		    c.update_date AS updateDate,
+		    c.calorie AS calorie,
+		    c.turnaround AS turnaround,
+		    c.view_count AS viewCount  -- view_count에서 viewCount로 수정
+		FROM 
+		    comment c
+		JOIN 
+		    user u ON c.user_serial = u.serial;

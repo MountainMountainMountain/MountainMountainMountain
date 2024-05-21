@@ -3,18 +3,19 @@ package com.mountain.model.dao;
 import java.util.List;
 
 import com.mountain.model.dto.Comment;
+import com.mountain.model.dto.CommentResponse;
 import com.mountain.model.dto.SearchConditionForComment;
 
 public interface CommentDao {
 
 	// 전체 게시글을 조회
-	List<Comment> selectAll();
+	List<CommentResponse> selectAll();
 
 	// 산의 게시글 조회
-	List<Comment> selectCommentByMountain(int mountainSerial);
+	List<CommentResponse> selectCommentByMountain(int mountainSerial);
 
 	// Serial에 해당하는 게시글 하나 가져오기
-	Comment selectOne(int commentSerial);
+	CommentResponse selectOne(int commentSerial);
 
 	// 게시글 등록
 	void createComment(Comment comment);
@@ -29,7 +30,7 @@ public interface CommentDao {
 	void modifyViewCnt(int commentSerial);
 
 	// 검색 기능
-	List<Comment> selectCommentBySearch(SearchConditionForComment searchCondition);
+	List<CommentResponse> selectCommentBySearch(SearchConditionForComment searchCondition);
 
 	// 평점 구하기
 	int selectStar(int mountainSerial, int starNumber);

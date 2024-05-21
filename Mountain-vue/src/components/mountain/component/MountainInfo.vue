@@ -46,6 +46,7 @@
             </div>
         </div>
         <CommentStar />
+        
         <CommentList />
 
 
@@ -58,15 +59,13 @@
 </template>
 
 
-
-
-
 <script setup>
 
 import { onMounted } from 'vue';
 import { useMountainStore } from '@/stores/mountainstore';
 import { useRoute } from "vue-router";
 import CommentStar from '@/components/comment/component/CommentStar.vue';
+import CommentSearch from '@/components/comment/component/CommentSearch.vue';
 import CommentList from '@/components/comment/component/CommentList.vue';
 
 const route = useRoute();

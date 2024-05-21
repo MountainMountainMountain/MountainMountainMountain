@@ -1,7 +1,10 @@
 package com.mountain.model.service;
 
+import java.util.List;
+
 import com.mountain.model.dto.Chat;
 import com.mountain.model.dto.ChatInfo;
+import com.mountain.model.dto.ChatLogResponse;
 import com.mountain.model.dto.ChatUserManager;
 
 public interface ChatService {
@@ -34,12 +37,15 @@ public interface ChatService {
 	void createChat(Chat Chat);
 
 	// 채팅 읽기
-	Chat selectChat(int chatSerial);
+	ChatLogResponse selectChat(int chatSerial);
 
 	// 채팅 수정
 	void modifyChat(Chat chat);
 
 	// 채팅 삭제
 	void deleteChat(int chatSerial);
+
+	// selectChatByChatInfoSerial
+	List<ChatLogResponse> selectChatByChatInfoSerial(int chatInfoSerial);
 
 }

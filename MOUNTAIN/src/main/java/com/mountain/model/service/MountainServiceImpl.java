@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.mountain.model.dao.MountainDao;
 import com.mountain.model.dto.Mountain;
-import com.mountain.model.dto.SearchCondition;
+import com.mountain.model.dto.SearchConditionForMountain;
 
 @Service
 public class MountainServiceImpl implements MountainService {
@@ -48,7 +48,7 @@ public class MountainServiceImpl implements MountainService {
 	}
 
 	@Override
-	public List<Mountain> selectMountainBySearch(SearchCondition searchcondition) {
+	public List<Mountain> selectMountainBySearch(SearchConditionForMountain searchcondition) {
 		return mountainDao.selectMountainBySearch(searchcondition);
 	}
 

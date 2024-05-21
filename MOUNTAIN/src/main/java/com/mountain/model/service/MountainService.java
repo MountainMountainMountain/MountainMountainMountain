@@ -3,7 +3,7 @@ package com.mountain.model.service;
 import java.util.List;
 
 import com.mountain.model.dto.Mountain;
-import com.mountain.model.dto.SearchCondition;
+import com.mountain.model.dto.SearchConditionForMountain;
 
 public interface MountainService {
 
@@ -26,7 +26,7 @@ public interface MountainService {
 	public void deleteMountain(int mountainSerial);
 
 	// Mountain 검색
-	public List<Mountain> selectMountainBySearch(SearchCondition searchcondition);
+	public List<Mountain> selectMountainBySearch(SearchConditionForMountain searchcondition);
 
 	// 등산 한 산 검색
 	List<Mountain> selectCompleteMountainByUserSerial(int UserSerial);

@@ -36,9 +36,7 @@ export const useMountainStore = defineStore('mountain', () => {
   };
 
   const searchMountainList = function (searchCondition) {
-    axios.get(REST_MOUNTAIN_API, {
-      params: searchCondition
-    })
+    axios.get(`${REST_MOUNTAIN_API}mountain`, { params: searchCondition })
       .then((res) => {
         mountainList.value = res.data;
       })

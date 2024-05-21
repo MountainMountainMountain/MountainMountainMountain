@@ -43,27 +43,31 @@ export const useCommentStore = defineStore('comment', () => {
 
   const createComment = function (comment) {
     return new Promise((resolve, reject) => {
-        axios({
-            url: `${REST_COMMENT_API}/comment/create`,
-            method: 'POST',
-            data: comment
-        })
+      axios({
+        url: `${REST_COMMENT_API}/comment/create`,
+        method: 'POST',
+        data: comment
+      })
         .then(() => {
-            resolve(); // 성공 시 resolve 호출
+          resolve(); // 성공 시 resolve 호출
         })
         .catch((error) => {
-            reject(error); // 실패 시 reject 호출
+          reject(error); // 실패 시 reject 호출
         });
     });
-};
+  };
 
 
   const updateComment = function () {
-    console.log(Comment.value)
-    axios.put(REST_COMMENT_API, Comment.value)
-      .then(() => {
-        router.push({ name: 'MountainListPage' })
-      })
+    return new Promise((resolve, reject) => {
+      axios.put(`${REST_COMMENT_API}/comment/update`, Comment.value)
+        .then(() => {
+          resolve();
+        })
+        .catch((err) => {
+          reject(err);
+        })
+    });
   }
 
   return { Comment, CommentList, MountainStarList, getCommentList, getComment, getCommentStar, searchCommentList, createComment, updateComment }
