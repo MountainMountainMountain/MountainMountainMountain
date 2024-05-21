@@ -25,15 +25,15 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.addMapping("/**").allowedOrigins("*").allowedMethods("POST", "GET", "PUT", "DELETE");
 	}
 
-	// 인터셉터 등 처리 가능
-	@Autowired
-	private JwtInterceptor jwtInterceptor;
-
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(jwtInterceptor).addPathPatterns("/**").excludePathPatterns("/api-user/**",
-				"/api-chat/**", "/api-comment/**", "/api-mountain/**", "/api-reply/**", "/swagger-ui/**",
-				"/v3/api-docs/**");
-	}
+//	// 인터셉터 등 처리 가능
+//	@Autowired
+//	private JwtInterceptor jwtInterceptor;
+//
+//	@Override
+//	public void addInterceptors(InterceptorRegistry registry) {
+//		registry.addInterceptor(jwtInterceptor).addPathPatterns("/**").excludePathPatterns("/api-user/**",
+//				"/api-chat/**", "/api-comment/**", "/api-mountain/**", "/api-reply/**", "/swagger-ui/**",
+//				"/v3/api-docs/**");
+//	}
 
 }

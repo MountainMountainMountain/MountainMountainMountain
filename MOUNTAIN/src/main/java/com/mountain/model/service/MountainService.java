@@ -28,4 +28,7 @@ public interface MountainService {
 	// Mountain 검색
 	public List<Mountain> selectMountainBySearch(SearchCondition searchcondition);
 
+	// 등산 한 산 검색
+	List<Mountain> selectCompleteMountainByUserSerial(int UserSerial);
+
 }

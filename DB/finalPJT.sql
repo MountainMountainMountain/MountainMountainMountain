@@ -320,7 +320,8 @@ VALUES
 ('Incredible views', 7, 7, 'Dhaulagiri offers stunning views of the Himalayas.', 550, 5, 110, 4),
 ('Unique experience', 8, 8, 'Manaslu trek was a unique experience.', 500, 5, 100, 4),
 ('Tough but rewarding', 9, 9, 'Nanga Parbat was tough but rewarding.', 650, 7, 130, 5),
-('Unforgettable journey', 10, 10, 'Annapurna trek was an unforgettable journey.', 470, 5, 94, 4);
+('Unforgettable journey', 10, 10, 'Annapurna trek was an unforgettable journey.', 470, 5, 94, 4)
+('rweqfsda journey', 10, 1, 'Annapurna trek was an unforgettable journey.', 470, 5, 94, 4);
 
 -- CommentFile 테이블 데이터 삽입
 INSERT INTO CommentFile (user_serial, comment_serial, file_name, file_size, file_content_type, file_url)
@@ -398,3 +399,8 @@ FROM Chat
 WHERE ChatUserManager_serial In (SELECT serial
                                 FROM ChatUserManager
                                 WHERE chatInfo_serial = 1);
+
+
+SELECT u.serial AS userSerial, m.serial AS mountainSerial, m.name AS mountainName, c.reg_date AS commentRegDate, m.difficulty AS difficulty, m.state AS state
+FROM User u, Mountain m, comment c
+WHERE u.serial = c.user_serial AND m.serial = c.mountain_serial AND c.user_serial = 1;

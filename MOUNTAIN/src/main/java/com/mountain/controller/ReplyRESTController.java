@@ -42,6 +42,7 @@ public class ReplyRESTController {
 
 	@PostMapping("/reply")
 	public ResponseEntity<?> createReply(@RequestBody Reply reply) {
+		System.out.println(reply);
 		replyService.createReply(reply);
 
 		return new ResponseEntity<Reply>(reply, HttpStatus.CREATED);
