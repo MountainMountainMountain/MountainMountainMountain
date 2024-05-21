@@ -1,6 +1,5 @@
 <template>
     <div>
-        <MainLoginNavBar />
         <RouterView />
     </div>
 </template>

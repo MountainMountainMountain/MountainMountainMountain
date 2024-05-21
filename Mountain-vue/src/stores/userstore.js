@@ -8,16 +8,24 @@ const REST_USER_API = `http://localhost:8080/api-user`
 export const useUserStore = defineStore('user', () => {
 
   const User = ref({})
-  const loginUserId = ref(null)
+  const loginUserSerial = ref(null);
+  const loginUserId = ref(null);
+  const loginUserName = ref(null);
+  const loginUserBirthDate = ref(null);
+  const loginUserGender = ref(null);
+  const loginUserEmail = ref(null);
+  const loginUserRegDate = ref(null);
+  const loginUserPoint = ref(null);
   const LoginUser = ref({})
   const UserList = ref([])
   const FollowingList = ref([])
   const FollowerList = ref([])
+  const headers = ref([])
 
   const getUser = function () {
     axios.get(`${REST_USER_API}/user`)
       .then((response) => {
-        UserList.value = response.data;
+        UserList.value = response.data
       })
   }
 
@@ -50,25 +58,85 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const userLogin = function (id, password) {
-    axios.post(`${REST_USER_API}/user/login`, {
-      id: id,
-      password: password
-    })
-      .then((res) => {
-        sessionStorage.setItem('access-token', res.data["access-token"])
+    return new Promise((resolve, reject) => {
+        axios.post(`${REST_USER_API}/user/login`, {
+            id,
+            password
+        })
+        .then((res) => {
+            sessionStorage.setItem('access-token', res.data["access-token"]);
 
-        const token = res.data['access-token'].split('.')
-        let id = JSON.parse(atob(token[1]))['id']
+            const token = res.data['access-token'].split('.');
+            headers.value = res.headers;
+            let id = JSON.parse(atob(token[1]))['id'];
 
-        loginUserId.value = id;
+            loginUserId.value = id;
+            // loginUserName.value = JSON.parse(atob(token[1]))['name']; // 사용자 이름 설정
 
-        router.push({ name: 'MountainMainView' })
+            resolve(); // 성공 시 resolve 호출
+        })
+        .catch((error) => {
+            console.error(error);
+            reject(error); // 실패 시 reject 호출
+        });
+    });
+}
 
-      })
-      .catch(() => {
 
-      })
+  const logoutUser = function () {
+    sessionStorage.removeItem('access-token');
+    router.push({ name: 'MountainMainView' });
   }
+
+  // const userLogin = function (id, password) {
+  //   axios.post(`${REST_USER_API}/user/login`, {
+  //     id,
+  //     password
+  //   })
+  //     .then((res) => {
+  //       sessionStorage.setItem('access-token', res.data["access-token"]);
+
+  //       const token = res.data['access-token'];
+  //       const tokenPayload = token.split('.')[1];
+  //       const decodedToken = JSON.parse(atob(tokenPayload));
+
+  //       // 사용자 정보 추출
+  //       const serial = decodedToken['serial'];
+  //       const id = decodedToken['id'];
+  //       const name = decodedToken['name'];
+  //       const birthDate = decodedToken['birthDate'];
+  //       const gender = decodedToken['gender'];
+  //       const email = decodedToken['email'];
+  //       const regDate = decodedToken['regDate'];
+  //       const point = decodedToken['point'];
+
+  //       // 각 정보를 Vue 리액티브 변수에 설정
+  //       loginUserSerial.value = serial;
+  //       loginUserId.value = id;
+  //       loginUserName.value = name;
+  //       loginUserBirthDate.value = birthDate;
+  //       loginUserGender.value = gender;
+  //       loginUserEmail.value = email;
+  //       loginUserRegDate.value = regDate;
+  //       loginUserPoint.value = point;
+  //       // name, birthDate, gender, email, regDate, point 등 다른 정보도 필요한 경우 이와 같이 설정
+
+  //       // 로그인 이후 작업 수행
+  //       console.log(loginUserSerial.value);
+  //       console.log(loginUserId.value);
+  //       console.log(loginUserName.value);
+  //       console.log(loginUserBirthDate.value);
+  //       console.log(loginUserGender.value);
+  //       console.log(loginUserEmail.value);
+  //       console.log(loginUserRegDate.value);
+  //       console.log("Point: ", loginUserPoint.value);
+  //       // router.push({ name: 'MountainMainView' });
+  //     })
+  //     .catch((error) => {
+  //       console.error("Login error: ", error);
+  //     });
+  // }
+
 
   const createUser = function (user) {
     axios({
@@ -123,5 +191,5 @@ export const useUserStore = defineStore('user', () => {
       })
   }
 
-  return { User, LoginUser, UserList, FollowingList, FollowerList, getUser, getUserByName, getUserByid, checkId, checkEmail, userLogin, createUser, updateUser, createFollow, getfollwingList, getfollwerList, }
+  return { User, LoginUser, UserList, FollowingList, FollowerList, getUser, getUserByName, getUserByid, checkId, checkEmail, userLogin, logoutUser, createUser, updateUser, createFollow, getfollwingList, getfollwerList, }
 })

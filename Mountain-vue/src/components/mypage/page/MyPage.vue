@@ -1,11 +1,6 @@
 <template>
     <div>
-        <MainLoginNavBar />
-        <MyState />
-        <RouterView />
-        <RouterLink :to="{ name: 'MyInfo' }">myinfo</RouterLink> | 
-        <RouterLink :to="{ name: 'MyFriends' }">myfrined</RouterLink> | 
-        <RouterLink :to="{ name: 'MyComplete' }">mycomplete</RouterLink>
+        <MyState /> 
     </div>
 </template>
 
@@ -14,4 +9,8 @@ import MyState from "../component/MyState.vue"
 import MainLoginNavBar from '@/components/common/MainLoginNavBar.vue';
 </script>
 
-<style scoped></style>
+<style scoped>
+/* .container {
+
+} */
+</style>

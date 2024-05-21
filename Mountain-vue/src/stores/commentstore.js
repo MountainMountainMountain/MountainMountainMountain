@@ -15,7 +15,6 @@ export const useCommentStore = defineStore('comment', () => {
     axios.get(`${REST_COMMENT_API}/mountain/${mountainSerial}`)
       .then((response) => {
         CommentList.value = response.data
-        console.log(CommentList.value)
       })
   }
 
@@ -23,6 +22,7 @@ export const useCommentStore = defineStore('comment', () => {
     axios.get(`${REST_COMMENT_API}/comment/${commentSerial}`)
       .then((response) => {
         Comment.value = response.data
+        console.log(Comment.value)
       })
   }
 
@@ -55,6 +55,7 @@ export const useCommentStore = defineStore('comment', () => {
   }
 
   const updateComment = function () {
+    console.log(Comment.value)
     axios.put(REST_COMMENT_API, Comment.value)
       .then(() => {
         router.push({ name: 'MountainListPage' })

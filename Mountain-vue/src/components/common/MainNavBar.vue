@@ -23,10 +23,10 @@
 
 <style scoped>
 .container {
-    background-color: rgba(212, 223, 196, 0.33);
+    background-color: rgba(74, 75, 73, 0.33);
     display: flex;
     align-items: center;
-    height: 50px;
+    height: 60px;
 }
 
 .userBar {
@@ -42,6 +42,11 @@
     display: flex;
     align-items: center;
 }
+
+/* i {
+    font-size: large;
+    margin-bottom: 20px;
+} */
 
 a {
     text-decoration: none;
