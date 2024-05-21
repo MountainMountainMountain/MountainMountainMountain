@@ -20,10 +20,13 @@
                                     </div>
                                     <!-- 팔로워 팔로워 수 떠야 해 -->
                                     <a v-if="level != '3'" class="text-decoration-none d-inline-block text-primary">
-                                        <strong>팔로워</strong> <span class="text-muted">followers</span> </a>
+                                        <strong>팔로워 {{ userStore.FollowerList.length }}</strong> <span
+                                            class="text-muted"></span> </a>
+                                    <br>
                                     <a v-if="level != '3'"
-                                        class="text-decoration-none d-inline-block text-primary ms-3">
-                                        <strong>팔로잉</strong> <span class="text-muted">following</span> </a>
+                                        class="text-decoration-none d-inline-block text-primary">
+                                        <strong>팔로잉 {{ userStore.FollowingList.length }}</strong> <span
+                                            class="text-muted"></span> </a>
                                 </div>
                             </div>
                         </div>
@@ -63,6 +66,8 @@ const checkUserSerial = () => {
 
 onMounted(() => {
     checkUserSerial();
+    userStore.getfollwerList(userSerial.value);
+    userStore.getfollwingList(userSerial.value);
     // userStore.getUserByid();
     // userStore.getfollwingList(userStore.User);
     // userStore.getfollwerList(userStore.User);
