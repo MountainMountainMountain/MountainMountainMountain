@@ -13,8 +13,14 @@ import FooterBar from "./components/common/FooterBar.vue";
       <RouterLink to="/login">login</RouterLink>
     </nav> -->
     <RouterView />
-    <FooterBar />
+    <div id="foot">
+      <FooterBar />
+    </div>
   </div>
 </template>
 
-<style></style>
+<style>
+#foot{
+  transform: scale(0.95);
+}
+</style>

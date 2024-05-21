@@ -1,7 +1,8 @@
 <template>
     <div>
-        <h1>detail</h1>
-        <Photo />
+        <div class="photobar">
+            <Photo />
+        </div>
         <RouterLink :to="{ name: 'MountainInfo' }">MountainInfo</RouterLink> |
         <RouterLink :to="{ name: 'MountainLocation' }">MountainLocation</RouterLink> |
         이건 동적으로 바뀔 예정
@@ -15,8 +16,11 @@
 
 <script setup>
 import Photo from '@/components/mountain/component/Photo.vue';
-import CommentStar from '@/components/comment/component/CommentStar.vue';
-import CommentList from '@/components/comment/component/CommentList.vue';
+// import CommentStar from '@/components/comment/component/CommentStar.vue';
+// import CommentList from '@/components/comment/component/CommentList.vue';
+import MountainInfo from '@/components/mountain/component/MountainInfo.vue';
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>

@@ -17,7 +17,7 @@ export const useUserStore = defineStore('user', () => {
   const getUser = function () {
     axios.get(`${REST_USER_API}/user`)
       .then((response) => {
-        UserList.value = response.data
+        UserList.value = response.data;
       })
   }
 
