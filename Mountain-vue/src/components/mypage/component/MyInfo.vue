@@ -11,15 +11,15 @@
                             <div class="d-flex flex-column align-items-start">
                                 <div class="info-item">
                                     <i class="bi bi-person-circle fs-7"></i>
-                                    <a> 아이디: </a>
+                                    <a> 아이디: {{ userId }}</a>
                                 </div>
                                 <div class="info-item">
                                     <img src="@/assets/images/mountain1.jpg" alt="프로필" class="rounded-circle">
-                                    <a> 이메일: </a>
+                                    <a> 이메일: {{ userEmail }}</a>
                                 </div>
                                 <div class="info-item">
                                     <img src="@/assets/images/mountain1.jpg" alt="프로필" class="rounded-circle">
-                                    <a> 몰라: </a>
+                                    <a> 몰라: {{ userEmail }}</a>
                                 </div>
                             </div>
                         </div>
@@ -33,25 +33,33 @@
 <script setup>
 // import MyState from './MyState.vue';
 import { useUserStore } from '@/stores/userstore';
-import { computed, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 
 const userStore = useUserStore();
 
+const userName = ref(''); // 사용자 이름
+const userSerial = ref(''); // 사용자 serial
+const userId = ref(''); // 사용자 id
+const userEmail = ref(''); // 사용자 email
+const token = sessionStorage.getItem('access-token');
+
+// let id = JSON.parse(atob(token[1]))['id'];
+
+
+const checkUserSerial = () => {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    userName.value = payload.name;
+    userSerial.value = payload.serial;
+    userId.value = payload.id;
+    userEmail.value = payload.email;
+}
+
 onMounted(() => {
-    userStore.getUser();
+    checkUserSerial();
+    // userStore.getUserByid();
     // userStore.getfollwingList(userStore.User);
     // userStore.getfollwerList(userStore.User);
 })
-
-// const { User, FollowingList, FollowerList } = userStore;
-
-const user = computed(() => userStore.User);
-
-// const UserStore = useUserStore();
-
-// onMounted(() => {
-//     UserStore.getUser();
-// })
 
 </script>
 

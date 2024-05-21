@@ -77,7 +77,7 @@ const router = createRouter({
       component: MyPage,
       children: [
         {
-          path: '/',
+          path: 'myInfo',
           name: 'MyInfo',
           component: MyInfo,
         },
