@@ -58,9 +58,9 @@ export const useMountainStore = defineStore('mountain', () => {
   };
 
   const getMountainState = function (mountainState) {
-    axios.get(`${REST_MOUNTAIN_API}/state/${mountainState}`)
+    axios.get(`${REST_MOUNTAIN_API}state/${mountainState}`)
       .then((response) => {
-        mountain.value = response.data;
+        mountainList.value = response.data;
       })
       .catch((err) => {
         console.error(err);

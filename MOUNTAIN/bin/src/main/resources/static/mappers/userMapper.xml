@@ -10,7 +10,7 @@
 		FROM User;
 	</select>
 
-	<insert id="signUpUser" parameterType="User">
+	<insert id="createUser" parameterType="User">
 		INSERT INTO User (id,
 		`password`, name, birth_date, gender, email)
 		VALUES (#{id},
@@ -28,7 +28,7 @@
 		resultType="User">
 		SELECT *
 		FROM User
-		WHERE name = #{userName};
+		WHERE name LIKE concat( '%', #{userName}, '%' )
 	</select>
 
 	<update id="modifyUser" parameterType="User">
@@ -44,13 +44,13 @@
 		serial = #{userSerial};
 	</delete>
 
-	<select id="userIdCheck">
-		SELECT COUNT(id)
+	<select id="isIdExist" parameterType="String" resultType="int">
+		SELECT COUNT(*)
 		FROM User
 		WHERE id = #{userId};
 	</select>
 
-	<select id="userEmailCheck">
+	<select id="isEmailExist" parameterType="String" resultType="int">
 		SELECT COUNT(*)
 		FROM User
 		WHERE email = #{userEmail};

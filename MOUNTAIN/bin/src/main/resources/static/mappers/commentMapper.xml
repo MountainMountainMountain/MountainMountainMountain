@@ -18,7 +18,7 @@
 		#{mountainSerial}
 	</select>
 
-	<select id="SelectOne" parameterType="int" resultType="Comment">
+	<select id="selectOne" parameterType="int" resultType="Comment">
 		SELECT *
 		FROM Comment
 		WHERE serial = #{commentSerial}
@@ -32,7 +32,7 @@
 		#{turnaround})
 	</insert>
 
-	<delete id="deleteMountain" parameterType="int">
+	<delete id="deleteComment" parameterType="int">
 		DELETE FROM Comment
 		WHERE serial = #{commentSerial};
 	</delete>
@@ -44,7 +44,7 @@
 		= #{turnaround}
 	</update>
 
-	<update id="updateViewCnt" parameterType="int">
+	<update id="modifyViewCnt" parameterType="int">
 		UPDATE Comment
 		SET
 		view_count = view_count + 1
@@ -57,38 +57,43 @@
 		FROM Comment
 		<!-- 동적쿼리(검색 조건) -->
 		<if test="key != null">
-			WHERE ${key} LIKE concat( '%', #{word}, '%' )
+			WHERE ${key} LIKE concat( '%', #{word}, '%' ) AND mountain_serial = #{mountainSerial}
 		</if>
 		<!-- 동적쿼리(정렬 조건) -->
 		<if test="orderBy != null">
 			ORDER BY ${orderBy} ${orderByDir}
 		</if>
 	</select>
-	
+
 	<select id="selectStar" parameterType="int" resultType="int">
 		SELECT COUNT(*)
 		FROM Comment
-		WHERE mountain_serial = #{mountainSerial} AND star = #{starNumber};
+		WHERE mountain_serial = #{mountainSerial} AND star
+		= #{starNumber};
 	</select>
-	
+
 	<select id="turnAroundTime" parameterType="int" resultType="int">
 		SELECT COUNT(turnaround)
 		FROM Comment
-		WHERE mountain_serial = #{mountainSerial}
+		WHERE mountain_serial =
+		#{mountainSerial}
 	</select>
-	
+
 	<select id="averageCalorie" parameterType="int" resultType="int">
 		SELECT AVG(calorie)
 		FROM Comment
-		WHERE mountain_serial = #{mountainSerial}
+		WHERE mountain_serial =
+		#{mountainSerial}
 	</select>
-	
-	<select id="averageTurnAround" parameterType="int" resultType="int">
+
+	<select id="averageTurnAround" parameterType="int"
+		resultType="int">
 		SELECT AVG(turnaround)
 		FROM Comment
-		WHERE mountain_serial = #{mountainSerial}
+		WHERE mountain_serial =
+		#{mountainSerial}
 	</select>
-	
+
 	<insert id="insertFile">
 
 	</insert>

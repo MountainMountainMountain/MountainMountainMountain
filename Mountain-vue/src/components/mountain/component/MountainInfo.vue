@@ -47,9 +47,13 @@
         </div>
         <CommentStar />
         <CommentList />
+
+
         <button v-if="token != null">
-            <RouterLink :to="{ name: 'CommentCreatePage' }">CommentCreatePage</RouterLink>
+            <RouterLink :to="{ name: 'CommentCreatePage', params: { mountainSerial: route.params.mountainSerial } }">
+                CommentCreatePage</RouterLink>
         </button>
+
     </div>
 </template>
 

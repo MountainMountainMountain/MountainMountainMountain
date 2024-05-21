@@ -60,6 +60,7 @@ public class CommentRESTController {
 	// 게시글 등록
 	@PostMapping("/comment/create")
 	public ResponseEntity<?> createComment(@RequestBody Comment comment) {
+		System.out.println(comment);
 		commentService.createComment(comment);
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}

@@ -12,11 +12,19 @@
 			FROM Follow
 			WHERE to_serial = user.serial);
 	</select>
+	
+	<select id="checkAlreadyFollowing" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM Follow
+		WHERE from_serial = #{fromFollow} AND to_serial = #{toFollow}
+		
+	</select>
+	
 
-	<insert id="insertFollow" parameterType="int">
+	<insert id="createFollow" parameterType="int">
 		INSERT INTO Follow
 		(from_serial, to_serial)
-		VALUE (#{fromFollow), #{toFollow));
+		VALUE (#{fromFollow}, #{toFollow});
 	</insert>
 
 	<delete id="deleteFollow" parameterType="int">
@@ -27,16 +35,16 @@
 
 	<select id="followingList" parameterType="int" resultType="User">
 		SELECT * FROM User
-		WHERE `serial` = (SELECT to_serial
+		WHERE `serial` In (SELECT to_serial
 			FROM Follow
-			WHERE to_serial = #{toFollow});
+			WHERE from_serial = #{fromFollow});
 	</select>
 
 	<select id="followerList" parameterType="int" resultType="User">
 		SELECT * FROM User
-		WHERE `serial` = (SELECT to_serial
+		WHERE `serial` In (SELECT from_serial
 			FROM Follow
-			WHERE from_serial = #{fromFollow});
+			WHERE to_serial = #{toSerial});
 	</select>
 
 </mapper>

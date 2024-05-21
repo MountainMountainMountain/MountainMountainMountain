@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 네임스페이스에 DAO 풀패키지명을 작성 -->
+<mapper namespace="com.mountain.model.dao.ChatInfoDao">
+
+	<insert id="createChatInfo" parameterType="Map">
+		INSERT INTO ChatInfo (mountain_serial, date)
+		VALUE (#{mountainSerial}, #{date})
+	</insert>
+	
+	<select id="selectChatInfoByMap" parameterType="Map" resultType="ChatInfo">
+		SELECT *
+		FROM ChatInfo
+		WHERE mountain_serial = #{mountainSerial} AND date = #{date};
+	</select>
+
+	<select id="selectChatInfoByChatInfoSerial" parameterType="int" resultType="ChatInfo">
+		SELECT *
+		FROM ChatInfo
+		WHERE serial = #{chatInfoSerial}
+	</select>
+	
+	<update id="modifyChatInfo" parameterType="ChatInfo">
+		UPDATE ChatInfo
+		SET mountain_serial = #{mountainSerial}, date = #{date}
+		WHERE serial = #{serial}
+	</update>
+	
+	<delete id="deleteChatInfo" parameterType="int">
+		DELETE FROM ChatInfo
+		WHERE serial = #{chatInfoSerial}
+	</delete>
+
+</mapper>

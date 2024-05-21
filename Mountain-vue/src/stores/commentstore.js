@@ -42,18 +42,21 @@ export const useCommentStore = defineStore('comment', () => {
   }
 
   const createComment = function (comment) {
-    axios({
-      url: REST_COMMENT_API,
-      method: 'POST',
-      data: comment
-    })
-      .then(() => {
-        router.push({ name: 'MountainListPage' })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
+    return new Promise((resolve, reject) => {
+        axios({
+            url: `${REST_COMMENT_API}/comment/create`,
+            method: 'POST',
+            data: comment
+        })
+        .then(() => {
+            resolve(); // 성공 시 resolve 호출
+        })
+        .catch((error) => {
+            reject(error); // 실패 시 reject 호출
+        });
+    });
+};
+
 
   const updateComment = function () {
     console.log(Comment.value)

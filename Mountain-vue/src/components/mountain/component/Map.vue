@@ -1,7 +1,7 @@
 <template>
     <div class="image-container">
         <img src="@/assets/images/mountain2.jpg" alt="Background Image" class="background-image">
-        <RouterLink :to="{ name: 'MountainListPage', params: { state: 'california' } }">
+        <RouterLink :to="{ name: 'MountainStatePage', params: { state: '수도권' } }">
             <img src="@/assets/map/KoreaMap.png" alt="Overlay Image" class="overlay-image">
         </RouterLink>
     </div>

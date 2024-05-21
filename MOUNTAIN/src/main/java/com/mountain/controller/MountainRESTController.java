@@ -42,6 +42,7 @@ public class MountainRESTController {
 	// 산 도를 검색하여 조회
 	@GetMapping("/state/{mountainState}")
 	public ResponseEntity<?> getMountainsByState(@PathVariable("mountainState") String mountainState) {
+		System.out.println(mountainState);
 		List<Mountain> list = mountainService.selectMountainByState(mountainState);
 
 		if (list == null || list.size() == 0) {
