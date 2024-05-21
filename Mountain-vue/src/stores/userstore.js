@@ -172,9 +172,10 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const getfollwingList = function (toFollow) {
-    axios.get(`${REST_USER_API}/follow/follwingList/${toFollow}`)
+    axios.get(`${REST_USER_API}/follow/followingList/${toFollow}`)
       .then((response) => {
         FollowingList.value = response.data
+        console.log(FollowingList.value)
       })
       .catch((err) => {
         console.log(err)
@@ -182,7 +183,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const getfollwerList = function (fromFollow) {
-    axios.get(`${REST_USER_API}/follow/follwerList/${fromFollow}`)
+    axios.get(`${REST_USER_API}/follow/followerList/${fromFollow}`)
       .then((response) => {
         FollowerList.value = response.data
       })

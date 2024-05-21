@@ -27,4 +27,7 @@ public interface MountainDao {
 	
 	// 산 검색
 	List<Mountain> selectMountainBySearch(SearchCondition SearchCondition);
+
+	// 등산한 산 검색
+	List<Mountain> selectCompleteMountainByUserSerial(int userSerial);
 }

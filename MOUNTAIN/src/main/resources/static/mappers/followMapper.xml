@@ -35,16 +35,16 @@
 
 	<select id="followingList" parameterType="int" resultType="User">
 		SELECT * FROM User
-		WHERE `serial` In (SELECT from_serial
+		WHERE `serial` In (SELECT to_serial
 			FROM Follow
-			WHERE to_serial = #{toSerial});
+			WHERE from_serial = #{fromFollow});
 	</select>
 
 	<select id="followerList" parameterType="int" resultType="User">
 		SELECT * FROM User
-		WHERE `serial` In (SELECT to_serial
+		WHERE `serial` In (SELECT from_serial
 			FROM Follow
-			WHERE from_serial = #{fromFollow});
+			WHERE to_serial = #{toSerial});
 	</select>
 
 </mapper>

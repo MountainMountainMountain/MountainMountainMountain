@@ -63,6 +63,16 @@ public class MountainRESTController {
 		return new ResponseEntity<Mountain>(mountain, HttpStatus.OK);
 	}
 
+	// 정복한 산
+	@GetMapping("/user/{userSerial}")
+	public ResponseEntity<?> selectMountainByUserSerial(@PathVariable("userSerial") int userSerial) {
+		List<Mountain> list = mountainService.selectCompleteMountainByUserSerial(userSerial);
+		if (list == null || list.size() == 0)
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+
 	// 산 생성
 	@PostMapping("/")
 	public ResponseEntity<?> createMountain(@RequestBody Mountain mountain) {

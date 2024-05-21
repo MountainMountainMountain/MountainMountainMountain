@@ -1,106 +1,108 @@
 <template>
-    <div>
-        <h1>mountainlocation</h1>
-        <div id="map"></div>
-        <button @click="initMap">산 위치 바로가기</button>
-        <!-- <button @click="initMap">내위치</button> -->
-        <!-- <button @click="displayMarker(myMarkerPosition)">산 위치 바로가기</button> -->
-        <!-- <button @click="displayMarker([])">즐겨찾기 마커 해제</button> -->
+    <div class="mapbox">
+      <div id="map"></div>
+      <button @click="initMap" class="btn btn-primary btn-sm">산 위치 바로가기</button>
     </div>
-</template>
-
-<script setup>
-import { useRoute, useRouter } from "vue-router";
-import { onMounted, ref, toRaw } from 'vue';
-import axios from "axios";
-const route = useRoute();
-const router = useRouter();
-import { useMountainStore } from "@/stores/mountainstore";
-const mountainStore = useMountainStore();
-
-let map = null;
-const initMap = function () {
-    let myCenter = new kakao.maps.LatLng(`${mountainStore.mountain.latitude}`, `${mountainStore.mountain.longitude}`); //카카오본사
-    // `${mountainStore.mountain.latitude}`, `${mountainStore.mountain.longitude}`
+  </template>
+  
+  <script setup>
+  import { useRoute } from "vue-router";
+  import { onMounted, ref, toRaw } from 'vue';
+  import { useMountainStore } from "@/stores/mountainstore";
+  
+  const route = useRoute();
+  const mountainStore = useMountainStore();
+  
+  let map = null;
+  
+  const initMap = function () {
+    let myCenter = new kakao.maps.LatLng(`${mountainStore.mountain.latitude}`, `${mountainStore.mountain.longitude}`);
+    
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-            // 여기가 현재 위치 불러오는 곳임
-            // const lat = position.coords.latitude;
-            // const lon = position.coords.longitude;
-            // myCenter = new kakao.maps.LatLng(lat, lon);
-            new kakao.maps.Marker({
-                map,
-                position: myCenter,
-            });
-            map.setCenter(myCenter);
+      navigator.geolocation.getCurrentPosition((position) => {
+        new kakao.maps.Marker({
+          map,
+          position: myCenter,
         });
+        map.setCenter(myCenter);
+      });
     }
+    
     const container = document.getElementById('map');
     const options = {
-        center: myCenter,
-        level: 5,
-    }; // 지도 객체를 등록합니다.
+      center: myCenter,
+      level: 5,
+    };
+    
     map = new kakao.maps.Map(container, options);
-    // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
-    const mapTypeControl = new kakao.maps.MapTypeControl();
-
-    // 지도에 컨트롤을 추가해야 지도위에 표시됩니다
-    map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
-
-    // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+    
+    // 지도 확대/축소 컨트롤 추가
     const zoomControl = new kakao.maps.ZoomControl();
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-};
-
-onMounted(() => {
+    
+    // 지도 유형 컨트롤 추가
+    const mapTypeControl = new kakao.maps.MapTypeControl();
+    map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+  };
+  
+  onMounted(() => {
     mountainStore.getMountainSerial(route.params.mountainSerial)
     if (window.kakao && window.kakao.maps) {
-        initMap();
+      initMap();
     } else {
-        const script = document.createElement('script'); // autoload=false 스크립트를 동적으로 로드하기 위해서 사용
-        script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${import.meta.env.VITE_KAKAO_API_KEY}`;
-        script.addEventListener('load', () => {
-            kakao.maps.load(initMap);
-        }); //헤드태그에 추가
-        document.head.appendChild(script);
+      const script = document.createElement('script');
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${import.meta.env.VITE_KAKAO_API_KEY}`;
+      script.addEventListener('load', () => {
+        kakao.maps.load(initMap);
+      });
+      document.head.appendChild(script);
     }
-});
-
-const myMarkerPosition = ref([[37.365146, 128.055632]]);
-
-const markers = ref([]);
-
-const displayMarker = function (markerPositions) {
-    //마커지우기
+  });
+  
+  const myMarkerPosition = ref([[37.365146, 128.055632]]);
+  const markers = ref([]);
+  
+  const displayMarker = function (markerPositions) {
     if (markers.value.length > 0) {
-        markers.value.forEach((marker) => marker.setMap(null));
+      markers.value.forEach((marker) => marker.setMap(null));
     }
-
+    
     const positions = markerPositions.map(
-        (position) => new kakao.maps.LatLng(...position)
+      (position) => new kakao.maps.LatLng(...position)
     );
+    
     if (positions.length > 0) {
-        markers.value = positions.map(
-            (position) =>
-                new kakao.maps.Marker({
-                    map: toRaw(map),
-                    position,
-                })
-        );
-
-        const bounds = positions.reduce(
-            (bounds, latlng) => bounds.extend(latlng),
-            new kakao.maps.LatLngBounds()
-        );
-
-        toRaw(map).setBounds(bounds);
+      markers.value = positions.map(
+        (position) =>
+          new kakao.maps.Marker({
+            map: toRaw(map),
+            position,
+          })
+      );
+      
+      const bounds = positions.reduce(
+        (bounds, latlng) => bounds.extend(latlng),
+        new kakao.maps.LatLngBounds()
+      );
+      
+      toRaw(map).setBounds(bounds);
     }
-};
-</script>
-
-<style scoped>
-#map {
-    width: 500px;
-    height: 400px;
-}
-</style>
+  };
+  </script>
+  
+  <style scoped>
+  #map {
+    width: 60%;
+    height: calc(80vw * 0.6 / 10 * 7); /* 가로 10 세로 8 비율로 설정 */
+    margin: 0 auto; /* 가운데 정렬 */
+  }
+  .mapbox {
+    text-align: center;
+    padding: 30px;
+    background-color: rgb(230, 229, 229);
+    border: 1px solid black;
+    width: 100%;
+    height: auto
+  }
+  </style>
+  

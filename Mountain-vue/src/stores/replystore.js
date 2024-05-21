@@ -25,17 +25,21 @@ export const useReplyStore = defineStore('reply', () => {
   }
 
   const createReply = function (reply) {
-    axios({
-      url: REST_REPLY_API,
-      method: 'POST',
-      data: reply
+    return new Promise((resolve, reject) => {
+      axios({
+        url: `${REST_REPLY_API}/reply`,
+        method: 'POST',
+        data: reply
+      })
+        .then(() => {
+          router.push({ name: 'CommentDetailPage' })
+          resolve();
+        })
+        .catch((err) => {
+          console.log(err)
+          reject(err);
+        })
     })
-      .then(() => {
-        router.push({ name: 'CommentDetailPage' })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
   }
 
   const updateReply = function () {

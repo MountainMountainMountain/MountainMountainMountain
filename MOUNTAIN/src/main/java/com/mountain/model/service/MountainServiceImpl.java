@@ -52,4 +52,9 @@ public class MountainServiceImpl implements MountainService {
 		return mountainDao.selectMountainBySearch(searchcondition);
 	}
 
+	@Override
+	public List<Mountain> selectCompleteMountainByUserSerial(int UserSerial) {
+		return mountainDao.selectCompleteMountainByUserSerial(UserSerial);
+	}
+
 }

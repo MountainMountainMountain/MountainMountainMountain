@@ -19,6 +19,7 @@ import com.mountain.model.dto.Comment;
 import com.mountain.model.dto.SearchConditionForComment;
 import com.mountain.model.service.CommentService;
 import com.mountain.util.JwtUtil;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api-comment")

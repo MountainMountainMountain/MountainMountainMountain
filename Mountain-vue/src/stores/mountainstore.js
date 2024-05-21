@@ -9,6 +9,7 @@ export const useMountainStore = defineStore('mountain', () => {
 
   const mountainList = ref([]);
   const mountain = ref({});
+  const completeMountain = ref([]);
 
   const createMountain = function (mountain) {
     axios({
@@ -87,5 +88,15 @@ export const useMountainStore = defineStore('mountain', () => {
       });
   };
 
-  return { createMountain, mountainList, mountain, getMountainList, searchMountainList, getMountainSerial, getMountainState, updateMountain, deleteMountain };
+  const getCompleteMountain = function (userSerial) {
+    axios.get(`${REST_MOUNTAIN_API}user/${userSerial}`)
+      .then((response) => {
+        completeMountain.value = response.data
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  return { createMountain, mountainList, mountain, getMountainList, searchMountainList, getMountainSerial, getMountainState, updateMountain, deleteMountain, completeMountain, getCompleteMountain };
 });
