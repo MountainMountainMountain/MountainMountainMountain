@@ -320,7 +320,7 @@ VALUES
 ('Incredible views', 7, 7, 'Dhaulagiri offers stunning views of the Himalayas.', 550, 5, 110, 4),
 ('Unique experience', 8, 8, 'Manaslu trek was a unique experience.', 500, 5, 100, 4),
 ('Tough but rewarding', 9, 9, 'Nanga Parbat was tough but rewarding.', 650, 7, 130, 5),
-('Unforgettable journey', 10, 10, 'Annapurna trek was an unforgettable journey.', 470, 5, 94, 4)
+('Unforgettable journey', 10, 10, 'Annapurna trek was an unforgettable journey.', 470, 5, 94, 4),
 ('rweqfsda journey', 10, 1, 'Annapurna trek was an unforgettable journey.', 470, 5, 94, 4);
 
 -- CommentFile 테이블 데이터 삽입

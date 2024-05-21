@@ -12,7 +12,7 @@
                         <td class="px-4 border-top border-dark"><label class="mb-4 form-label" for="userId">아이디</label>
                         </td>
                         <td v-if="userIdChk" class="px-4">
-                            <input v-model="user" @change="idcheck" id="userId" type="text"
+                            <input v-model="user.id" @change="idcheck" id="userId" type="text"
                                 class="mb-4 form-control form-control-lg">
                         </td>
                         <td v-else class="px-4 form-floating">
@@ -172,12 +172,12 @@ const route = useRoute();
 </script>
 
 <style scoped>
-/* #signup-container {
+#signup-container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: calc(100vh - 10px);
-    100px for footer height
+    /* 100px for footer height */
 }
 
 #signup {
@@ -207,16 +207,16 @@ a:hover {
 
 .signup-link {
     font-size: 0.8em;
-    Smaller font size for signup link
+    /* Smaller font size for signup link */
 }
 
-button {
+/* button {
     background-color: greenyellow;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     font-size: 1em;
-}
+} */
 
 button:hover {
     background-color: rgb(151, 181, 248);
@@ -228,5 +228,5 @@ button:hover {
 
 table {
     text-decoration: center;
-} */
+}
 </style>
