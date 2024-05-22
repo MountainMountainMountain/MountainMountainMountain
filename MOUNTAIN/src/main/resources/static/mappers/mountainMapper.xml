@@ -51,7 +51,10 @@
 		FROM Mountain
 		<!-- 동적쿼리(검색 조건) -->
 		<if test="key != ''">
-			WHERE ${key} LIKE concat( '%', #{word}, '%' ) AND state = #{state}
+			WHERE ${key} LIKE concat( '%', #{word}, '%' )
+		</if>
+		<if test="state != '전체'">
+			AND state = #{state}
 		</if>
 		<!-- 동적쿼리(정렬 조건) -->
 		<if test="orderBy != ''">
@@ -64,8 +67,10 @@
 		SELECT u.serial AS userSerial, m.serial
 		AS mountainSerial, m.name AS mountainName, c.reg_date AS
 		commentRegDate, m.difficulty AS difficulty, m.state AS state
-		FROM User u, Mountain m, comment c
-		WHERE u.serial = c.user_serial AND m.serial = c.mountain_serial AND
+		FROM User
+		u, Mountain m, comment c
+		WHERE u.serial = c.user_serial AND m.serial =
+		c.mountain_serial AND
 		c.user_serial = #{userSerial};
 	</select>
 
