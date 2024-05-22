@@ -1,6 +1,6 @@
 <template>
     <div class="review-container">
-        <h1>{{ mountainStore.mountain.name }}</h1>
+            <h1>{{ mountainStore.mountain.name }}</h1>
         <div class="details-container">
             <div class="detail-item">
                 <strong>제목</strong>
@@ -26,7 +26,7 @@
                         리뷰 수정
                     </RouterLink>
                 </button>
-                <button @click="confirmDeleteComment">댓글 삭제</button>
+                <button @click="confirmDeleteComment">리뷰 삭제</button>
             </div>
         </div>
 
@@ -34,11 +34,11 @@
             <li v-for="reply in replyStore.ReplyList" :key="reply.serial" class="reply-item">
                 <span>User Serial: {{ reply.name }}</span>
                 <span>, Reply Content: {{ reply.content }}</span>
-                <button v-if="reply.userSerial == userSerial" @click="confirmDeleteReply(reply)">대 댓글 삭제</button>
+                <button v-if="reply.userSerial == userSerial" @click="confirmDeleteReply(reply)">댓글 삭제</button>
             </li>
         </ul>
 
-        <button v-if="token !== null" @click="showReplyForm = true">대댓글 작성하기</button>
+        <button v-if="token !== null" @click="showReplyForm = true">댓글 작성하기</button>
 
         <div v-if="showReplyForm" class="reply-form">
             <textarea v-model="reply.content" placeholder="댓글 내용을 입력하세요"></textarea>
@@ -95,7 +95,7 @@ const deleteComment = function () {
                 params: { mountainSerial: commentStore.Comment.mountainSerial }
             });
         })
-        .catch(() => {});
+        .catch(() => { });
 };
 
 const deleteReply = function (reply) {
@@ -104,7 +104,7 @@ const deleteReply = function (reply) {
         .then(() => {
             replyStore.getReplyList(route.params.commentSerial);
         })
-        .catch(() => {});
+        .catch(() => { });
 };
 
 const confirmDeleteComment = () => {
@@ -124,7 +124,7 @@ const confirmDeleteComment = () => {
 
 const confirmDeleteReply = (reply) => {
     Swal.fire({
-        title: '대댓글을 삭제하시겠습니까?',
+        title: '댓글을 삭제하시겠습니까?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: '삭제',
@@ -263,4 +263,5 @@ const postReply = function () {
 #modifybutton {
     align-items: center;
 }
+
 </style>

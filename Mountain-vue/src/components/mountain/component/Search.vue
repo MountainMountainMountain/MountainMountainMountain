@@ -1,34 +1,20 @@
 <template>
   <div class="container">
+    <div class="withimg">
+      <img src="@/assets/images/redmountain.jpg" alt="" />
+    </div>
     <div class="search">
-      <div>
-        <label>검색 기준 :</label>
-        <select v-model="searchInfo.key">
-          <option value=''>없음</option>
+      <div class="search-bar">
+        <!-- <label>검색 기준 :</label> -->
+        <select v-model="searchInfo.key" style="height: 30px;">
+          <option value=''>검색기준</option>
           <option value="name">산 이름</option>
           <option value="state">위치</option>
         </select>
-      </div>
-      <div>
-        <label><input type="text" class="form-control" v-model="searchInfo.word" placeholder="산을 입력하세요" /></label>
-      </div>
-      <div>
-        <label>정렬 기준 :</label>
-        <select v-model="searchInfo.orderBy">
-          <option value=''>없음</option>
-          <option value="name">산 이름</option>
-          <option value="state">위치</option>
-        </select>
-      </div>
-      <div>
-        <label>정렬 방향 :</label>
-        <select v-model="searchInfo.orderByDir">
-          <option value="asc">오름차순</option>
-          <option value="desc">내림차순</option>
-        </select>
-      </div>
-      <div>
-        <button class="btn btn-primary" @click="searchMountainList"><i class="fas fa-search" style="color: white"></i></button>
+        <input type="text" class="form-control" v-model="searchInfo.word" placeholder="산을 입력하세요" />
+        <button class="btn btn-primary" @click="searchMountainList">
+          <i class="fas fa-search" style="color: white"></i>
+        </button>
       </div>
     </div>
 
@@ -98,10 +84,30 @@ watch(() => route.params.state, (newState) => {
   padding: 20px;
 }
 
+.withimg {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.withimg img {
+  width: 80%;
+  max-width: 800px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .search {
   display: flex;
-  gap: 10px;
+  justify-content: center;
   margin-bottom: 20px;
+}
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: 700px;
 }
 
 table {
@@ -129,11 +135,6 @@ tr:nth-child(even) {
 
 tr:hover {
   background-color: #f1f1f1;
-}
-
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
 }
 
 a {

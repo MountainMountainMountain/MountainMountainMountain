@@ -5,23 +5,75 @@
 <!-- 네임스페이스에 DAO 풀패키지명을 작성 -->
 <mapper namespace="com.mountain.model.dao.CommentDao">
 
-	<select id="selectAll" resultType="Comment">
-		SELECT *
-		FROM Comment;
+	<select id="selectAll" resultType="CommentResponse">
+		SELECT
+		c.serial AS serial,
+		c.title AS title,
+		c.mountain_serial AS mountainSerial,
+		c.user_serial AS userSerial,
+		u.id AS id,
+		u.name AS name,
+		u.gender AS gender,
+		u.point AS point,
+		c.content AS content,
+		c.reg_date AS regDate,
+		c.update_date AS updateDate,
+		c.calorie AS calorie,
+		c.turnaround AS turnaround,
+		c.view_count AS viewCount -- view_count에서 viewCount로 수정
+		FROM
+		comment c
+		JOIN
+		user u ON c.user_serial = u.serial
 	</select>
 
 	<select id="selectCommentByMountain" parameterType="int"
-		resultType="Comment">
-		SELECT *
-		FROM Comment
+		resultType="CommentResponse">
+		SELECT
+		c.serial AS serial,
+		c.title AS title,
+		c.mountain_serial AS mountainSerial,
+		c.user_serial AS userSerial,
+		u.id AS id,
+		u.name AS name,
+		u.gender AS gender,
+		u.point AS point,
+		c.content AS content,
+		c.reg_date AS regDate,
+		c.update_date AS updateDate,
+		c.calorie AS calorie,
+		c.turnaround AS turnaround,
+		c.view_count AS viewCount -- view_count에서 viewCount로 수정
+		FROM
+		comment c
+		JOIN
+		user u ON c.user_serial = u.serial
 		WHERE mountain_serial =
 		#{mountainSerial}
 	</select>
 
-	<select id="selectOne" parameterType="int" resultType="Comment">
-		SELECT *
-		FROM Comment
-		WHERE serial = #{commentSerial}
+	<select id="selectOne" parameterType="int"
+		resultType="CommentResponse">
+		SELECT
+		c.serial AS serial,
+		c.title AS title,
+		c.mountain_serial AS mountainSerial,
+		c.user_serial AS userSerial,
+		u.id AS id,
+		u.name AS name,
+		u.gender AS gender,
+		u.point AS point,
+		c.content AS content,
+		c.reg_date AS regDate,
+		c.update_date AS updateDate,
+		c.calorie AS calorie,
+		c.turnaround AS turnaround,
+		c.view_count AS viewCount -- view_count에서 viewCount로 수정
+		FROM
+		comment c
+		JOIN
+		user u ON c.user_serial = u.serial
+		WHERE c.serial = #{commentSerial}
 	</select>
 
 	<insert id="createComment">
@@ -42,6 +94,7 @@
 		title = #{title}, mountain_serial = #{mountainSerial}, user_serial =
 		#{userSerial}, content = #{content}, calorie = #{calorie}, turnaround
 		= #{turnaround}
+		WHERE serial = #{serial};
 	</update>
 
 	<update id="modifyViewCnt" parameterType="int">
@@ -52,21 +105,45 @@
 	</update>
 
 	<select id="selectCommentBySearch"
-		parameterType="SearchCondition" resultType="Comment">
-		SELECT *
-		FROM Comment
-		<!-- 동적쿼리(검색 조건) -->
-		<if test="key != null">
-			WHERE ${key} LIKE concat( '%', #{word}, '%' ) AND mountain_serial = #{mountainSerial}
-		</if>
+		parameterType="SearchConditionForComment" resultType="CommentResponse">
+		SELECT
+			c.serial AS serial,
+			c.title AS title,
+			c.mountain_serial AS mountainSerial,
+			c.user_serial AS userSerial,
+			u.id AS id,
+			u.name AS name,
+			u.gender AS gender,
+			u.point AS point,
+			c.content AS content,
+			c.reg_date AS regDate,
+			c.update_date AS updateDate,
+			c.calorie AS calorie,
+			c.turnaround AS turnaround,
+			c.view_count AS viewCount -- view_count에서 viewCount로 수정
+		FROM
+			comment c
+		JOIN
+			user u ON c.user_serial = u.serial
+		<where>
+			<!-- 동적쿼리(검색 조건) -->
+			<if test="key != ''">
+				${key} LIKE concat('%', #{word}, '%')
+			</if>
+			<if test="mountainSerial != null">
+				AND mountain_serial = #{mountainSerial}
+			</if>
+		</where>
 		<!-- 동적쿼리(정렬 조건) -->
-		<if test="orderBy != null">
+		<if test="orderBy != ''">
 			ORDER BY ${orderBy} ${orderByDir}
 		</if>
 	</select>
 
+
 	<select id="selectStar" parameterType="int" resultType="int">
-		SELECT COUNT(*)
+		SELECT
+		COUNT(*)
 		FROM Comment
 		WHERE mountain_serial = #{mountainSerial} AND star
 		= #{starNumber};

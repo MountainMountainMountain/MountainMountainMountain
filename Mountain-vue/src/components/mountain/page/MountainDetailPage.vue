@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>detail</h1>
+    <hr>
+    <br>
     <Photo />
     <div id="index_wrap">
       <ul id="leftToRight">

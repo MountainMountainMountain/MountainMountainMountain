@@ -5,22 +5,82 @@
 <!-- 네임스페이스에 DAO 풀패키지명을 작성 -->
 <mapper namespace="com.mountain.model.dao.ChatDao">
 
-	<select id="selectAll" resultType="Chat">
-		SELECT *
-		FROM Chat
+	<select id="selectAll" resultType="ChatLogResponse">
+		SELECT 
+		    c.serial AS serial,
+		    c.content AS content,
+		    c.create_date AS CreateDate,
+		    u.serial AS userSerial,
+		    u.name AS userName,
+		    u.id AS userId,
+		    u.point AS userPoint,
+		    u.gender AS userGender,
+		    m.serial AS mountainSerial,
+		    m.name AS mountainName,
+		    ci.date AS hikingDate
+		FROM 
+		    Chat c
+		JOIN 
+		    ChatUserManager cu ON c.ChatUserManager_serial = cu.serial
+		JOIN 
+		    User u ON cu.user_serial = u.serial
+		JOIN 
+		    ChatInfo ci ON cu.chatInfo_serial = ci.serial
+		JOIN 
+		    Mountain m ON ci.mountain_serial = m.serial
 	</select>
 
-	<select id="selectChatByChatInfoSerial" parameterType="int" resultType="Chat">
-		SELECT *
-		FROM Chat
+	<select id="selectChatByChatInfoSerial" parameterType="int" resultType="ChatLogResponse">
+		SELECT 
+		    c.serial AS serial,
+		    c.content AS content,
+		    c.create_date AS CreateDate,
+		    u.serial AS userSerial,
+		    u.name AS userName,
+		    u.id AS userId,
+		    u.point AS userPoint,
+		    u.gender AS userGender,
+		    m.serial AS mountainSerial,
+		    m.name AS mountainName,
+		    ci.date AS hikingDate
+		FROM 
+		    Chat c
+		JOIN 
+		    ChatUserManager cu ON c.ChatUserManager_serial = cu.serial
+		JOIN 
+		    User u ON cu.user_serial = u.serial
+		JOIN 
+		    ChatInfo ci ON cu.chatInfo_serial = ci.serial
+		JOIN 
+		    Mountain m ON ci.mountain_serial = m.serial
 		WHERE ChatUserManager_serial In (SELECT serial
 										FROM ChatUserManager
 										WHERE chatInfo_serial = #{chatInfoSerial});
 	</select>
 	
-	<select id="selectOne" parameterType="int" resultType="Chat">
-		SELECT *
-		FROM Chat
+	<select id="selectOne" parameterType="int" resultType="ChatLogResponse">
+		SELECT 
+		    c.serial AS serial,
+		    c.content AS content,
+		    c.create_date AS CreateDate,
+		    u.serial AS userSerial,
+		    u.name AS userName,
+		    u.id AS userId,
+		    u.point AS userPoint,
+		    u.gender AS userGender,
+		    m.serial AS mountainSerial,
+		    m.name AS mountainName,
+		    ci.date AS hikingDate
+		FROM 
+		    Chat c
+		JOIN 
+		    ChatUserManager cu ON c.ChatUserManager_serial = cu.serial
+		JOIN 
+		    User u ON cu.user_serial = u.serial
+		JOIN 
+		    ChatInfo ci ON cu.chatInfo_serial = ci.serial
+		JOIN 
+		    Mountain m ON ci.mountain_serial = m.serial
 		WHERE serial = #{chatSerial}
 	</select>
 	
