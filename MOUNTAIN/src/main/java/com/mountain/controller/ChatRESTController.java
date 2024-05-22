@@ -1,5 +1,7 @@
 package com.mountain.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mountain.model.dto.Chat;
 import com.mountain.model.dto.ChatInfo;
+import com.mountain.model.dto.ChatLogResponse;
 import com.mountain.model.dto.ChatUserManager;
 import com.mountain.model.service.ChatService;
 
@@ -38,9 +41,9 @@ public class ChatRESTController {
 	@GetMapping("/chat/{chatSerial}")
 	public ResponseEntity<?> selectOneChat(@PathVariable("chatSerial") int chatSerial) {
 		// responsebody에 User 정보(유저 이름, point) Mountain 정보(산 이름, 산 시리얼) 더 필요함
-		Chat chat = chatService.selectChat(chatSerial);
+		ChatLogResponse chat = chatService.selectChat(chatSerial);
 
-		return new ResponseEntity<Chat>(chat, HttpStatus.OK);
+		return new ResponseEntity<ChatLogResponse>(chat, HttpStatus.OK);
 	}
 
 	// 채팅 수정
@@ -58,6 +61,16 @@ public class ChatRESTController {
 		chatService.deleteChat(chatSerial);
 
 		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+
+	// 채팅 infoserial 통해서 리스트 가져오기
+	@GetMapping("/chat/bychatinfo/{chatInfoSerial}")
+	public ResponseEntity<?> selectChatByChatInfoSerial(@PathVariable("chatInfoSerial") int chatInfoSerial) {
+		System.out.println(chatInfoSerial);
+		// responsebody에 User 정보(유저 이름, point) Mountain 정보(산 이름, 산 시리얼) 더 필요함
+		List<ChatLogResponse> list = chatService.selectChatByChatInfoSerial(chatInfoSerial);
+
+		return new ResponseEntity<List<ChatLogResponse>>(list, HttpStatus.OK);
 	}
 
 	// 채팅Info 생성

@@ -74,8 +74,8 @@ CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`ChatInfo` (
   CONSTRAINT `fk_ChatManager_Mountain1`
     FOREIGN KEY (`mountain_serial`)
     REFERENCES `finalMountainPJT`.`Mountain` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -93,13 +93,13 @@ CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`ChatUserManager` (
   CONSTRAINT `fk_ChatUserManager_User1`
     FOREIGN KEY (`user_serial`)
     REFERENCES `finalMountainPJT`.`User` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_ChatUserManager_ChatInfo1`
     FOREIGN KEY (`chatInfo_serial`)
     REFERENCES `finalMountainPJT`.`ChatInfo` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -117,8 +117,8 @@ CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`Chat` (
   CONSTRAINT `fk_Chat_ChatUserManager1`
     FOREIGN KEY (`ChatUserManager_serial`)
     REFERENCES `finalMountainPJT`.`ChatUserManager` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -144,13 +144,13 @@ CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`Comment` (
   CONSTRAINT `fk_Comment_User1`
     FOREIGN KEY (`user_serial`)
     REFERENCES `finalMountainPJT`.`User` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Comment_Mountain1`
     FOREIGN KEY (`mountain_serial`)
     REFERENCES `finalMountainPJT`.`Mountain` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -173,13 +173,13 @@ CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`CommentFile` (
   CONSTRAINT `fk_CommentFile_Comment1`
     FOREIGN KEY (`comment_serial`)
     REFERENCES `finalMountainPJT`.`Comment` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_CommentFile_User1`
     FOREIGN KEY (`user_serial`)
     REFERENCES `finalMountainPJT`.`User` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -197,13 +197,13 @@ CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`Follow` (
   CONSTRAINT `fk_Follow_User`
     FOREIGN KEY (`from_serial`)
     REFERENCES `finalMountainPJT`.`User` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Follow_User1`
     FOREIGN KEY (`to_serial`)
     REFERENCES `finalMountainPJT`.`User` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -224,19 +224,21 @@ CREATE TABLE IF NOT EXISTS `finalMountainPJT`.`Reply` (
   CONSTRAINT `fk_Reply_User1`
     FOREIGN KEY (`user_serial`)
     REFERENCES `finalMountainPJT`.`User` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Reply_Comment1`
     FOREIGN KEY (`comment_serial`)
     REFERENCES `finalMountainPJT`.`Comment` (`serial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
 
 -- User 테이블 데이터 삽입
 INSERT INTO User (id, password, name, birth_date, gender, email, point)
@@ -255,16 +257,18 @@ VALUES
 -- Mountain 테이블에 한국에 있는 실제 산 데이터 삽입 및 날씨 관측소의 동경과 북위 좌표 추가
 INSERT INTO Mountain (name, latitude, longitude, altitude, course, difficulty, fee, state, town, point, weather_NX, weather_NY)
 VALUES
-('한라산', 33.3617, 126.5292, 1950, 1, 6.0, 3000, '제주특별자치도', '서귀포시', 300, 60, 127),
-('지리산', 35.354167, 127.730833, 1915, 2, 7.0, 2000, '경상남도', '산청군', 280, 63, 124),
+('한라산', 33.3617, 126.5292, 1950, 1, 6.0, 3000, '제주도', '서귀포시', 300, 60, 127),
+('지리산', 35.354167, 127.730833, 1915, 2, 7.0, 2000, '경상도', '산청군', 280, 63, 124),
 ('설악산', 38.1192, 128.4658, 1708, 3, 6.5, 3500, '강원도', '양양군', 320, 66, 131),
-('덕유산', 35.908333, 127.740833, 1614, 4, 5.5, 1500, '전라북도', '무주군', 250, 67, 129),
-('소백산', 36.915291, 128.465714, 1577, 5, 5.0, 1000, '충청북도', '단양군', 220, 68, 130),
+('덕유산', 35.908333, 127.740833, 1614, 4, 5.5, 1500, '전라도', '무주군', 250, 67, 129),
+('소백산', 36.915291, 128.465714, 1577, 5, 5.0, 1000, '충청도', '단양군', 220, 68, 130),
 ('태백산', 37.099722, 128.930556, 1567, 6, 5.5, 1200, '강원도', '태백시', 230, 69, 133),
 ('오대산', 37.788611, 128.566667, 1265, 7, 4.5, 800, '강원도', '홍천군', 180, 70, 128),
-('내장산', 35.488056, 126.933889, 1241, 8, 4.0, 700, '전라북도', '정읍시', 160, 71, 126),
+('내장산', 35.488056, 126.933889, 1241, 8, 4.0, 700, '전라도', '정읍시', 160, 71, 126),
 ('치악산', 37.414722, 128.033056, 1288, 9, 6.0, 2000, '강원도', '원주시', 280, 73, 107),
-('가야산', 35.783056, 128.102222, 799, 10, 3.5, 500, '경상남도', '김해시', 120, 73, 123);
+('가야산', 35.783056, 128.102222, 799, 10, 3.5, 500, '경상도', '김해시', 120, 73, 123),
+('명지산', 37.9552, 127.5250, 1267, 11, 5.0, 0, '수도권', '가평군', 250, 69, 134);
+
 
 -- ChatInfo 테이블 데이터 삽입
 INSERT INTO ChatInfo (mountain_serial, date)
@@ -320,7 +324,7 @@ VALUES
 ('Incredible views', 7, 7, 'Dhaulagiri offers stunning views of the Himalayas.', 550, 5, 110, 4),
 ('Unique experience', 8, 8, 'Manaslu trek was a unique experience.', 500, 5, 100, 4),
 ('Tough but rewarding', 9, 9, 'Nanga Parbat was tough but rewarding.', 650, 7, 130, 5),
-('Unforgettable journey', 10, 10, 'Annapurna trek was an unforgettable journey.', 470, 5, 94, 4)
+('Unforgettable journey', 10, 10, 'Annapurna trek was an unforgettable journey.', 470, 5, 94, 4),
 ('rweqfsda journey', 10, 1, 'Annapurna trek was an unforgettable journey.', 470, 5, 94, 4);
 
 -- CommentFile 테이블 데이터 삽입
@@ -404,3 +408,46 @@ WHERE ChatUserManager_serial In (SELECT serial
 SELECT u.serial AS userSerial, m.serial AS mountainSerial, m.name AS mountainName, c.reg_date AS commentRegDate, m.difficulty AS difficulty, m.state AS state
 FROM User u, Mountain m, comment c
 WHERE u.serial = c.user_serial AND m.serial = c.mountain_serial AND c.user_serial = 1;
+
+SELECT * FROM comment, user u
+WHERE comment.user_serial = u.serial;
+
+SELECT 
+    c.serial AS serial,
+    c.title AS title,
+    c.mountain_serial AS mountainSerial,
+    c.user_serial AS userSerial,
+    u.id AS id,
+    u.name AS name,
+    u.gender AS gender,
+    u.point AS point,
+    c.content AS content,
+    c.reg_date AS regDate,
+    c.update_date AS updateDate,
+    c.calorie AS calorie,
+    c.turnaround AS turnaround,
+    c.view_count AS view_count
+FROM 
+    comment c
+JOIN 
+    user u ON c.user_serial = u.serial;
+    
+    		SELECT 
+		    c.serial AS serial,
+		    c.title AS title,
+		    c.mountain_serial AS mountainSerial,
+		    c.user_serial AS userSerial,
+		    u.id AS id,
+		    u.name AS name,
+		    u.gender AS gender,
+		    u.point AS point,
+		    c.content AS content,
+		    c.reg_date AS regDate,
+		    c.update_date AS updateDate,
+		    c.calorie AS calorie,
+		    c.turnaround AS turnaround,
+		    c.view_count AS viewCount  -- view_count에서 viewCount로 수정
+		FROM 
+		    comment c
+		JOIN 
+		    user u ON c.user_serial = u.serial;

@@ -3,14 +3,15 @@ package com.mountain.model.dao;
 import java.util.List;
 
 import com.mountain.model.dto.Reply;
+import com.mountain.model.dto.ReplyResponse;
 
 public interface ReplyDao {
 
 	// Comment의 Reply 전체 조회
-	List<Reply> selectByCommentSerial(int commentSerial);
+	List<ReplyResponse> selectByCommentSerial(int commentSerial);
 	
 	// 대댓글 1개 조회
-	Reply selectOneReply(int replySerial);
+	ReplyResponse selectOneReply(int replySerial);
 
 	// 대댓글 생성
 	void createReply(Reply reply);

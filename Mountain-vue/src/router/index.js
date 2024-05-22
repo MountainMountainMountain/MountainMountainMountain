@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import MountainView from "@/views/MountainView.vue";
 import MountainMainPage from "@/components/mountain/page/MountainMainPage.vue";
 import MountainListPage from "@/components/mountain/page/MountainListPage.vue";
+import MountainStatePage from "@/components/mountain/page/MountainStatePage.vue";
 import MountainDetailPage from "@/components/mountain/page/MountainDetailPage.vue";
 
 import MountainInfo from "@/components/mountain/component/MountainInfo.vue";
@@ -46,6 +47,11 @@ const router = createRouter({
           path: ':state',
           name: 'MountainListPage',
           component: MountainListPage,
+        },
+        {
+          path: 'state/:state',
+          name: 'MountainStatePage',
+          component: MountainStatePage
         },
         {
           path: 'mountain/:mountainSerial',
@@ -104,7 +110,7 @@ const router = createRouter({
       component: CommentView,
       children: [
         {
-          path: 'commentCreate',
+          path: 'commentCreate/:mountainSerial',
           name: 'CommentCreatePage',
           component: CommentCreatePage,
         },

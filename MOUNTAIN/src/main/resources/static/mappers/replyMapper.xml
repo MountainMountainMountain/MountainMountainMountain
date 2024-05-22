@@ -6,16 +6,40 @@
 <mapper namespace="com.mountain.model.dao.ReplyDao">
 
 	<select id="selectByCommentSerial" parameterType="int"
-		resultType="Reply">
-		SELECT *
-		FROM Reply
+		resultType="ReplyResponse">
+		SELECT
+		    u.serial AS userSerial,
+		    u.id AS id,
+		    u.name AS name,
+		    u.gender AS gender,
+		    u.point AS point,
+		    r.serial AS commentSerial,
+		    r.content AS content,
+		    r.reg_date AS regDate,
+		    r.update_date AS updateDate
+		FROM
+		    User u
+		JOIN
+		    Reply r ON u.serial = r.user_serial
 		WHERE comment_serial = #{commentSerial}
 	</select>
 
 	<select id="selectOneReply" parameterType="int"
-		resultType="Reply">
-		SELECT *
-		FROM Reply
+		resultType="ReplyResponse">
+		SELECT
+		    u.serial AS userSerial,
+		    u.id AS id,
+		    u.name AS name,
+		    u.gender AS gender,
+		    u.point AS point,
+		    r.serial AS commentSerial,
+		    r.content AS content,
+		    r.reg_date AS regDate,
+		    r.update_date AS updateDate
+		FROM
+		    User u
+		JOIN
+		    Reply r ON u.serial = r.user_serial
 		WHERE serial = #{replySerial}
 	</select>
 

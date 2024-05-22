@@ -44,13 +44,13 @@
 		serial = #{userSerial};
 	</delete>
 
-	<select id="isIdExist">
-		SELECT COUNT(id)
+	<select id="isIdExist" parameterType="String" resultType="int">
+		SELECT COUNT(*)
 		FROM User
 		WHERE id = #{userId};
 	</select>
 
-	<select id="isEmailExist">
+	<select id="isEmailExist" parameterType="String" resultType="int">
 		SELECT COUNT(*)
 		FROM User
 		WHERE email = #{userEmail};

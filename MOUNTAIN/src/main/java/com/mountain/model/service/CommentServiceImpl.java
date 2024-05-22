@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.mountain.model.dao.CommentDao;
 import com.mountain.model.dto.Comment;
+import com.mountain.model.dto.CommentResponse;
 import com.mountain.model.dto.SearchConditionForComment;
 
 @Service
@@ -20,12 +21,12 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public List<Comment> selectAll() {
+	public List<CommentResponse> selectAll() {
 		return commentDao.selectAll();
 	}
 
 	@Override
-	public List<Comment> selectCommentByMountainSerial(int mountainSerial) {
+	public List<CommentResponse> selectCommentByMountainSerial(int mountainSerial) {
 //		SearchCondition searchCondition = new SearchCondition();
 //		searchCondition.setKey(mountainSerial + "");
 //		searchCondition.setWord(mountainSerial + "");
@@ -35,7 +36,7 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public Comment selectOne(int commentSerial) {
+	public CommentResponse selectOne(int commentSerial) {
 		commentDao.modifyViewCnt(commentSerial);
 		return commentDao.selectOne(commentSerial);
 	}
@@ -56,7 +57,7 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public List<Comment> selectCommentBySearch(SearchConditionForComment searchCondition) {
+	public List<CommentResponse> selectCommentBySearch(SearchConditionForComment searchCondition) {
 		return commentDao.selectCommentBySearch(searchCondition);
 	}
 

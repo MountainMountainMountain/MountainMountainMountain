@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mountain.model.dto.Comment;
+import com.mountain.model.dto.CommentResponse;
 import com.mountain.model.dto.SearchConditionForComment;
 import com.mountain.model.service.CommentService;
 import com.mountain.util.JwtUtil;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api-comment")
@@ -46,20 +46,21 @@ public class CommentRESTController {
 	// 해당 산의 리뷰 조회
 	@GetMapping("/mountain/{mountainSerial}")
 	public ResponseEntity<?> getCommentList(@PathVariable("mountainSerial") int mountainSerial) {
-		List<Comment> commentList = commentService.selectCommentByMountainSerial(mountainSerial);
-		return new ResponseEntity<List<Comment>>(commentList, HttpStatus.OK);
+		List<CommentResponse> commentList = commentService.selectCommentByMountainSerial(mountainSerial);
+		return new ResponseEntity<List<CommentResponse>>(commentList, HttpStatus.OK);
 	}
 
 	// Serial에 해당하는 게시글 조회
 	@GetMapping("/comment/{commentSerial}")
 	public ResponseEntity<?> selectOne(@PathVariable("commentSerial") int commentSerial) {
 //		if() 없으면 어떻게 할까? list에 담아서 없으면 오류 출력해야 하나 
-		return new ResponseEntity<Comment>(commentService.selectOne(commentSerial), HttpStatus.OK);
+		return new ResponseEntity<CommentResponse>(commentService.selectOne(commentSerial), HttpStatus.OK);
 	}
 
 	// 게시글 등록
 	@PostMapping("/comment/create")
 	public ResponseEntity<?> createComment(@RequestBody Comment comment) {
+		System.out.println(comment);
 		commentService.createComment(comment);
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
@@ -75,6 +76,7 @@ public class CommentRESTController {
 	// 게시글 수정
 	@PutMapping("/comment/update")
 	public ResponseEntity<?> modifyComment(@RequestBody Comment comment) {
+		System.out.println(comment);
 		// 서버 인증 필요!!
 		commentService.modifyComment(comment);
 		return new ResponseEntity<Void>(HttpStatus.OK);
@@ -85,9 +87,10 @@ public class CommentRESTController {
 	// ModelAttribute로 할지 param으로 할지 나중에 정하기
 	public ResponseEntity<?> selectCommentBySearch(@PathVariable("mountainSerial") int mountainSerial,
 			@ModelAttribute SearchConditionForComment searchCondition) {
+		System.out.println(searchCondition);
 		searchCondition.setMountainSerial(mountainSerial);
-		List<Comment> list = commentService.selectCommentBySearch(searchCondition);
-		return new ResponseEntity<List<Comment>>(list, HttpStatus.OK);
+		List<CommentResponse> list = commentService.selectCommentBySearch(searchCondition);
+		return new ResponseEntity<List<CommentResponse>>(list, HttpStatus.OK);
 	}
 
 	// 게시글 평점

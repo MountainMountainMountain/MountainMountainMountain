@@ -45,8 +45,9 @@ public class UserRESTController {
 	// 사용자 등록
 	@PostMapping("/user/join")
 	public ResponseEntity<?> signup(@RequestBody User user) {
+		System.out.println(user);
 		userService.signup(user);
-		return new ResponseEntity<Void>(HttpStatus.CREATED);
+		return new ResponseEntity<User>(user,HttpStatus.CREATED);
 	}
 
 	// 사용자 수정
@@ -91,9 +92,9 @@ public class UserRESTController {
 	}
 
 	// 사용자 아이디 확인
-
 	@GetMapping("/user/join/check/id/{id}")
 	public ResponseEntity<?> checkId(@PathVariable("id") String id) {
+		System.out.println(id);
 		// 아이디가 존재합니다.
 		if (userService.checkId(id)) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);

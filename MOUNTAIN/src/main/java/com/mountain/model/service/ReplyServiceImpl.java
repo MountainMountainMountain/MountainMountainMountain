@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.mountain.model.dao.ReplyDao;
 import com.mountain.model.dto.Reply;
+import com.mountain.model.dto.ReplyResponse;
 
 @Service
 public class ReplyServiceImpl implements ReplyService {
@@ -17,12 +18,12 @@ public class ReplyServiceImpl implements ReplyService {
 	}
 
 	@Override
-	public List<Reply> selectByCommentSerial(int commentSerial) {
+	public List<ReplyResponse> selectByCommentSerial(int commentSerial) {
 		return replyDao.selectByCommentSerial(commentSerial);
 	}
 
 	@Override
-	public Reply selectOneReply(int replySerial) {
+	public ReplyResponse selectOneReply(int replySerial) {
 		return replyDao.selectOneReply(replySerial);
 	}
 

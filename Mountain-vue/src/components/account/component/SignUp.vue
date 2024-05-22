@@ -6,140 +6,22 @@
 
                 <h2 style="text-align: center; color: green; font-size: xx-large">산산산 가입을 환영합니다 !</h2>
                 <hr>
-                <table>
 
-                    <tr>
-                        <td class="px-4 border-top border-dark"><label class="mb-4 form-label" for="userId">아이디</label>
-                        </td>
-                        <td v-if="userIdChk" class="px-4">
-                            <input v-model="user" @change="idcheck" id="userId" type="text"
-                                class="mb-4 form-control form-control-lg">
-                        </td>
-                        <td v-else class="px-4 form-floating">
-                            <label for="userId" class="ps-5 text-danger" style="color: red;">* 중복된 아이디가 존재합니다</label>
-                            <br>
-                            <input v-model="userId" @change="idcheck" id="userId" type="text"
-                                class="mb-4 form-control is-invalid form-control-lg">
-                            <button>확인</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 15%;" class="px-4 border-top border-dark"><label class="mb-4 form-label"
-                                for="userName">비밀번호 </label></td>
-                        <td>
-                            <span class="border border-primary"><input type="text" name="userPassword"
-                                    id="userPassword"></span>
+                <input v-model="user.id" type="text" placeholder="아이디">
+                <button @click.prevent="idCheck" style="width: 20px;height: 20px;"></button>
+                <input v-model="user.password" type="password" placeholder="비밀번호">
+                <input v-model="user.repassword" type="password" placeholder="비밀번호 재입력">
+                <button @click.prevent="passwordcheck" style="width: 20px;height: 20px;"></button>
+                <!-- <input v-model="userRePassword" @change="passwordcheck" id="userRePassword" type="password"> -->
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-4 border-top border-dark"><label class="mb-4 form-label" for="userRePassword">비밀번호
-                                확인 <span class="text-danger"></span></label>
-                        </td>
-                        <td v-if="userPwdChk" class="px-4">
-                            <input v-model="userRePassword" @change="passwordcheck" id="userRePassword" type="password"
-                                class="mb-4 form-control form-control-lg">
-                        </td>
-                        <td v-else class="px-4 form-floating">
-                            <label for="userRePassword" class="ps-5 text-danger" style="color: red">* 비밀번호가 일치하지 않습니다.
-                            </label>
-                            <br>
-                            <input v-model="userRePassword" @change="passwordcheck" id="userRePassword" type="password"
-                                class="mb-4 form-control is-invalid form-control-lg">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 15%;" class="px-4 border-top border-dark"><label class="mb-4 form-label"
-                                for="userEmail">이메일 </label></td>
-                        <td>
-                            <input type="text" name="userEmail" id="userEmail" placeholder="you@example.com">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 15%;" class="px-4 border-top border-dark"><label class="mb-4 form-label"
-                                for="userName">이름 </label></td>
-                        <td class="px-4"><input v-model="userName" id="userName" type="text"
-                                class="mb-4 form-control form-control-lg"></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 15%;" class="px-4 border-top border-dark"><label class="mb-4 form-label"
-                                for="userEmail">생일</label></td>
-                        <td>
-                            <li>
-                                <select name="" id="" class="form-control">
-                                    <option value="">년도</option>
-                                    <option value="">1994</option>
-                                    <option value="">1995</option>
-                                    <option value="">1996</option>
-                                    <option value="">1997</option>
-                                    <option value="">1998</option>
-                                    <option value="">1999</option>
-                                    <option value="">2000</option>
-                                    <option value="">2001</option>
-                                </select>
-                                -
-                                <select name="" id="" class="form-control">
-                                    <option value="">월</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                    <option value="">4</option>
-                                    <option value="">5</option>
-                                    <option value="">6</option>
-                                    <option value="">7</option>
-                                    <option value="">8</option>
-                                    <option value="">9</option>
-                                    <option value="">10</option>
-                                    <option value="">11</option>
-                                    <option value="">12</option>
-                                </select>
+                <input v-model="user.name" type="text" placeholder="이름">
+                <input v-model="user.email" type="text" placeholder="email">
+                <input v-model="user.birthDate" type="text" placeholder="생일">
+                <input v-model="user.gender" type="text" placeholder="성별">
 
-                                <!-- <select name="" id="" class="form-control">
-                                    <option value="">일</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                    <option value="">4</option>
-                                    <option value="">5</option>
-                                    <option value="">6</option>
-                                    <option value="">7</option>
-                                    <option value="">8</option>
-                                    <option value="">9</option>
-                                    <option value="">10</option>
-                                    <option value="">11</option>
-                                    <option value="">12</option>
-                                    <option value="">13</option>
-                                    <option value="">14</option>
-                                    <option value="">15</option>
-                                    <option value="">16</option>
-                                    <option value="">17</option>
-                                    <option value="">18</option>
-                                    <option value="">19</option>
-                                    <option value="">20</option>
-                                    <option value="">21</option>
-                                    <option value="">22</option>
-                                    <option value="">23</option>
-                                    <option value="">24</option>
-                                </select> -->
-                            </li>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 15%;" class="px-4 border-top border-dark"><label class="mb-4 form-label"
-                                for="userGender">성별</label></td>
-                        <td>
-                            <button type="button" class="btn btn-primary" style="width: 30%;">남자</button>
-                            &nbsp;<button type="button" class="btn btn-primary" style="width: 30%;">여자</button>
-                        </td>
-                    </tr>
-                </table>
-                <hr>
-                <div class="underbar">
-                    <router-link :to="{ name: 'Login' }">
-                        <button type="button" class="btn btn-primary"
-                            style="width: 30%; height: 30px; background-color: greenyellow; border: none; ">회원가입</button>
-                    </router-link>
-                </div>
+                <button @click.prevent="createUser" style="width: 20px;height: 20px;"></button>
+
+
             </fieldset>
         </form>
     </div>
@@ -158,75 +40,41 @@ const user = ref({
     password: "",
     repassword: "",
     name: "",
-    birthDate: "",
+    email: "",
+    birthDate: "1990-01-01",
     gender: "",
 })
 
-// const store = useUserStore();
+const userStore = useUserStore();
 const router = useRouter();
 const route = useRoute();
 
+const idCheck = () => {
+    userStore.checkId(user.value.id)
+}
 
+const passwordcheck = () => {
+    if (user.value.password.length < 8) {
+        alert("비밀번호를 최소 8자 이상 작성하세요.");
+    } else if (user.value.password != user.value.repassword) {
+        console.log("비밀번호 다름")
+        alert("비밀번호가 일치하지 않습니다.");
+        // 필요에 따라 다른 작업을 수행할 수 있습니다.
+    } else {
+        alert("비밀번호가 일치합니다.");
+    }
+}
 
+const createUser = () => {
+    userStore.createUser(user.value)
+        .then(() => {
+            router.push({ name: 'Login' })
+        })
+        .catch(() => {
+
+        })
+}
 
 </script>
 
-<style scoped>
-/* #signup-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 10px);
-    100px for footer height
-}
-
-#signup {
-    width: 100%;
-    max-width: 800px;
-}
-
-#signupbox {
-    border: none;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-li {
-    list-style-type: none;
-    padding: 0;
-}
-
-a {
-    color: #000;
-    text-decoration: none;
-}
-
-a:hover {
-    color: blue;
-}
-
-.signup-link {
-    font-size: 0.8em;
-    Smaller font size for signup link
-}
-
-button {
-    background-color: greenyellow;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 1em;
-}
-
-button:hover {
-    background-color: rgb(151, 181, 248);
-}
-
-.underbar {
-    text-align: center;
-}
-
-table {
-    text-decoration: center;
-} */
-</style>
+<style scoped></style>

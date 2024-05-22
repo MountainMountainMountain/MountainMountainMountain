@@ -1,6 +1,7 @@
 package com.mountain.model.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import com.mountain.model.dao.ChatInfoDao;
 import com.mountain.model.dao.ChatUserManagerDao;
 import com.mountain.model.dto.Chat;
 import com.mountain.model.dto.ChatInfo;
+import com.mountain.model.dto.ChatLogResponse;
 import com.mountain.model.dto.ChatUserManager;
 
 @Service
@@ -33,7 +35,7 @@ public class ChatServiceImpl implements ChatService {
 
 	// 채팅 info 읽기
 	@Override
-	public Chat selectChat(int chatSerial) {
+	public ChatLogResponse selectChat(int chatSerial) {
 		return chatDao.selectOne(chatSerial);
 	}
 
@@ -47,6 +49,12 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public void deleteChat(int chatSerial) {
 		chatDao.deleteChat(chatSerial);
+	}
+
+	// selectChatByChatInfoSerial
+	@Override
+	public List<ChatLogResponse> selectChatByChatInfoSerial(int chatInfoSerial) {
+		return chatDao.selectChatByChatInfoSerial(chatInfoSerial);
 	}
 
 	// 채팅 manager 생성
