@@ -37,16 +37,12 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
 import { useCommentStore } from "@/stores/commentstore";
-import { useReplyStore } from "@/stores/replystore";
 import axios from "axios";
 const route = useRoute();
 const router = useRouter();
 const commentStore = useCommentStore();
 const replyStore = useReplyStore();
-import { useUserStore } from '@/stores/userstore';
-import { ref, computed, onMounted } from 'vue';
 
-const userStore = useUserStore();
 
 const userName = ref(''); // 사용자 이름
 const userSerial = ref(''); // 사용자 serial

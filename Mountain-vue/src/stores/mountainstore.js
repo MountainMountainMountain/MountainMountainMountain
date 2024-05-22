@@ -56,6 +56,7 @@ export const useMountainStore = defineStore('mountain', () => {
   };
 
   const getMountainState = function (mountainState) {
+    if (mountainState != "전체")
       axios.get(`${REST_MOUNTAIN_API}state/${mountainState}`)
         .then((response) => {
           mountainList.value = response.data;
@@ -63,6 +64,15 @@ export const useMountainStore = defineStore('mountain', () => {
         .catch((err) => {
           console.error(err);
         });
+    else {
+      axios.get(REST_MOUNTAIN_API)
+        .then((response) => {
+          mountainList.value = response.data;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
     // return new Promise((resolve, reject) => {
     //   axios.get(`${REST_MOUNTAIN_API}state/${mountainState}`)
     //     .then((response) => {

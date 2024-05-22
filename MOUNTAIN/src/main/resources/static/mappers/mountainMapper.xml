@@ -49,18 +49,23 @@
 		parameterType="SearchConditionForMountain" resultType="Mountain">
 		SELECT *
 		FROM Mountain
-		<!-- 동적쿼리(검색 조건) -->
-		<if test="key != ''">
-			WHERE ${key} LIKE concat( '%', #{word}, '%' )
-		</if>
-		<if test="state != '전체'">
-			AND state = #{state}
-		</if>
+		<where>
+			<if test="key != ''">
+				${key} LIKE concat('%', #{word}, '%')
+			</if>
+			<if test="key != '' and state != '전체'">
+				AND state = #{state}
+			</if>
+			<if test="key == '' and state != '전체'">
+				state = #{state}
+			</if>
+		</where>
 		<!-- 동적쿼리(정렬 조건) -->
 		<if test="orderBy != ''">
 			ORDER BY ${orderBy} ${orderByDir}
 		</if>
 	</select>
+
 
 	<select id="selectCompleteMountainByUserSerial"
 		parameterType="int" resultType="MountainComplete">

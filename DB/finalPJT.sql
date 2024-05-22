@@ -412,42 +412,42 @@ WHERE u.serial = c.user_serial AND m.serial = c.mountain_serial AND c.user_seria
 SELECT * FROM comment, user u
 WHERE comment.user_serial = u.serial;
 
-SELECT 
-    c.serial AS serial,
-    c.title AS title,
-    c.mountain_serial AS mountainSerial,
-    c.user_serial AS userSerial,
-    u.id AS id,
-    u.name AS name,
-    u.gender AS gender,
-    u.point AS point,
-    c.content AS content,
-    c.reg_date AS regDate,
-    c.update_date AS updateDate,
-    c.calorie AS calorie,
-    c.turnaround AS turnaround,
-    c.view_count AS view_count
-FROM 
-    comment c
-JOIN 
-    user u ON c.user_serial = u.serial;
-    
-    		SELECT 
-		    c.serial AS serial,
-		    c.title AS title,
-		    c.mountain_serial AS mountainSerial,
-		    c.user_serial AS userSerial,
-		    u.id AS id,
-		    u.name AS name,
-		    u.gender AS gender,
-		    u.point AS point,
-		    c.content AS content,
-		    c.reg_date AS regDate,
-		    c.update_date AS updateDate,
-		    c.calorie AS calorie,
-		    c.turnaround AS turnaround,
-		    c.view_count AS viewCount  -- view_count에서 viewCount로 수정
-		FROM 
-		    comment c
-		JOIN 
-		    user u ON c.user_serial = u.serial;
+-- SELECT 
+--     c.serial AS serial,
+--     c.title AS title,
+--     c.mountain_serial AS mountainSerial,
+--     c.user_serial AS userSerial,
+--     u.id AS id,
+--     u.name AS name,
+--     u.gender AS gender,
+--     u.point AS point,
+--     c.content AS content,
+--     c.reg_date AS regDate,
+--     c.update_date AS updateDate,
+--     c.calorie AS calorie,
+--     c.turnaround AS turnaround,
+--     c.view_count AS view_count
+-- FROM 
+--     comment c
+-- JOIN 
+--     user u ON c.user_serial = u.serial;
+--     
+--     		SELECT 
+-- 		    c.serial AS serial,
+-- 		    c.title AS title,
+-- 		    c.mountain_serial AS mountainSerial,
+-- 		    c.user_serial AS userSerial,
+-- 		    u.id AS id,
+-- 		    u.name AS name,
+-- 		    u.gender AS gender,
+-- 		    u.point AS point,
+-- 		    c.content AS content,
+-- 		    c.reg_date AS regDate,
+-- 		    c.update_date AS updateDate,
+-- 		    c.calorie AS calorie,
+-- 		    c.turnaround AS turnaround,
+-- 		    c.view_count AS viewCount  -- view_count에서 viewCount로 수정
+-- 		FROM 
+-- 		    comment c
+-- 		JOIN 
+-- 		    user u ON c.user_serial = u.serial;
