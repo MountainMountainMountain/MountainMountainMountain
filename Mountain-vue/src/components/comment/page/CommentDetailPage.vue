@@ -109,7 +109,7 @@ const deleteReply = function (reply) {
 
 const confirmDeleteComment = () => {
     Swal.fire({
-        title: '댓글을 삭제하시겠습니까?',
+        title: '리뷰를 삭제하시겠습니까?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: '삭제',

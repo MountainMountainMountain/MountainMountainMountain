@@ -17,7 +17,7 @@ export default {
 .image-container {
     position: relative;
     width: 100vw; /* Viewport width */
-    height: 100vh; /* Viewport height */
+    height: 160vh; /* Viewport height */
     overflow: hidden; /* Hide overflow to prevent scrolling */
 }
 
