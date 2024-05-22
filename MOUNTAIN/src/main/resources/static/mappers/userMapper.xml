@@ -28,7 +28,8 @@
 		resultType="User">
 		SELECT *
 		FROM User
-		WHERE name LIKE CONCAT('%', #{userName}, '%')
+		WHERE name LIKE CONCAT('%', #{userName},
+		'%')
 		AND serial != #{mySerial}
 	</select>
 
@@ -66,5 +67,12 @@
 		User
 		WHERE id = #{id} AND password = #{password}
 	</select>
+
+	<update id="modifyUserPoint" parameterType="int">
+		UPDATE User
+		SET
+		point = point + #{mountainPoint}
+		WHERE serial = #{serial};
+	</update>
 
 </mapper>

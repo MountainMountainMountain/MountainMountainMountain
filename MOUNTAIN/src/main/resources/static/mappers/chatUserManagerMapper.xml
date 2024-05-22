@@ -10,32 +10,48 @@
 		FROM ChatUserManager
 		WHERE chatInfo_serial = #{chatInfoSerial}
 	</select>
-	
+
 	<insert id="joinChat" parameterType="int">
-		INSERT INTO ChatUserManager (chatInfo_serial, user_serial)
+		INSERT INTO ChatUserManager
+		(chatInfo_serial, user_serial)
 		VALUE (chatInfoSerial, userSerial)
 	</insert>
-	
-	<select id="selectOneByChatUserManagerSerial" parameterType="int" resultType="ChatUserManager">
+
+	<select id="selectOneByChatUserManagerSerial"
+		parameterType="int" resultType="ChatUserManager">
 		SELECT *
 		FROM ChatUserManager
-		WHERE serial = #{ChatUserManagerSerial}
-	</select>
-	
-	<select id="selectOneByChatInfoSerial" parameterType="int" resultType="ChatUserManager">
-		SELECT *
-		FROM ChatUserManager
-		WHERE chatInfo_serial = #{ChatInfoSerial}
+		WHERE
+		serial = #{ChatUserManagerSerial}
 	</select>
 
-	<update id="updateChatUserManager" parameterType="ChatUserManager">
+	<select id="selectOneByChatInfoSerial" parameterType="int"
+		resultType="ChatUserManager">
+		SELECT *
+		FROM ChatUserManager
+		WHERE chatInfo_serial =
+		#{ChatInfoSerial}
+	</select>
+
+	<select id="selectByUserSerial" parameterType="int"
+		resultType="ChatUserManager">
+		SELECT *
+		FROM ChatUserManager
+		WHERE chatInfo_serial =
+		#{ChatInfoSerial}
+	</select>
+
+	<update id="updateChatUserManager"
+		parameterType="ChatUserManager">
 		UPDATE ChatUserManager
-		SET chatInfo_serial = #{chatInfoSerial}, user_serial = #{userSerial}
+		SET chatInfo_serial =
+		#{chatInfoSerial}, user_serial = #{userSerial}
 	</update>
-	
+
 	<delete id="leaveChat">
 		DELETE FROM ChatUserManager
-		WHERE chatInfo_serial = #{chatInfoSerial} AND user_serial = #{userSerial}
+		WHERE chatInfo_serial =
+		#{chatInfoSerial} AND user_serial = #{userSerial}
 	</delete>
-		
+
 </mapper>

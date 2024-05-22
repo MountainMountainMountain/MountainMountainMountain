@@ -48,4 +48,10 @@ public interface ChatService {
 	// selectChatByChatInfoSerial
 	List<ChatLogResponse> selectChatByChatInfoSerial(int chatInfoSerial);
 
+	// 채팅 참여
+	void joinChatUserManager(int chatInfoSerial, int chatUserSerial);
+
+	// 내 채팅 참여 목록 조회
+	List<ChatInfo> selectMyChatInfo(int userSerial);
+
 }

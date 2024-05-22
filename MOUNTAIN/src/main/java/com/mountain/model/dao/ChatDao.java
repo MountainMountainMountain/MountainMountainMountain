@@ -24,5 +24,5 @@ public interface ChatDao {
 
 	// 채팅 삭제
 	void deleteChat(int chatSerial);
-
+	
 }

@@ -13,19 +13,19 @@
                                     <img src="@/assets/images/daram.jpg" alt="프로필" style="width: 140px; height: 140px;"
                                         class="rounded-circle"> 하늘다람쥐
                                 </div>
-                                <div v-else-if="1000 > userStore.User.point && userStore.User.point > 800">
+                                <div v-else-if="1000 > userStore.User.point && userStore.User.point >= 800">
                                     <img src="@/assets/images/daram.jpg" alt="프로필" style="width: 140px; height: 140px;"
                                         class="rounded-circle"> 산신령
                                 </div>
-                                <div v-else-if="800 > userStore.User.point && userStore.User.point > 600">
+                                <div v-else-if="800 > userStore.User.point && userStore.User.point >= 600">
                                     <img src="@/assets/images/daram.jpg" alt="프로필" style="width: 140px; height: 140px;"
                                         class="rounded-circle"> 모자, 선글라스, 스틱
                                 </div>
-                                <div v-else-if="600 > userStore.User.point && userStore.User.point > 400">
+                                <div v-else-if="600 > userStore.User.point && userStore.User.point >= 400">
                                     <img src="@/assets/images/daram.jpg" alt="프로필" style="width: 140px; height: 140px;"
                                         class="rounded-circle"> 모자 선글라스
                                 </div>
-                                <div v-else-if="400 > userStore.User.point && userStore.User.point > 200">
+                                <div v-else-if="400 > userStore.User.point && userStore.User.point >= 200">
                                     <img src="@/assets/images/daram.jpg" alt="프로필" style="width: 140px; height: 140px;"
                                         class="rounded-circle"> 모자
                                 </div>
@@ -84,20 +84,26 @@ const userStore = useUserStore();
 
 const userName = ref(''); // 사용자 이름
 const userSerial = ref(''); // 사용자 serial
-const token = sessionStorage.getItem('access-token');
 
 // let id = JSON.parse(atob(token[1]))['id'];
 
 
-const checkUserSerial = () => {
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    userName.value = payload.name;
-    userSerial.value = payload.serial;
-    userStore.getUserByid(userSerial.value);
-}
+const checkLoginStatus = () => {
+  const token = sessionStorage.getItem('access-token');
+  if (token) {
+    try {
+      const tokenPayload = JSON.parse(decodeURIComponent(escape(atob(token.split('.')[1]))));
+      userName.value = tokenPayload['name'];
+      userSerial.value = tokenPayload['serial'];
+    } catch (error) {
+      console.error('Failed to decode token:', error);
+    }
+  } else {
+  }
+};
 
 onMounted(() => {
-    checkUserSerial();
+    checkLoginStatus();
     userStore.getfollwerList(userSerial.value);
     userStore.getfollwingList(userSerial.value);
     // userStore.getUserByid();

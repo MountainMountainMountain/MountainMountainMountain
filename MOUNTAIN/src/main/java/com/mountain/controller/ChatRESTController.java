@@ -142,4 +142,22 @@ public class ChatRESTController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
+	// 채팅 참여
+	@GetMapping("/chatUserManager/{chatInfoSerial}/{userSerial}")
+	public ResponseEntity<?> joinChatUserManager(@PathVariable("chatInfoSerial") int chatInfoSerial,
+			@PathVariable("userSerial") int userSerial) {
+
+		chatService.joinChatUserManager(chatInfoSerial, userSerial);
+
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+
+	// 내가 참여한 채팅 확인
+	@GetMapping("/chatUserManager/{userSerial}")
+	public ResponseEntity<?> selectChatUserManagerByUserSerial(@PathVariable("userSerial") int userSerial) {
+		List<ChatInfo> list = chatService.selectMyChatInfo(userSerial);
+
+		return new ResponseEntity<List<ChatInfo>>(list, HttpStatus.OK);
+	}
+
 }

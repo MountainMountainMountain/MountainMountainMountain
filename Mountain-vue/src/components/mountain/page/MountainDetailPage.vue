@@ -3,6 +3,7 @@
     <hr>
     <br>
     <Photo />
+    <button class="btn btn-light back-button" @click="backButton">목록으로 돌아가기</button>
     <div id="index_wrap">
       <ul id="leftToRight">
         <li>
@@ -24,6 +25,8 @@
 import Photo from '@/components/mountain/component/Photo.vue';
 
 import { useReplyStore } from "@/stores/replystore";
+import { useRouter } from 'vue-router';
+const router = useRouter();
 import { ref, computed, onMounted } from 'vue';
 import { useUserStore } from '@/stores/userstore';
 const userStore = useUserStore();
@@ -37,6 +40,10 @@ const checkUserSerial = () => {
     userSerial.value = payload.serial;
     userStore.getUserByid(userSerial.value);
   }
+}
+const backButton = function () {
+    router.go(-1);
+    // router.back();
 }
 onMounted(() => {
   checkUserSerial();
@@ -128,5 +135,11 @@ onMounted(() => {
 
 #stretch li:hover::after {
   width: 100%;
+}
+
+.back-button {
+  float: right;
+  margin-right: 20px;
+  margin-bottom: 20px;
 }
 </style>

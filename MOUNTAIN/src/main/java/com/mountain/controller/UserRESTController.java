@@ -149,10 +149,21 @@ public class UserRESTController {
 		return new ResponseEntity<>(result, status);
 	}
 
+	// 포인트 업데이트
+	@GetMapping("/user/point/{userSerial}/{mountainSerial}")
+	public ResponseEntity<Void> updateUserPoint(@PathVariable("userSerial") int userSerial,
+			@PathVariable("mountainSerial") int mountainSerial) {
+		userService.updateUserPoint(userSerial, mountainSerial);
+
+		return new ResponseEntity<Void>(HttpStatus.CREATED);
+	}
+
 	// 팔로우 하기
 	@GetMapping("/follow/{fromFollow}/{toFollow}")
 	public ResponseEntity<?> createFollow(@PathVariable("fromFollow") int fromFollow,
 			@PathVariable("toFollow") int toFollow) {
+		System.out.println(fromFollow);
+		System.out.println(toFollow);
 
 		if (userService.checkAlreadyFollowing(fromFollow, toFollow)) {
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);

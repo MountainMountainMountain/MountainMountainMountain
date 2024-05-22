@@ -33,6 +33,9 @@ public interface UserService {
 	// 로그인
 	public User login(String id, String password);
 
+	// userpoint 업데이트
+	void updateUserPoint(int serial, int mountainPoint);
+	
 	// 팔로우 여부 체크
 	boolean checkAlreadyFollowing(int fromFollow, int toFollow);
 
@@ -47,5 +50,6 @@ public interface UserService {
 
 	// 팔로워 리스트(나의 기준 나를 팔로잉 하는 리스트)
 	List<User> followerList(int fromFollow);
+
 
 }
