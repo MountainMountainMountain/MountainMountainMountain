@@ -44,7 +44,7 @@
                 <label for="content">내용</label>
             </div>
             <div class="d-flex justify-content-end">
-                <button class="btn btn-outline-primary" @click="createComment">등록</button>
+                <button class="btn btn-outline-primary" @click="confirmCreateComment">등록</button>
             </div>
         </div>
     </div>
@@ -56,6 +56,7 @@ import { useMountainStore } from '@/stores/mountainstore';
 import { useUserStore } from '@/stores/userstore'
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from "vue-router";
+import Swal from 'sweetalert2';
 
 const CommentStore = useCommentStore();
 const mountainStore = useMountainStore();
@@ -91,7 +92,6 @@ const createComment = function () {
     comment.value.userSerial = userSerial.value;
     comment.value.writer = userSerial.value;
     comment.value.mountainSerial = route.params.mountainSerial;
-    // comment.userSerial = userSerial.value;
     CommentStore.createComment(comment.value)
         .then(() => {
             router.push({
@@ -101,12 +101,26 @@ const createComment = function () {
         })
 };
 
+const confirmCreateComment = () => {
+    Swal.fire({
+        title: '댓글을 등록하시겠습니까?',
+        text: "작성한 댓글을 등록하려면 예를 클릭하세요.",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: '예',
+        cancelButtonText: '아니오'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            createComment();
+            Swal.fire('등록 완료!', '댓글이 성공적으로 등록되었습니다.', 'success');
+        }
+    });
+};
 
 onMounted(() => {
     mountainStore.getMountainSerial(`${route.params.mountainSerial}`);
     checkUserSerial();
 });
-
 </script>
 
 <style scoped>
@@ -124,7 +138,6 @@ onMounted(() => {
 
 .content-textarea {
     height: 500px;
-    /* 내용 부분의 크기를 크게 설정 */
     width: 100%;
 }
 

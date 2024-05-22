@@ -72,8 +72,6 @@ const mountainstore = useMountainStore()
 const searchMountainList = function () {
   searchInfo.value.state = `${route.params.state}`
   mountainstore.searchMountainList(searchInfo.value);
-
-
   // searchInfo.value.state = `${route.params.state}`;
   // mountainstore.searchMountainList(searchInfo.value)
   // .then(() => {
@@ -82,7 +80,6 @@ const searchMountainList = function () {
   //   mountainstore.getMountainList()
   // });
 }
-
 const fetchMountains = () => {
   console.log(route.params.state)
   mountainstore.getMountainState(route.params.state);

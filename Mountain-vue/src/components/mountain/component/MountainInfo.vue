@@ -1,19 +1,17 @@
 <template>
     <div>
-        <!-- <h1>mountaininfo</h1> -->
         <div class="mountainbox">
             <div v-if="mountainStore.mountain && Object.keys(mountainStore.mountain).length > 0"
                 class="d-flex justify-content-center">
                 <div class="card" style="width: 80%; border-color: white;">
                     <div class="mountainbody">
-                        <h4 class="card-title">{{ mountainStore.mountain.name }}</h4>
+                        <h4 class="card-title"><span>{{ mountainStore.mountain.name }}</span></h4>
                         <div class="mountaintable">
                             <table class="table text-center">
                                 <tbody>
                                     <tr>
                                         <th scope="row" class="text-right">위치</th>
-                                        <td class="text-left">{{ mountainStore.mountain.state }} {{
-                                            mountainStore.mountain.town }}</td>
+                                        <td class="text-left">{{ mountainStore.mountain.state }} {{ mountainStore.mountain.town }}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" class="text-right">고도</th>
@@ -46,26 +44,18 @@
             </div>
         </div>
         <CommentStar />
-        
         <CommentList />
-
-
         <button v-if="token != null">
-            <RouterLink :to="{ name: 'CommentCreatePage', params: { mountainSerial: route.params.mountainSerial } }">
-                CommentCreatePage</RouterLink>
+            <RouterLink :to="{ name: 'CommentCreatePage' }">CommentCreatePage</RouterLink>
         </button>
-
     </div>
 </template>
 
-
 <script setup>
-
 import { onMounted } from 'vue';
 import { useMountainStore } from '@/stores/mountainstore';
 import { useRoute } from "vue-router";
 import CommentStar from '@/components/comment/component/CommentStar.vue';
-import CommentSearch from '@/components/comment/component/CommentSearch.vue';
 import CommentList from '@/components/comment/component/CommentList.vue';
 
 const route = useRoute();
@@ -76,26 +66,23 @@ const token = sessionStorage.getItem('access-token');
 onMounted(() => {
     mountainStore.getMountainSerial(mountainSerial);
 });
-
-function moveUpdate() {
-    // Implement the logic for updating the mountain
-}
-
-function deleteMountain() {
-    mountainStore.deleteMountain(mountainSerial).then(() => {
-        // Navigate to the list page or show a confirmation message
-    });
-}
 </script>
 
 <style scoped>
 .mountainbox {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(246, 246, 246);
+    border: none;
     text-align: center;
     padding: 30px;
-    background-color: rgb(230, 229, 229);
-    border: 1px solid black;
-    width: 100%;
-    height: auto;
+}
+
+.mountainbody {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow to mountainbody */
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
 }
 
 .mountaintable {
@@ -105,12 +92,31 @@ function deleteMountain() {
 
 .mountaintable table {
     margin: 0 auto;
-    /* 테이블을 가운데 정렬 */
 }
 
 .mountaintable th,
-.card-table td {
+.mountaintable td {
+    position: relative;
     padding: 10px 20px;
-    /* 각 셀에 적당한 패딩 적용 */
+}
+
+.mountaintable th::after,
+.mountaintable td::after {
+    content: "";
+    position: absolute;
+    height: 1px;
+    background: black;
+    bottom: 0;
+}
+
+.mountaintable th::after {
+    left: 0;
+}
+
+.mountaintable td::after {
+    right: 0;
+}
+span{
+    box-shadow: inset 0 -13px 0 #bfffa1;
 }
 </style>
