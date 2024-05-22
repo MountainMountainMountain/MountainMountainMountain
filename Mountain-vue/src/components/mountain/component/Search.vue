@@ -55,7 +55,7 @@
 
 <script setup>
 import { useMountainStore } from '@/stores/mountainstore';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 const route = useRoute();
 
@@ -71,11 +71,30 @@ const mountainstore = useMountainStore()
 
 const searchMountainList = function () {
   mountainstore.searchMountainList(searchInfo.value)
+  // .then(() => {
+  // })
+  // .catch(() => {
+  //   mountainstore.getMountainList()
+  // });
 }
+const fetchMountains = () => {
+  if (route.params.state == "전체") {
+    mountainstore.getMountainList();
+    console.log(route.params.state)
+  }
+  else {
+    console.log(route.params.state)
+    mountainstore.getMountainState(route.params.state);
+  }
+};
 
 onMounted(() => {
-  mountainstore.getMountainList();
+  mountainstore.getMountainList()
 })
+
+watch(() => route.params.state, (newState) => {
+  fetchMountains();
+});
 </script>
 
 <style scoped>

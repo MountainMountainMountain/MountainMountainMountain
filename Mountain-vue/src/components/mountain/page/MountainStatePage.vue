@@ -1,6 +1,7 @@
 <template>
     <div>
 
+        <router-link :to="{ name: 'MountainStatePage', params: { state: '전체' } }">전체</router-link> |
         <router-link :to="{ name: 'MountainStatePage', params: { state: '수도권' } }">수도권</router-link> |
         <router-link :to="{ name: 'MountainStatePage', params: { state: '강원도' } }">강원도</router-link> |
         <router-link :to="{ name: 'MountainStatePage', params: { state: '충청도' } }">충청도</router-link> |
@@ -10,7 +11,7 @@
 
 
         <Search />
-        <List />
+        <!-- <List /> -->
 
     </div>
 </template>

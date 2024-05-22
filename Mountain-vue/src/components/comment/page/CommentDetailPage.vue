@@ -13,14 +13,17 @@
                     :to="{ name: 'CommentModifyPage', params: { commentSerial: '`${route.params.commentSerial}`' } }">
                     modifypage</RouterLink>
             </button>
+            <button v-if="commentStore.Comment.userSerial == userSerial" @click="deleteComment">댓글 삭제</button>
         </ul>
 
         <li v-for="reply in replyStore.ReplyList" :key="reply.serial">
             <span> userserial: {{ reply.name }}</span>
             <span> , replycontent: {{ reply.content }}</span>
+            <button v-if="reply.userSerial == userSerial" @click="deleteReply(reply)">대 댓글 삭제</button>
             <!-- <RouterLink :to="{ name: 'MountainDetailPage', params: { mountainSerial: '1' } }">1</RouterLink> -->
         </li>
-        <button v-if="token !== null" @click="showReplyForm = true">댓글 작성하기</button>
+        <button v-if="token !== null" @click="showReplyForm = true">대댓글 작성하기</button>
+
 
         <div v-if="showReplyForm">
             <textarea v-model="reply.content"></textarea>
@@ -65,6 +68,29 @@ const checkUserSerial = () => {
         reply.value.userSerial = userSerial.value;
         reply.value.commentSerial = route.params.commentSerial;
     }
+}
+
+const deleteComment = function () {
+    axios
+        .delete(`http://localhost:8080/api-comment/comment/delete/${route.params.commentSerial}`)
+        .then(() => {
+            router.push({
+                name: "MountainInfo",
+                params: { mountainSerial: `${commentStore.Comment.mountainSerial}` }
+            })
+        })
+        .catch(() => {
+        })
+}
+
+const deleteReply = function (reply) {
+    axios
+        .delete(`http://localhost:8080/api-reply/${reply.serial}`)
+        .then(() => {
+            replyStore.getReplyList(route.params.commentSerial);
+        })
+        .catch(() => {
+        })
 }
 
 // 댓글과 답글을 불러오는 함수

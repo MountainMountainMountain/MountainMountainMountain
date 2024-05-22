@@ -8,12 +8,13 @@
 	<select id="selectByCommentSerial" parameterType="int"
 		resultType="ReplyResponse">
 		SELECT
+		    r.serial AS serial,
 		    u.serial AS userSerial,
 		    u.id AS id,
 		    u.name AS name,
 		    u.gender AS gender,
 		    u.point AS point,
-		    r.serial AS commentSerial,
+		    r.comment_serial AS commentSerial,
 		    r.content AS content,
 		    r.reg_date AS regDate,
 		    r.update_date AS updateDate
@@ -27,12 +28,13 @@
 	<select id="selectOneReply" parameterType="int"
 		resultType="ReplyResponse">
 		SELECT
+		    r.serial AS serial,
 		    u.serial AS userSerial,
 		    u.id AS id,
 		    u.name AS name,
 		    u.gender AS gender,
 		    u.point AS point,
-		    r.serial AS commentSerial,
+		    r.comment_serial AS commentSerial,
 		    r.content AS content,
 		    r.reg_date AS regDate,
 		    r.update_date AS updateDate
