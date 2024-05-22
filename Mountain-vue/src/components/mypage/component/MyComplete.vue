@@ -46,6 +46,7 @@ const checkUserSerial = () => {
 onMounted(() => {
     checkUserSerial();
     mountainStore.getCompleteMountain(userSerial.value);
+    userStore.getUserByid(`${route.params.userId}`);
 })
 </script>
 

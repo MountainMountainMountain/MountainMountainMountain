@@ -24,17 +24,19 @@
 		WHERE id = #{userId};
 	</select>
 
-	<select id="selectUserByName" parameterType="String"
+	<select id="selectUserByName" parameterType="Map"
 		resultType="User">
 		SELECT *
 		FROM User
-		WHERE name LIKE concat( '%', #{userName}, '%' )
+		WHERE name LIKE CONCAT('%', #{userName}, '%')
+		AND serial != #{mySerial}
 	</select>
 
 	<update id="modifyUser" parameterType="User">
 		UPDATE User
 		SET id = #{id},
-		password = #{password}, name = #{name}, birth_date = #{birthDate}, email = #{email}
+		password = #{password}, name = #{name}, birth_date = #{birthDate},
+		email = #{email}
 		WHERE id = #{id};
 	</update>
 
@@ -45,12 +47,14 @@
 	</delete>
 
 	<select id="isIdExist" parameterType="String" resultType="int">
-		SELECT COUNT(*)
+		SELECT
+		COUNT(*)
 		FROM User
 		WHERE id = #{userId};
 	</select>
 
-	<select id="isEmailExist" parameterType="String" resultType="int">
+	<select id="isEmailExist" parameterType="String"
+		resultType="int">
 		SELECT COUNT(*)
 		FROM User
 		WHERE email = #{userEmail};

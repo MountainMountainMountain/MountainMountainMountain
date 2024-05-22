@@ -19,7 +19,7 @@ public interface UserService {
 	public User searchById(String id);
 
 	// 사용자 이름 검색
-	public List<User> searchByName(String name);
+	public List<User> searchByName(String name, int mySeria);
 
 	// 사용자 삭제
 	public void deleteUser(int serial);
