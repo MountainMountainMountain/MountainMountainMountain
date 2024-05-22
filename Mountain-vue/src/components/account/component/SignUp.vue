@@ -31,7 +31,8 @@
                     <tr>
                         <td class="label-cell"><label class="mb-4 form-label" for="userEmail">이메일</label></td>
                         <td class="input-cell">
-                            <input v-model="user.email" id="userEmail" type="text" class="mb-4 form-control form-control-lg" placeholder="you@example.com" />
+                            <input v-model="user.email" @change="emailCheck" id="userEmail" type="email" class="mb-4 form-control form-control-lg" placeholder="you@example.com" />
+                            <div v-if="!userEmailChk" class="error-message">* 유효한 이메일 주소를 입력하세요</div>
                         </td>
                     </tr>
                     <tr>
@@ -51,9 +52,8 @@
                         <td class="input-cell">
                             <select v-model="user.gender" id="userGender" class="form-control mb-4">
                                 <option value="">선택하세요</option>
-                                <option value="male">남자</option>
-                                <option value="female">여자</option>
-                                <option value="other">기타</option>
+                                <option value="M">남자</option>
+                                <option value="F">여자</option>
                             </select>
                         </td>
                     </tr>
@@ -86,26 +86,41 @@ const user = ref({
 
 const userIdChk = ref(true);
 const userPwdChk = ref(true);
+const userEmailChk = ref(true);
 
 const userStore = useUserStore();
 const router = useRouter();
 
 const idCheck = () => {
-    userStore.checkId(user.value.id)
+    userStore.checkId(user.value.id).then(response => {
+        userIdChk.value = response.isAvailable;
+    }).catch(error => {
+        console.error('아이디 체크 중 오류 발생:', error);
+        userIdChk.value = false;
+    });
 };
 
 const passwordCheck = () => {
     userPwdChk.value = user.value.password === user.value.repassword;
 };
 
+const emailCheck = () => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    userEmailChk.value = emailPattern.test(user.value.email);
+};
+
 const createUser = () => {
-    userStore.createUser(user.value)
-        .then(() => {
-            router.push({ name: 'Login' });
-        })
-        .catch(() => {
-            alert('회원가입 중 오류가 발생했습니다.');
-        });
+    if (userIdChk.value && userPwdChk.value && userEmailChk.value) {
+        userStore.createUser(user.value)
+            .then(() => {
+                router.push({ name: 'Login' });
+            })
+            .catch(() => {
+                alert('회원가입 중 오류가 발생했습니다.');
+            });
+    } else {
+        alert('모든 필드를 올바르게 입력하세요.');
+    }
 };
 </script>
 

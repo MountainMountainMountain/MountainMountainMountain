@@ -37,10 +37,16 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const getUserByid = function (id) {
-    axios.get(`${REST_USER_API}/user/search/id/${id}`)
-      .then((response) => {
-        User.value = response.data
-      })
+    return new Promise((resolve, reject) => {
+      axios.get(`${REST_USER_API}/user/search/id/${id}`)
+        .then((response) => {
+          User.value = response.data
+          resolve();
+        })
+        .catch(()=>{
+          reject();
+        })
+    });
   }
 
   const checkId = function (id) {
@@ -72,14 +78,22 @@ export const useUserStore = defineStore('user', () => {
         password
       })
         .then((res) => {
-          console.log(headers)
+          // console.log(headers)
           sessionStorage.setItem('access-token', res.data["access-token"]);
 
           const token = res.data['access-token'].split('.');
-          headers.value = res.headers;
-          let id = JSON.parse(atob(token[1]))['id'];
+          // headers.value = res.headers;
+          // let id = JSON.parse(atob(token[1]))['id'];
+          // let name = JSON.parse(atob(token[1]))['name'];
 
+
+          const tokenPayload = JSON.parse(decodeURIComponent(escape(atob(token[1]))));
+          let id = tokenPayload['id'];
+          let name = tokenPayload['name'];
+
+          loginUserName.value = name;
           loginUserId.value = id;
+          console.log(loginUserName.value)
           // loginUserName.value = JSON.parse(atob(token[1]))['name']; // 사용자 이름 설정
 
           resolve(); // 성공 시 resolve 호출

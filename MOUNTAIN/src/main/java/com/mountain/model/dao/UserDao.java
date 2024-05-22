@@ -25,13 +25,13 @@ public interface UserDao {
 	// 사용자 삭제
 	void deleteUser(int userSerial);
 
-	// 사용자 아이디 
+	// 사용자 아이디
 	int isIdExist(String userId);
-	
+
 	// 이메일 중복체크
 	int isEmailExist(String userEmail);
-	
+
 	// 로그인
 	User login(Map<String, String> info);
-	
+
 }

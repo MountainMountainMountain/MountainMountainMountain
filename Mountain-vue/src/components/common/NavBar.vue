@@ -1,63 +1,64 @@
 <template>
-  
-    <div class="userBar" >
-      <div class="brand">
-        <router-link class="navbar-brand" to="/">
-          <img style="width: 64px;" src="@/assets/images/Mlogo.png" alt="이미지">
-        </router-link>
-      </div>
-      <div class="links">
-        <router-link v-if="!isLoggedIn" class="nav-link" :to="{ name: 'Login' }">로그인</router-link>
-        <router-link v-if="!isLoggedIn" class="nav-link" :to="{ name: 'SignUp' }"><i
-            class="fas fa-user-plus"></i></router-link>
-        <router-link v-if="isLoggedIn" class="nav-link" :to="{ name: 'MyInfoMain', params: { userId: userId } }">{{
-          userName }}님</router-link>
-        <router-link v-if="isLoggedIn" class="nav-link" :to="{ name: 'ChatList' }"><i
-            class="fas fa-comments"></i></router-link>
-        <a v-if="isLoggedIn" class="nav-link" @click="logout">로그아웃</a>
-      </div>
+  <div class="userBar">
+    <div class="brand">
+      <router-link class="navbar-brand" to="/">
+        <img style="width: 64px;" src="@/assets/images/Mlogo.png" alt="이미지">
+      </router-link>
     </div>
+    <div class="links">
+      <router-link v-if="!isLoggedIn" class="nav-link" :to="{ name: 'Login' }">로그인</router-link>
+      <router-link v-if="!isLoggedIn" class="nav-link" :to="{ name: 'SignUp' }"><i
+          class="fas fa-user-plus"></i></router-link>
+      <router-link v-if="isLoggedIn" class="nav-link" :to="{ name: 'MyInfoMain', params: { userId: userId } }">{{
+        userName }}님</router-link>
+      <router-link v-if="isLoggedIn" class="nav-link" :to="{ name: 'ChatList' }"><i
+          class="fas fa-comments"></i></router-link>
+      <a v-if="isLoggedIn" class="nav-link" @click="logout">로그아웃</a>
+    </div>
+  </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/userstore';
 
 const userStore = useUserStore();
-const route = useRoute();
 const isLoggedIn = ref(false);
-const userName = ref(''); // 사용자 이름
-const userSerial = ref(''); // 사용자 이름
-const userId = ref(''); // 사용자 이름
+const userName = ref('');
+const userSerial = ref('');
+const userId = ref('');
 
 const router = useRouter();
 
-// sessionStorage에서 사용자 정보를 가져옵니다.
-const token = sessionStorage.getItem('access-token');
-if (token) {
-  const payload = JSON.parse(atob(token.split('.')[1]));
-  userName.value = payload.name;
-  userSerial.value = payload.serial;
-  userId.value = payload.id;
-}
+const checkLoginStatus = () => {
+  const token = sessionStorage.getItem('access-token');
+  if (token) {
+    try {
+      const tokenPayload = JSON.parse(decodeURIComponent(escape(atob(token.split('.')[1]))));
+      userName.value = tokenPayload['name'];
+      userSerial.value = tokenPayload['serial'];
+      userId.value = tokenPayload['id'];
+      isLoggedIn.value = true;
+    } catch (error) {
+      console.error('Failed to decode token:', error);
+      isLoggedIn.value = false;
+    }
+  } else {
+    isLoggedIn.value = false;
+  }
+};
 
 // 로그아웃 함수
 const logout = () => {
   userStore.logoutUser();
+  sessionStorage.removeItem('access-token');
   location.replace('/');
-};
-
-const checkLoginStatus = () => {
-  const token = sessionStorage.getItem('access-token');
-  isLoggedIn.value = !!token;
 };
 
 onMounted(() => {
   checkLoginStatus();
 });
-
-
 </script>
 
 <style scoped>
@@ -89,6 +90,5 @@ onMounted(() => {
 
 .links a:hover {
   color: blue;
-  
 }
 </style>
