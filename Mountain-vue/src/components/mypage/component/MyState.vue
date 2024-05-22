@@ -64,9 +64,9 @@
 
             </div>
             <!-- <MyInfo /> -->
-            <RouterLink :to="{ name: 'MyInfoMain', params: { userId: userId } }">내 정보</RouterLink> |
-            <RouterLink :to="{ name: 'MyFriends' }">친구관리</RouterLink> |
-            <RouterLink :to="{ name: 'MyComplete' }">정복 산</RouterLink>
+            <RouterLink :to="{ name: 'MyInfoMain', params: { userId: `${route.params.userId}` } }">내 정보</RouterLink> |
+            <RouterLink :to="{ name: 'MyFriends', params: { userId: `${route.params.userId}` } }">친구관리</RouterLink> |
+            <RouterLink :to="{ name: 'MyComplete', params: { userId: `${route.params.userId}` } }">정복 산</RouterLink>
             <RouterView />
         </div>
     </div>
@@ -75,8 +75,11 @@
 <script setup>
 import { useUserStore } from '@/stores/userstore';
 import { ref, computed, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import MyInfo from './MyInfo.vue';
 
+const route = useRoute();
+const router = useRouter();
 const userStore = useUserStore();
 
 const userName = ref(''); // 사용자 이름

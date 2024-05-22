@@ -2,41 +2,21 @@
     <div>
         <h1>friends</h1>
 
-        <h1>following</h1>
 
         <div class="search">
             <div>
-                <label>검색 기준 :</label>
-                <select v-model="searchInfo.key">
-                    <option value=''>없음</option>
-                    <option value="name">산 이름</option>
-                    <option value="state">위치</option>
-                </select>
+                <label><input type="text" class="form-control" v-model="name" placeholder="이름을 입력하세요" /></label>
             </div>
             <div>
-                <label><input type="text" class="form-control" v-model="searchInfo.word"
-                        placeholder="산을 입력하세요" /></label>
-            </div>
-            <div>
-                <label>정렬 기준 :</label>
-                <select v-model="searchInfo.orderBy">
-                    <option value=''>없음</option>
-                    <option value="name">산 이름</option>
-                    <option value="state">위치</option>
-                </select>
-            </div>
-            <div>
-                <label>정렬 방향 :</label>
-                <select v-model="searchInfo.orderByDir">
-                    <option value="asc">오름차순</option>
-                    <option value="desc">내림차순</option>
-                </select>
-            </div>
-            <div>
-                <button class="btn btn-primary" @click="searchMountainList"><i class="fas fa-search"
+                <button class="btn btn-primary" @click="searchFriendList"><i class="fas fa-search"
                         style="color: white"></i></button>
             </div>
         </div>
+        
+        <div v-for="friend in userStore.UserList" :key="friend.serial">
+            {{ friend.name }}
+        </div>
+        <h1>following</h1>
 
         <div v-for="following in userStore.FollowingList" :key="following.serial">
             <!-- {{ following.serial }} -->
@@ -65,12 +45,11 @@ import { ref, computed, onMounted } from 'vue';
 
 const userStore = useUserStore();
 
-const searchInfo = ref({
-    key: '',
-    word: '',
-    orderBy: '',
-    orderByDir: 'asc',
-});
+const name = ref('')
+
+const searchFriendList = () => {
+    userStore.getUserByName(name.value, userSerial.value);
+};
 
 const userName = ref(''); // 사용자 이름
 const userSerial = ref(''); // 사용자 serial
@@ -89,6 +68,8 @@ onMounted(() => {
     checkUserSerial();
     userStore.getfollwerList(userSerial.value);
     userStore.getfollwingList(userSerial.value);
+    userStore.getUserByid(`${route.params.userId}`);
+    userStore.UserList = null;
 })
 
 </script>

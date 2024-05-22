@@ -42,8 +42,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> searchByName(String name) {
-		return userDao.selectUserByName(name);
+	public List<User> searchByName(String name, int mySerial) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("userName", name);
+		paramMap.put("mySerial", mySerial);
+
+		return userDao.selectUserByName(paramMap);
 	}
 
 	@Override

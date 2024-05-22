@@ -25,6 +25,8 @@
                             <router-link :to="{ name: 'MyInfoMainModify', params: { userId: userId.value } }">
                                 <button>정보 수정</button>
                             </router-link>
+
+                            <button @click="confirmDeleteUser">회원 탈퇴</button>
                         </div>
                     </div>
                 </div>
@@ -34,8 +36,11 @@
 </template>
 
 <script setup>
+import { useRoute, useRouter } from "vue-router";
+const router = useRouter();
 import { useUserStore } from '@/stores/userstore';
 import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
 const userStore = useUserStore();
 
@@ -61,6 +66,35 @@ const checkUserSerial = () => {
         console.warn('토큰이 없습니다.');
     }
 }
+
+const deleteComment = function () {
+    axios
+        .delete(`http://localhost:8080/api-user/user/${userSerial.value}`)
+        .then(() => {
+            sessionStorage.removeItem('access-token')
+
+        })
+        .catch(() => { });
+};
+
+const confirmDeleteUser = () => {
+    Swal.fire({
+        title: '유저를 삭제하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '삭제',
+        cancelButtonText: '취소'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            deleteComment();
+            Swal.fire('삭제되었습니다!', '', 'success')
+                .then(() => {
+                    checkUserSerial();
+                    location.replace('/');
+                })
+        }
+    });
+};
 
 onMounted(() => {
     checkUserSerial();

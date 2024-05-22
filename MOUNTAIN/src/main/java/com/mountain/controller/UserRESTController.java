@@ -75,9 +75,11 @@ public class UserRESTController {
 	}
 
 	// 사용자 이름 검색
-	@GetMapping("/user/search/name/{name}")
-	public ResponseEntity<?> searchByName(@PathVariable("name") String name) {
-		List<User> userList = userService.searchByName(name);
+	@GetMapping("/user/search/name/{name}/{serial}")
+	public ResponseEntity<?> searchByName(@PathVariable("name") String name, @PathVariable("serial") int serial) {
+		System.out.println(name);
+		System.out.println(serial);
+		List<User> userList = userService.searchByName(name, serial);
 		if (userList == null) {
 			// 검색했는데 없다면
 			return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
