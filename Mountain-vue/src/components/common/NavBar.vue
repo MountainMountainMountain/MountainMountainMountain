@@ -1,9 +1,9 @@
 <template>
-  <div class="container">
-    <div class="userBar">
+  
+    <div class="userBar" >
       <div class="brand">
         <router-link class="navbar-brand" to="/">
-          <img style="width: 64px;" src="" alt="이미지">
+          <img style="width: 64px;" src="@/assets/images/Mlogo.png" alt="이미지">
         </router-link>
       </div>
       <div class="links">
@@ -17,7 +17,6 @@
         <a v-if="isLoggedIn" class="nav-link" @click="logout">로그아웃</a>
       </div>
     </div>
-  </div>
 </template>
 
 <script setup>
@@ -62,19 +61,13 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.container {
-  background-color: rgba(74, 75, 73, 0.33);
-  display: flex;
-  align-items: center;
-  height: 60px;
-}
-
 .userBar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   padding: 0 4%;
+  height: 100px;
 }
 
 .brand {
@@ -96,5 +89,6 @@ onMounted(() => {
 
 .links a:hover {
   color: blue;
+  
 }
 </style>
