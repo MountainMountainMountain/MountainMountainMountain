@@ -1,4 +1,4 @@
-<template>
+title<template>
     <div>
         <div class="mountainbox">
             <div v-if="mountainStore.mountain && Object.keys(mountainStore.mountain).length > 0"

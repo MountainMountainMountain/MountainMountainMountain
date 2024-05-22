@@ -18,4 +18,6 @@ import FooterBar from "./components/common/FooterBar.vue";
   </div>
 </template>
 
-<style></style>
+<style>
+
+</style>

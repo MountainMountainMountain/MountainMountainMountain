@@ -10,8 +10,8 @@
         <li>
           <RouterLink class="buttonbar" :to="{ name: 'MountainLocation' }"><strong>위치</strong></RouterLink>
         </li>
-        <li>
-          <RouterLink v-if="token !== null" @click="showReplyForm = true" :to="{ name: 'Book' }">예약</RouterLink>
+           <li>
+          <RouterLink class="buttonbar" v-if="token !== null" @click="showReplyForm = true" :to="{ name: 'Book' }"><strong>예약</strong></RouterLink>
         </li>
       </ul>
     </div>

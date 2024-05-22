@@ -103,8 +103,8 @@ const createComment = function () {
 
 const confirmCreateComment = () => {
     Swal.fire({
-        title: '댓글을 등록하시겠습니까?',
-        text: "작성한 댓글을 등록하려면 예를 클릭하세요.",
+        title: '리뷰를 등록하시겠습니까?',
+        text: "작성한 리뷰를 등록하려면 예를 클릭하세요.",
         icon: 'question',
         showCancelButton: true,
         confirmButtonText: '예',
@@ -112,7 +112,7 @@ const confirmCreateComment = () => {
     }).then((result) => {
         if (result.isConfirmed) {
             createComment();
-            Swal.fire('등록 완료!', '댓글이 성공적으로 등록되었습니다.', 'success');
+            Swal.fire('등록 완료!', '리뷰가 성공적으로 등록되었습니다.', 'success');
         }
     });
 };
