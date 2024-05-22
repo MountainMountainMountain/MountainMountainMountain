@@ -13,6 +13,8 @@ import Book from "@/components/mountain/component/Book.vue";
 import MypageView from "@/views/MypageView.vue";
 import MyPage from "@/components/mypage/page/MyPage.vue";
 import MyInfo from "@/components/mypage/component/MyInfo.vue";
+import Info from "@/components/mypage/component/Info.vue";
+import ModifyInfo from "@/components/mypage/component/ModifyInfo.vue";
 import MyComplete from "@/components/mypage/component/MyComplete.vue";
 import MyFriends from "@/components/mypage/component/MyFriends.vue";
 
@@ -78,7 +80,7 @@ const router = createRouter({
       ],
     },
     {
-      path: '/mypage',
+      path: '/mypage/:userId',
       name: 'MyPage',
       component: MyPage,
       children: [
@@ -86,6 +88,18 @@ const router = createRouter({
           path: 'myInfo',
           name: 'MyInfo',
           component: MyInfo,
+          children: [
+            {
+              path: '',
+              name: 'MyInfoMain',
+              component: Info,
+            },
+            {
+              path: 'modify',
+              name: 'MyInfoMainModify',
+              component: ModifyInfo,
+            },
+          ]
         },
         {
           path: 'myFriends',

@@ -34,7 +34,7 @@
 	<update id="modifyUser" parameterType="User">
 		UPDATE User
 		SET id = #{id},
-		password = #{password}, name = #{name}, age = #{age}, email = #{email}
+		password = #{password}, name = #{name}, birth_date = #{birthDate}, email = #{email}
 		WHERE id = #{id};
 	</update>
 

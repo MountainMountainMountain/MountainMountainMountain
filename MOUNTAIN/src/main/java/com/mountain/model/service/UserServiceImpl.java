@@ -30,14 +30,14 @@ public class UserServiceImpl implements UserService {
 	public void signup(User user) {
 		userDao.createUser(user);
 	}
-	
+
 	@Override
 	public void modifyUser(User user) {
 		userDao.modifyUser(user);
 	}
 
 	@Override
-	public List<User> searchById(String id) {
+	public User searchById(String id) {
 		return userDao.selectUserById(id);
 	}
 

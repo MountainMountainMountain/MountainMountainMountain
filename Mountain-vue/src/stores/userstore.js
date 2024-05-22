@@ -39,7 +39,7 @@ export const useUserStore = defineStore('user', () => {
   const getUserByid = function (id) {
     axios.get(`${REST_USER_API}/user/search/id/${id}`)
       .then((response) => {
-        UserList.value = response.data
+        User.value = response.data
       })
   }
 
@@ -72,6 +72,7 @@ export const useUserStore = defineStore('user', () => {
         password
       })
         .then((res) => {
+          console.log(headers)
           sessionStorage.setItem('access-token', res.data["access-token"]);
 
           const token = res.data['access-token'].split('.');
@@ -154,19 +155,25 @@ export const useUserStore = defineStore('user', () => {
         data: user
       })
         .then(() => {
-          router.push({ name: 'Login' })
+          resolve();
         })
         .catch((err) => {
-          console.log(err)
+          reject();
         })
     });
   }
 
-  const updateUser = function (userSerial) {
-    axios.put(`${REST_USER_API}/user/${LoginUser.value.userSerial}`, User.value)
-      .then(() => {
-        router.push({ name: 'MyInfo' })
-      })
+  const updateUser = function (user) {
+    return new Promise((resolve, reject) => {
+      axios.put(`${REST_USER_API}/user/${user.serial}`, user)
+        .then(() => {
+          User.value = user
+          resolve();
+        })
+        .catch((error) => {
+          reject(error);
+        })
+    });
   }
 
 
@@ -185,7 +192,7 @@ export const useUserStore = defineStore('user', () => {
     axios.get(`${REST_USER_API}/follow/followingList/${toFollow}`)
       .then((response) => {
         FollowingList.value = response.data
-        console.log(FollowingList.value)
+
       })
       .catch((err) => {
         console.log(err)

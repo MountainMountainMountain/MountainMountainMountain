@@ -16,7 +16,7 @@ public interface UserService {
 	void modifyUser(User user);
 
 	// 사용자 아이디 검색
-	public List<User> searchById(String id);
+	public User searchById(String id);
 
 	// 사용자 이름 검색
 	public List<User> searchByName(String name);

@@ -244,7 +244,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 INSERT INTO User (id, password, name, birth_date, gender, email, point)
 VALUES
 ('user1', 'password1', 'John Doe', '1990-01-01', 'M', 'john@example.com', 100),
-('user2', 'password2', 'Jane Doe', '1992-05-15', 'F', 'jane@example.com', 150),
+('user2', 'password2', 'Jane Doe 가나', '1992-05-15', 'F', 'jane@example.com', 150),
 ('user3', 'password3', 'Alice Smith', '1985-11-20', 'F', 'alice@example.com', 200),
 ('user4', 'password4', 'Bob Johnson', '1988-03-10', 'M', 'bob@example.com', 120),
 ('user5', 'password5', 'Charlie Brown', '1995-07-05', 'M', 'charlie@example.com', 180),
@@ -371,7 +371,9 @@ VALUES
 
 
 -- User 테이블 조회
-SELECT * FROM User;
+SELECT * FROM User
+LIMIT 300
+;
 
 -- Mountain 테이블 조회
 SELECT * FROM Mountain;
@@ -412,42 +414,45 @@ WHERE u.serial = c.user_serial AND m.serial = c.mountain_serial AND c.user_seria
 SELECT * FROM comment, user u
 WHERE comment.user_serial = u.serial;
 
--- SELECT 
---     c.serial AS serial,
---     c.title AS title,
---     c.mountain_serial AS mountainSerial,
---     c.user_serial AS userSerial,
---     u.id AS id,
---     u.name AS name,
---     u.gender AS gender,
---     u.point AS point,
---     c.content AS content,
---     c.reg_date AS regDate,
---     c.update_date AS updateDate,
---     c.calorie AS calorie,
---     c.turnaround AS turnaround,
---     c.view_count AS view_count
--- FROM 
---     comment c
--- JOIN 
---     user u ON c.user_serial = u.serial;
---     
---     		SELECT 
--- 		    c.serial AS serial,
--- 		    c.title AS title,
--- 		    c.mountain_serial AS mountainSerial,
--- 		    c.user_serial AS userSerial,
--- 		    u.id AS id,
--- 		    u.name AS name,
--- 		    u.gender AS gender,
--- 		    u.point AS point,
--- 		    c.content AS content,
--- 		    c.reg_date AS regDate,
--- 		    c.update_date AS updateDate,
--- 		    c.calorie AS calorie,
--- 		    c.turnaround AS turnaround,
--- 		    c.view_count AS viewCount  -- view_count에서 viewCount로 수정
--- 		FROM 
--- 		    comment c
--- 		JOIN 
--- 		    user u ON c.user_serial = u.serial;
+SELECT 
+    c.serial AS serial,
+    c.title AS title,
+    c.mountain_serial AS mountainSerial,
+    c.user_serial AS userSerial,
+    u.id AS id,
+    u.name AS name,
+    u.gender AS gender,
+    u.point AS point,
+    c.content AS content,
+    c.reg_date AS regDate,
+    c.update_date AS updateDate,
+    c.calorie AS calorie,
+    c.turnaround AS turnaround,
+    c.view_count AS view_count
+FROM 
+    comment c
+JOIN 
+    user u ON c.user_serial = u.serial;
+
+SELECT 
+    c.serial AS serial,
+    c.title AS title,
+    c.mountain_serial AS mountainSerial,
+    c.user_serial AS userSerial,
+    u.id AS id,
+    u.name AS name,
+    u.gender AS gender,
+    u.point AS point,
+    c.content AS content,
+    c.reg_date AS regDate,
+    c.update_date AS updateDate,
+    c.calorie AS calorie,
+    c.turnaround AS turnaround,
+    c.view_count AS viewCount
+FROM 
+    comment c
+JOIN 
+    user u ON c.user_serial = u.serial;
+
+INSERT INTO User (id, password, name, birth_date, gender, email)
+VALUES ('aecvxdr', 'qwerasdfzxcv', '가나다라마', '1990-01-01 09:00:00.0', 'F', 'fc@awefds.da');

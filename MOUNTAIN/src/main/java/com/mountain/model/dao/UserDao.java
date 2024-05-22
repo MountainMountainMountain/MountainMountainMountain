@@ -14,7 +14,7 @@ public interface UserDao {
 	void createUser(User user);
 
 	// 사용자 아이디 검색
-	List<User> selectUserById(String userId);
+	User selectUserById(String userId);
 
 	// 사용자 이름 검색
 	List<User> selectUserByName(String userName);

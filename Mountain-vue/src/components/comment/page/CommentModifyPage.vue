@@ -37,7 +37,7 @@ const updateBoard = function () {
     commentStore.updateComment()
         .then(() => {
             router.push({
-                name: 'CommentDetailPage', 
+                name: 'CommentDetailPage',
                 params: { commentSerial: commentStore.Comment.serial }
             })
         })
@@ -54,6 +54,12 @@ const checkUserSerial = () => {
         userStore.getUserByid(userSerial.value);
     }
 }
+
+const backButton = function () {
+    router.go(-1);
+    // router.back();
+}
+
 onMounted(() => {
     checkUserSerial();
 });

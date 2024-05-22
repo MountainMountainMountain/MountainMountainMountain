@@ -47,12 +47,14 @@ public class UserRESTController {
 	public ResponseEntity<?> signup(@RequestBody User user) {
 		System.out.println(user);
 		userService.signup(user);
-		return new ResponseEntity<User>(user,HttpStatus.CREATED);
+		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
 
 	// 사용자 수정
 	@PutMapping("/user/{userSerial}")
-	public ResponseEntity<?> putMethodName(@PathVariable("int") int userSerial, @RequestBody User user) {
+	public ResponseEntity<?> putMethodName(@PathVariable("userSerial") int userSerial, @RequestBody User user) {
+		System.out.println(user);
+		System.out.println(userSerial);
 		user.setSerial(userSerial);
 		userService.modifyUser(user);
 
@@ -62,13 +64,13 @@ public class UserRESTController {
 	// 사용자 아이디 검색
 	@GetMapping("/user/search/id/{id}")
 	public ResponseEntity<?> searchById(@PathVariable("id") String id) {
-		List<User> userList = userService.searchById(id);
-		if (userList == null) {
+		User user = userService.searchById(id);
+		if (user == null) {
 			// 검색했는데 없다면
 			return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
 		} else {
-			System.out.println(userList);
-			return new ResponseEntity<List<User>>(userList, HttpStatus.OK);
+			System.out.println(user);
+			return new ResponseEntity<User>(user, HttpStatus.OK);
 		}
 	}
 
@@ -122,7 +124,7 @@ public class UserRESTController {
 	public ResponseEntity<?> login(@RequestBody User user) {
 
 		System.out.println(user);
-		
+
 		HttpStatus status = null;
 		Map<String, Object> result = new HashMap<>();
 		// 서비스 -> 다오 -> DB
