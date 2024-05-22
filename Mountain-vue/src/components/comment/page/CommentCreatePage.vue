@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!-- {{  CommentStore.createComment }} -->
         <div class="commentbox mx-auto">
             <h3>{{ mountainStore.mountain.name }}</h3>
             <fieldset class="rate">
@@ -44,7 +43,8 @@
                 <label for="content">내용</label>
             </div>
             <div class="d-flex justify-content-end">
-                <button class="btn btn-outline-primary" @click="confirmCreateComment">등록</button>
+                <button class="btn btn-outline-primary me-2" @click="confirmCreateComment">등록</button>
+                <button class="btn btn-light back-button" @click="backButton">취소</button>
             </div>
         </div>
     </div>
@@ -64,7 +64,6 @@ const userStore = useUserStore();
 const route = useRoute();
 const router = useRouter();
 
-const token = sessionStorage.getItem('access-token');
 
 const comment = ref({
     title: "",
@@ -80,13 +79,18 @@ const userName = ref(''); // 사용자 이름
 const userSerial = ref(''); // 사용자 serial
 
 const checkUserSerial = () => {
-    if (token !== null) {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        userName.value = payload.name;
-        userSerial.value = payload.serial;
-        userStore.getUserByid(userSerial.value);
+    const token = sessionStorage.getItem('access-token');
+    if (token) {
+        try {
+            const tokenPayload = JSON.parse(decodeURIComponent(escape(atob(token.split('.')[1]))));
+            userName.value = tokenPayload['name'];
+            userSerial.value = tokenPayload['serial'];
+        } catch (error) {
+            console.error('Failed to decode token:', error);
+        }
+    } else {
     }
-}
+};
 
 const createComment = function () {
     comment.value.userSerial = userSerial.value;
@@ -95,11 +99,15 @@ const createComment = function () {
     CommentStore.createComment(comment.value)
         .then(() => {
             router.push({
-                name: 'MountainInfo', 
+                name: 'MountainInfo',
                 params: { mountainSerial: route.params.mountainSerial }
             });
         })
 };
+
+const updateUserPoint = function () {
+    userStore.updateUserPoint(userSerial.value, mountainStore.mountain.point)
+}
 
 const confirmCreateComment = () => {
     Swal.fire({
@@ -112,9 +120,15 @@ const confirmCreateComment = () => {
     }).then((result) => {
         if (result.isConfirmed) {
             createComment();
+            updateUserPoint();
             Swal.fire('등록 완료!', '리뷰가 성공적으로 등록되었습니다.', 'success');
         }
     });
+};
+
+const backButton = function () {
+    router.go(-1);
+    // router.back();
 };
 
 onMounted(() => {
@@ -183,5 +197,9 @@ onMounted(() => {
 .rate input:checked~.rate label:hover~label,
 .rate label:hover~input:checked~label {
     color: #f73c32 !important;
+}
+
+.back-button {
+    margin-left: 10px;
 }
 </style>

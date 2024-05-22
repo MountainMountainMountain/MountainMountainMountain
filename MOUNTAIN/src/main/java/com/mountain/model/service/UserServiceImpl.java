@@ -74,9 +74,15 @@ public class UserServiceImpl implements UserService {
 		info.put("password", password);
 		return userDao.login(info);
 	}
+	
+	@Override
+	public void updateUserPoint(int serial, int mountainPoint) {
+		userDao.modifyUserPoint(serial, mountainPoint);
+	}
 
 	@Override
 	public boolean checkAlreadyFollowing(int fromFollow, int toFollow) {
+		System.out.println(followDao.checkAlreadyFollowing(fromFollow, toFollow));
 		return followDao.checkAlreadyFollowing(fromFollow, toFollow) == 1;
 	}
 

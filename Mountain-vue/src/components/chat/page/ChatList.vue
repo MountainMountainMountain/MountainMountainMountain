@@ -4,7 +4,9 @@
 
         <div>로그인 유저의 시리얼 : {{ userSerial }}</div>
 
-        <div>
+        
+
+        <!-- <div>
             <div v-for="chatlog in chatStore.ChatLogList" :key="chatlog.serial">
                 <div v-if="userSerial == chatlog.userSerial" style="text-align: right;">
                     <span> 가는 산: {{ chatlog.mountainName }}</span>
@@ -27,7 +29,7 @@
                     <span> , userserial: {{ chatlog.userSerial }}</span>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 

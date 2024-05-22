@@ -11,6 +11,7 @@ export const useUserStore = defineStore('user', () => {
   const loginUserSerial = ref(null);
   const loginUserId = ref(null);
   const loginUserName = ref(null);
+  const loginPassword = ref(null);
   const loginUserBirthDate = ref(null);
   const loginUserGender = ref(null);
   const loginUserEmail = ref(null);
@@ -95,9 +96,11 @@ export const useUserStore = defineStore('user', () => {
           const tokenPayload = JSON.parse(decodeURIComponent(escape(atob(token[1]))));
           let id = tokenPayload['id'];
           let name = tokenPayload['name'];
+          let password = tokenPayload['id'];
 
           loginUserName.value = name;
           loginUserId.value = id;
+          loginPassword.value = password;
           console.log(loginUserName.value)
           // loginUserName.value = JSON.parse(atob(token[1]))['name']; // 사용자 이름 설정
 
@@ -195,16 +198,32 @@ export const useUserStore = defineStore('user', () => {
     });
   }
 
+  const updateUserPoint = function (userSerial, point) {
+    return new Promise((resolve, reject) => {
+      axios.get(`${REST_USER_API}/user/point/${userSerial}/${point}`)
+        .then(() => {
+          resolve();
+        })
+        .catch((error) => {
+          reject(error);
+        })
+    });
+  }
+
 
 
   // Follow
   const createFollow = function (fromFollow, toFollow) {
-    axios.get(`${REST_USER_API}/follow/${fromFollow}/${toFollow}`)
-      .then((response) => {
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    return new Promise((resolve, reject) => {
+      axios.get(`${REST_USER_API}/follow/${fromFollow}/${toFollow}`)
+        .then((response) => {
+          resolve()
+        })
+        .catch((err) => {
+          console.log(err)
+          reject()
+        })
+    });
   }
 
   const getfollwingList = function (toFollow) {
@@ -228,5 +247,5 @@ export const useUserStore = defineStore('user', () => {
       })
   }
 
-  return { User, LoginUser, UserList, FollowingList, FollowerList, getUser, getUserByName, getUserByid, checkId, checkEmail, userLogin, logoutUser, createUser, updateUser, createFollow, getfollwingList, getfollwerList, }
+  return { User, LoginUser, UserList, FollowingList, FollowerList, getUser, getUserByName, getUserByid, checkId, checkEmail, userLogin, logoutUser, createUser, updateUser, createFollow, getfollwingList, getfollwerList, updateUserPoint, loginUserId, loginUserName, loginPassword }
 })
