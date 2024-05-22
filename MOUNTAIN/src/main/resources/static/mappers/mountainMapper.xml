@@ -51,10 +51,7 @@
 		FROM Mountain
 		<!-- 동적쿼리(검색 조건) -->
 		<if test="key != ''">
-			WHERE ${key} LIKE concat( '%', #{word}, '%' )
-		</if>
-		<if test="state != '전체'">
-			 AND state = #{state}
+			WHERE ${key} LIKE concat( '%', #{word}, '%' ) AND state = #{state}
 		</if>
 		<!-- 동적쿼리(정렬 조건) -->
 		<if test="orderBy != ''">
