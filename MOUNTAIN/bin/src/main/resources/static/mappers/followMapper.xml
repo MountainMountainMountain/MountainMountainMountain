@@ -17,9 +17,7 @@
 		SELECT COUNT(*)
 		FROM Follow
 		WHERE from_serial = #{fromFollow} AND to_serial = #{toFollow}
-		
 	</select>
-	
 
 	<insert id="createFollow" parameterType="int">
 		INSERT INTO Follow

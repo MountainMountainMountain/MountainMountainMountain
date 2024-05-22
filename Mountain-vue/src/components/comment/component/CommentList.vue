@@ -2,6 +2,8 @@
     <div>
         <div class="table-responsive">
             <h3>{{ mountainStore.mountain.name }} Review</h3>
+            <hr>
+            <br>
             <div class="search">
                 <div>
                     <label>검색 기준 :</label>
@@ -13,10 +15,6 @@
                     </select>
                 </div>
                 <div>
-                    <label>검색 내용 :</label>
-                    <input type="text" v-model="searchInfo.word" />
-                </div>
-                <div>
                     <label>정렬 기준 :</label>
                     <select v-model="searchInfo.orderBy">
                         <option value=''>없음</option>
@@ -24,6 +22,10 @@
                         <option value="title">제목</option>
                         <option value="viewCount">조회수</option>
                     </select>
+                </div>
+                <div>
+                    <label>검색 내용 :</label>
+                    <input type="text" v-model="searchInfo.word" />
                 </div>
                 <div>
                     <label>정렬 방향 :</label>
@@ -51,18 +53,18 @@
                             :to="{ name: 'CommentDetailPage', params: { commentSerial: `${comment.serial}` } }">
                             <th scope="row">{{ index + 1 }}</th>
                         </router-link>
-                        <td>{{ comment.title }}</td>
                         <td>
                             <router-link
                                 :to="{ name: 'CommentDetailPage', params: { commentSerial: `${comment.serial}` } }">
-                                {{ comment.name }}
+                                {{ comment.title }}
                             </router-link>
                         </td>
+                        <td>{{ comment.name }}</td>
                         <td>{{ comment.viewCount }}</td>
                     </tr>
                 </tbody>
             </table>
-          
+
         </div>
     </div>
 </template>
@@ -132,6 +134,7 @@ onMounted(() => {
     flex-wrap: wrap;
     gap: 1rem;
     margin-bottom: 1rem;
+    align-content: center;
 }
 
 .search div {
