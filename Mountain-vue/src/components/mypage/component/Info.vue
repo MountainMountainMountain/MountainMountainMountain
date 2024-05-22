@@ -13,18 +13,18 @@
                                         <a> 아이디: {{ userStore.User.id }}</a>
                                     </div>
                                     <div class="info-item">
-                                        <img src="@/assets/images/mountain1.jpg" alt="프로필" class="rounded-circle">
+                                        <i class="bi bi-envelope"></i>
                                         <a> 이메일: {{ userStore.User.email }}</a>
                                     </div>
                                     <div class="info-item">
-                                        <img src="@/assets/images/mountain1.jpg" alt="프로필" class="rounded-circle">
+                                        <i class="bi bi-person"></i>
                                         <a> 이름: {{ userStore.User.name }}</a>
                                     </div>
                                 </div>
                             </div>
-                            <router-link
-                                :to="{ name: 'MyInfoMainModify', params: { userId: userId.value } }"><button>123</button></router-link>
-
+                            <router-link :to="{ name: 'MyInfoMainModify', params: { userId: userId.value } }">
+                                <button>정보 수정</button>
+                            </router-link>
                         </div>
                     </div>
                 </div>
@@ -34,9 +34,8 @@
 </template>
 
 <script setup>
-// import MyState from './MyState.vue';
 import { useUserStore } from '@/stores/userstore';
-import { ref, computed, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const userStore = useUserStore();
 
@@ -46,25 +45,35 @@ const userId = ref(''); // 사용자 id
 const userEmail = ref(''); // 사용자 email
 const token = sessionStorage.getItem('access-token');
 
-// let id = JSON.parse(atob(token[1]))['id'];
-
-
 const checkUserSerial = () => {
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    userName.value = payload.name;
-    userSerial.value = payload.serial;
-    userId.value = payload.id;
-    userEmail.value = payload.email;
-    console.log(payload)
+    if (token) {
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            userName.value = payload.name;
+            userSerial.value = payload.serial;
+            userId.value = payload.id;
+            userEmail.value = payload.email;
+            console.log(payload);
+        } catch (error) {
+            console.error('토큰 파싱 중 오류 발생:', error);
+        }
+    } else {
+        console.warn('토큰이 없습니다.');
+    }
 }
 
 onMounted(() => {
     checkUserSerial();
-    userStore.getUserByid(userId.value)
-    // userStore.getUserByid();
-    // userStore.getfollwingList(userStore.User);
-    // userStore.getfollwerList(userStore.User);
-})
+    if (userId.value) {
+        userStore.getUserByid(userId.value)
+            .then(() => {
+                console.log('사용자 정보 로드 완료');
+            })
+            .catch((error) => {
+                console.error('사용자 정보 로드 중 오류 발생:', error);
+            });
+    }
+});
 </script>
 
 <style scoped>
@@ -95,9 +104,12 @@ onMounted(() => {
     margin-bottom: 10px;
 }
 
-.info-item img {
-    width: 30px;
-    height: 30px;
+.info-item i {
     margin-right: 10px;
+}
+
+.info-item a {
+    text-decoration: none;
+    color: black;
 }
 </style>

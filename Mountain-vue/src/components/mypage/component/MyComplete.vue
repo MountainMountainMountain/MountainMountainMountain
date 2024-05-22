@@ -9,7 +9,7 @@
             <br>
             난이도 : {{ mountain.difficulty }}
             <br>
-            도 : {{ mountain.state }}
+            위치 : {{ mountain.state }}
         </div>
     </div>
 </template>

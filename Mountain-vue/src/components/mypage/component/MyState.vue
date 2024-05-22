@@ -7,8 +7,38 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex align-items-center flex-column flex-md-row">
-                                <img src="@/assets/images/daram.jpg" alt="프로필" style="width: 140px; height: 140px;"
-                                    class="rounded-circle">
+
+
+                                <div v-if="userStore.User.point > 1000">
+                                    <img src="@/assets/images/daram.jpg" alt="프로필" style="width: 140px; height: 140px;"
+                                        class="rounded-circle"> 하늘다람쥐
+                                </div>
+                                <div v-else-if="1000 > userStore.User.point && userStore.User.point > 800">
+                                    <img src="@/assets/images/daram.jpg" alt="프로필" style="width: 140px; height: 140px;"
+                                        class="rounded-circle"> 산신령
+                                </div>
+                                <div v-else-if="800 > userStore.User.point && userStore.User.point > 600">
+                                    <img src="@/assets/images/daram.jpg" alt="프로필" style="width: 140px; height: 140px;"
+                                        class="rounded-circle"> 모자, 선글라스, 스틱
+                                </div>
+                                <div v-else-if="600 > userStore.User.point && userStore.User.point > 400">
+                                    <img src="@/assets/images/daram.jpg" alt="프로필" style="width: 140px; height: 140px;"
+                                        class="rounded-circle"> 모자 선글라스
+                                </div>
+                                <div v-else-if="400 > userStore.User.point && userStore.User.point > 200">
+                                    <img src="@/assets/images/daram.jpg" alt="프로필" style="width: 140px; height: 140px;"
+                                        class="rounded-circle"> 모자
+                                </div>
+                                <div v-else-if="200 > userStore.User.point && userStore.User.point >= 0">
+                                    <img src="@/assets/images/daram.jpg" alt="프로필" style="width: 140px; height: 140px;"
+                                        class="rounded-circle"> 원형
+                                </div>
+
+                                <!-- <img src="@/assets/images/daram.jpg" alt="프로필" style="width: 140px; height: 140px;"
+                                    class="rounded-circle"> -->
+
+
+
                                 <div class="media-body ms-md-5 m-0 mt-4 mt-md-0 text-md-start text-center">
                                     <h5 class="font-weight-bold d-inline-block me-2"> </h5>{{ userName }}님
                                     <!-- 여기 이름 {{  }} 들어와야 해 -->
