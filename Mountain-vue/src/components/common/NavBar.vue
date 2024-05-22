@@ -69,6 +69,10 @@ onMounted(() => {
   width: 100%;
   padding: 0 4%;
   height: 100px;
+  font-family: "Gowun Dodum", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: large;
 }
 
 .brand {
