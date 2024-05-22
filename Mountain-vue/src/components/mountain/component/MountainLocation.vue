@@ -95,12 +95,13 @@ const displayMarker = function (markerPositions) {
   width: 60%;
   height: calc(80vw * 0.6 / 10 * 7); /* 가로 10 세로 8 비율로 설정 */
   margin: 0 auto; /* 가운데 정렬 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 .mapbox {
   text-align: center;
   padding: 30px;
-  background-color: rgb(230, 229, 229);
-  border: 1px solid black;
+  background-color: rgb(246, 246, 246);
+  border: none;
   width: 100%;
   height: auto
 }

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="table-responsive">
-            <h3>{{ mountainStore.mountain.name }} Review</h3>
+            <h3 class="card-title">{{ mountainStore.mountain.name }} Review</h3>
             <hr>
             <br>
             <div class="search">
@@ -166,5 +166,9 @@ onMounted(() => {
 
 .search button:hover {
     background-color: #0056b3;
+}
+.card-title{
+    font-family: "Nanum Myeongjo", serif;
+    font-weight: bold;
 }
 </style>

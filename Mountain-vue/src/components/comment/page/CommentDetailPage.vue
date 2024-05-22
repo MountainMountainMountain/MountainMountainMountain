@@ -1,52 +1,62 @@
 <template>
     <div class="review-container">
-            <h1>{{ mountainStore.mountain.name }}</h1>
-        <div class="details-container">
-            <div class="detail-item">
-                <strong>제목</strong>
-                <span class="detail-content">{{ commentStore.Comment.title }}</span>
-                <span class="view-count">조회 수 {{ commentStore.Comment.viewCount }}</span>
-            </div>
-            <div class="detail-item">
-                <strong>작성자</strong>
-                <span class="detail-content">{{ commentStore.Comment.name }}</span>
-            </div>
-            <div class="detail-item content-item">
-                <strong>내용</strong>
-                <div class="content">
-                    <img v-if="commentStore.Comment.image" :src="commentStore.Comment.image" alt="Comment Image"
-                        class="content-image">
-                    <p>{{ commentStore.Comment.content }}</p>
+        <hr>
+        <h1>{{ mountainStore.mountain.name }}</h1>
+        <br>
+        <div class="main-container">
+            <div class="details-container">
+                <div class="detail-item">
+                    <strong>제목</strong>
+                    <span class="detail-content">{{ commentStore.Comment.title }}</span>
+                    <span class="view-count">조회 수 {{ commentStore.Comment.viewCount }}</span>
+                </div>
+                <div class="detail-item">
+                    <strong>작성자</strong>
+                    <span class="detail-content">{{ commentStore.Comment.name }}</span>
+                </div>
+                <div class="detail-item">
+                    <strong>작성시간</strong>
+                    <span class="detail-content">{{ formatDate(commentStore.Comment.regDate) }}</span>
+                </div>
+
+                <div class="detail-item content-item">
+                    <strong>내용</strong>
+                    <div class="content">
+                        <img v-if="commentStore.Comment.image" :src="commentStore.Comment.image" alt="Comment Image"
+                            class="content-image">
+                        <p>{{ commentStore.Comment.content }}</p>
+                    </div>
+                </div>
+                <div v-if="commentStore.Comment.userSerial == userSerial" class="detail-item">
+                    <button id="modifybutton">
+                        <RouterLink
+                            :to="{ name: 'CommentModifyPage', params: { commentSerial: route.params.commentSerial } }">
+                            리뷰 수정
+                        </RouterLink>
+                    </button>
+                    <button @click="confirmDeleteComment">리뷰 삭제</button>
                 </div>
             </div>
-            <div v-if="commentStore.Comment.userSerial == userSerial" class="detail-item">
-                <button id="modifybutton">
-                    <RouterLink
-                        :to="{ name: 'CommentModifyPage', params: { commentSerial: route.params.commentSerial } }">
-                        리뷰 수정
-                    </RouterLink>
-                </button>
-                <button @click="confirmDeleteComment">리뷰 삭제</button>
+            <div class="replybox">
+                <ul class="reply-list">
+                    <li v-for="reply in replyStore.ReplyList" :key="reply.serial" class="reply-item">
+                        <span id="replyname">{{ reply.name }}</span>
+                        <br>
+                        <span>{{ reply.content }}</span>
+                        <button v-if="reply.userSerial == userSerial" @click="confirmDeleteReply(reply)">댓글 삭제</button>
+
+                        <button v-if="reply.userSerial == userSerial" @click="confirmDeleteReply(reply)">등록</button>
+                    </li>
+                </ul>
+                <button v-if="token !== null" @click="showReplyForm = true">댓글 작성하기</button>
+                <div v-if="showReplyForm" class="reply-form">
+                    <textarea v-model="reply.content" placeholder="댓글 내용을 입력하세요"></textarea>
+                    <button @click="postReply">댓글 작성</button>
+                </div>
             </div>
-        </div>
-
-        <ul class="reply-list">
-            <li v-for="reply in replyStore.ReplyList" :key="reply.serial" class="reply-item">
-                <span>User Serial: {{ reply.name }}</span>
-                <span>, Reply Content: {{ reply.content }}</span>
-                <button v-if="reply.userSerial == userSerial" @click="confirmDeleteReply(reply)">댓글 삭제</button>
-            </li>
-        </ul>
-
-        <button v-if="token !== null" @click="showReplyForm = true">댓글 작성하기</button>
-
-        <div v-if="showReplyForm" class="reply-form">
-            <textarea v-model="reply.content" placeholder="댓글 내용을 입력하세요"></textarea>
-            <button @click="postReply">댓글 작성</button>
         </div>
     </div>
 </template>
-
 
 <script setup>
 import { useRoute, useRouter } from "vue-router";
@@ -150,26 +160,37 @@ const postReply = function () {
         });
     showReplyForm.value = false;
 };
-</script>
 
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = (1 + date.getMonth()).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  return `${year}년 ${month}월 ${day}일`;
+};
+
+</script>
 
 <style scoped>
 .review-container {
-    width: 60%;
+    width: 80%;
     margin: 0 auto;
     margin-top: 20px;
     text-align: center;
 }
 
-.details-container {
+.main-container {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.details-container {
+    width: 70%;
     background-color: #f9f9f9;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin: 20px 0;
+    margin-right: 20px;
 }
 
 .detail-item {
@@ -225,6 +246,17 @@ const postReply = function () {
     margin-bottom: 10px;
 }
 
+.replybox {
+    width: 30%;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+    max-height: 500px;
+    /* Adjust as needed */
+}
+
 .reply-list {
     list-style-type: none;
     padding: 0;
@@ -232,6 +264,17 @@ const postReply = function () {
 
 .reply-item {
     margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#replyname {
+    align-self: flex-start;
 }
 
 .reply-form {
@@ -264,4 +307,8 @@ const postReply = function () {
     align-items: center;
 }
 
+.reply-item button {
+    align-self: center;
+    margin-top: 10px;
+}
 </style>

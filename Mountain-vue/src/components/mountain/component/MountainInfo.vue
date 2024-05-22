@@ -1,4 +1,4 @@
-title<template>
+<template>
     <div>
         <div class="mountainbox">
             <div v-if="mountainStore.mountain && Object.keys(mountainStore.mountain).length > 0"
@@ -42,6 +42,7 @@ title<template>
             <div v-else>
                 Loading...
             </div>
+            
         </div>
         <CommentStar />
         <CommentList />
@@ -57,6 +58,7 @@ import { useMountainStore } from '@/stores/mountainstore';
 import { useRoute } from "vue-router";
 import CommentStar from '@/components/comment/component/CommentStar.vue';
 import CommentList from '@/components/comment/component/CommentList.vue';
+
 
 const route = useRoute();
 const mountainStore = useMountainStore();
@@ -76,6 +78,10 @@ onMounted(() => {
     border: none;
     text-align: center;
     padding: 30px;
+}
+.card-title{
+    font-family: "Nanum Myeongjo", serif;
+    font-weight: bold;
 }
 
 .mountainbody {
