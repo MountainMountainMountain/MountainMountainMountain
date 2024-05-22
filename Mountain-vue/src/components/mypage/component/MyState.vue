@@ -23,8 +23,7 @@
                                         <strong>팔로워 {{ userStore.FollowerList.length }}</strong> <span
                                             class="text-muted"></span> </a>
                                     <br>
-                                    <a v-if="level != '3'"
-                                        class="text-decoration-none d-inline-block text-primary">
+                                    <a v-if="level != '3'" class="text-decoration-none d-inline-block text-primary">
                                         <strong>팔로잉 {{ userStore.FollowingList.length }}</strong> <span
                                             class="text-muted"></span> </a>
                                 </div>
@@ -35,7 +34,7 @@
 
             </div>
             <!-- <MyInfo /> -->
-            <RouterLink :to="{ name: 'MyInfo' }">내 정보</RouterLink> |
+            <RouterLink :to="{ name: 'MyInfoMain', params: { userId: userId } }">내 정보</RouterLink> |
             <RouterLink :to="{ name: 'MyFriends' }">친구관리</RouterLink> |
             <RouterLink :to="{ name: 'MyComplete' }">정복 산</RouterLink>
             <RouterView />

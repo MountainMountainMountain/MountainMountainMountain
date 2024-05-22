@@ -10,7 +10,8 @@
         <router-link v-if="!isLoggedIn" class="nav-link" :to="{ name: 'Login' }">로그인</router-link>
         <router-link v-if="!isLoggedIn" class="nav-link" :to="{ name: 'SignUp' }"><i
             class="fas fa-user-plus"></i></router-link>
-        <router-link v-if="isLoggedIn" class="nav-link" :to="{ name: 'MyInfo' }">{{ userName }}님</router-link>
+        <router-link v-if="isLoggedIn" class="nav-link" :to="{ name: 'MyInfoMain', params: { userId: userId } }">{{
+          userName }}님</router-link>
         <router-link v-if="isLoggedIn" class="nav-link" :to="{ name: 'ChatList' }"><i
             class="fas fa-comments"></i></router-link>
         <a v-if="isLoggedIn" class="nav-link" @click="logout">로그아웃</a>
@@ -28,6 +29,8 @@ const userStore = useUserStore();
 const route = useRoute();
 const isLoggedIn = ref(false);
 const userName = ref(''); // 사용자 이름
+const userSerial = ref(''); // 사용자 이름
+const userId = ref(''); // 사용자 이름
 
 const router = useRouter();
 
@@ -36,6 +39,8 @@ const token = sessionStorage.getItem('access-token');
 if (token) {
   const payload = JSON.parse(atob(token.split('.')[1]));
   userName.value = payload.name;
+  userSerial.value = payload.serial;
+  userId.value = payload.id;
 }
 
 // 로그아웃 함수

@@ -71,7 +71,7 @@ const createUser = () => {
             router.push({ name: 'Login' })
         })
         .catch(() => {
-
+            
         })
 }
 
