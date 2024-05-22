@@ -70,7 +70,8 @@ const searchInfo = ref({
 const mountainstore = useMountainStore()
 
 const searchMountainList = function () {
-  mountainstore.searchMountainList(searchInfo.value)
+    searchInfo.value.state = route.params.state
+    mountainstore.searchMountainList(searchInfo.value)
   // .then(() => {
   // })
   // .catch(() => {
@@ -81,9 +82,11 @@ const fetchMountains = () => {
   if (route.params.state == "전체") {
     mountainstore.getMountainList();
     console.log(route.params.state)
+    console.log(222)
   }
   else {
     console.log(route.params.state)
+    console.log(111)
     mountainstore.getMountainState(route.params.state);
   }
 };
