@@ -1,60 +1,80 @@
 <template>
-    <div>
-        <h1>commentdetail</h1>
-
-        <ul>
-            <span> 제목: {{ commentStore.Comment.title }}</span>
-            <span> , 작성자: {{ commentStore.Comment.name }}</span>
-            <span> , 조회 수: {{ commentStore.Comment.viewCount }} </span>
-            <span> , 내용: {{ commentStore.Comment.content }} </span>
-            <!-- <RouterLink :to="{ name: 'MountainDetailPage', params: { mountainSerial: '1' } }">1</RouterLink> -->
-            <button v-if="commentStore.Comment.userSerial == userSerial">
-                <RouterLink
-                    :to="{ name: 'CommentModifyPage', params: { commentSerial: '`${route.params.commentSerial}`' } }">
-                    modifypage</RouterLink>
-            </button>
-            <button v-if="commentStore.Comment.userSerial == userSerial" @click="deleteComment">댓글 삭제</button>
-        </ul>
-
-        <li v-for="reply in replyStore.ReplyList" :key="reply.serial">
-            <span> userserial: {{ reply.name }}</span>
-            <span> , replycontent: {{ reply.content }}</span>
-            <button v-if="reply.userSerial == userSerial" @click="deleteReply(reply)">대 댓글 삭제</button>
-            <!-- <RouterLink :to="{ name: 'MountainDetailPage', params: { mountainSerial: '1' } }">1</RouterLink> -->
-        </li>
-        <button v-if="token !== null" @click="showReplyForm = true">대댓글 작성하기</button>
-
-
-        <div v-if="showReplyForm">
-            <textarea v-model="reply.content"></textarea>
-            <button @click="postReply">댓글 작성</button>
+    <div class="review-container">
+        <h1>{{ mountainStore.mountain.name }}</h1>
+        <div class="details-container">
+            <div class="detail-item">
+                <strong>제목</strong>
+                <span class="detail-content">{{ commentStore.Comment.title }}</span>
+                <span class="view-count">조회 수 {{ commentStore.Comment.viewCount }}</span>
+            </div>
+            <div class="detail-item">
+                <strong>작성자</strong>
+                <span class="detail-content">{{ commentStore.Comment.name }}</span>
+            </div>
+            <div class="detail-item content-item">
+                <strong>내용</strong>
+                <div class="content">
+                    <img v-if="commentStore.Comment.image" :src="commentStore.Comment.image" alt="Comment Image"
+                        class="content-image">
+                    <p>{{ commentStore.Comment.content }}</p>
+                </div>
+            </div>
+            <div v-if="commentStore.Comment.userSerial == userSerial" class="detail-item">
+                <button id="modifybutton">
+                    <RouterLink
+                        :to="{ name: 'CommentModifyPage', params: { commentSerial: route.params.commentSerial } }">
+                        리뷰 수정
+                    </RouterLink>
+                </button>
+                <button @click="confirmDeleteComment">댓글 삭제</button>
+            </div>
         </div>
 
+        <ul class="reply-list">
+            <li v-for="reply in replyStore.ReplyList" :key="reply.serial" class="reply-item">
+                <span>User Serial: {{ reply.name }}</span>
+                <span>, Reply Content: {{ reply.content }}</span>
+                <button v-if="reply.userSerial == userSerial" @click="confirmDeleteReply(reply)">대 댓글 삭제</button>
+            </li>
+        </ul>
 
+        <button v-if="token !== null" @click="showReplyForm = true">대댓글 작성하기</button>
+
+        <div v-if="showReplyForm" class="reply-form">
+            <textarea v-model="reply.content" placeholder="댓글 내용을 입력하세요"></textarea>
+            <button @click="postReply">댓글 작성</button>
+        </div>
     </div>
 </template>
+
 
 <script setup>
 import { useRoute, useRouter } from "vue-router";
 import { useCommentStore } from "@/stores/commentstore";
-import axios from "axios";
+import { useReplyStore } from "@/stores/replystore";
+import { useMountainStore } from "@/stores/mountainstore";
+import Swal from 'sweetalert2';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import { useUserStore } from '@/stores/userstore';
+
 const route = useRoute();
 const router = useRouter();
 const commentStore = useCommentStore();
 const replyStore = useReplyStore();
+const mountainStore = useMountainStore();
+const userStore = useUserStore();
 
-
-const userName = ref(''); // 사용자 이름
-const userSerial = ref(''); // 사용자 serial
+const userName = ref('');
+const userSerial = ref('');
 const token = sessionStorage.getItem('access-token');
 const showReplyForm = ref(false);
 const reply = ref({
-    userSerial: "",
-    commentSerial: "",
-    content: ""
-})
+    userSerial: '',
+    commentSerial: '',
+    content: ''
+});
 
-// 사용자가 로그인했는지 확인하고 사용자 정보를 가져오는 함수
 const checkUserSerial = () => {
     if (token !== null) {
         const payload = JSON.parse(atob(token.split('.')[1]));
@@ -64,7 +84,7 @@ const checkUserSerial = () => {
         reply.value.userSerial = userSerial.value;
         reply.value.commentSerial = route.params.commentSerial;
     }
-}
+};
 
 const deleteComment = function () {
     axios
@@ -72,12 +92,11 @@ const deleteComment = function () {
         .then(() => {
             router.push({
                 name: "MountainInfo",
-                params: { mountainSerial: `${commentStore.Comment.mountainSerial}` }
-            })
+                params: { mountainSerial: commentStore.Comment.mountainSerial }
+            });
         })
-        .catch(() => {
-        })
-}
+        .catch(() => {});
+};
 
 const deleteReply = function (reply) {
     axios
@@ -85,28 +104,163 @@ const deleteReply = function (reply) {
         .then(() => {
             replyStore.getReplyList(route.params.commentSerial);
         })
-        .catch(() => {
-        })
-}
+        .catch(() => {});
+};
 
-// 댓글과 답글을 불러오는 함수
+const confirmDeleteComment = () => {
+    Swal.fire({
+        title: '댓글을 삭제하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '삭제',
+        cancelButtonText: '취소'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            deleteComment();
+            Swal.fire('삭제되었습니다!', '', 'success');
+        }
+    });
+};
+
+const confirmDeleteReply = (reply) => {
+    Swal.fire({
+        title: '대댓글을 삭제하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '삭제',
+        cancelButtonText: '취소'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            deleteReply(reply);
+            Swal.fire('삭제되었습니다!', '', 'success');
+        }
+    });
+};
+
 onMounted(() => {
     commentStore.getComment(route.params.commentSerial);
     replyStore.getReplyList(route.params.commentSerial);
     checkUserSerial();
-})
+});
 
-// 새로운 답글을 작성하는 함수
 const postReply = function () {
-
     replyStore.createReply(reply.value)
         .then(() => {
             replyStore.getReplyList(route.params.commentSerial);
         });
-    // 답글 작성 폼 숨기기
     showReplyForm.value = false;
-}
+};
 </script>
 
 
-<style scoped></style>
+<style scoped>
+.review-container {
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.details-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 20px 0;
+}
+
+.detail-item {
+    width: 100%;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.detail-content {
+    flex-grow: 1;
+    text-align: left;
+    margin-left: 10px;
+}
+
+.title-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title-item span {
+    flex-grow: 1;
+    text-align: left;
+    margin-left: 10px;
+}
+
+.view-count {
+    margin-left: auto;
+    margin-right: 15px;
+}
+
+.content-item {
+    flex-direction: column;
+    width: 100%;
+}
+
+.content {
+    width: 100%;
+    overflow-y: auto;
+    height: 400px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.content-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.reply-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.reply-item {
+    margin: 10px 0;
+}
+
+.reply-form {
+    margin-top: 20px;
+}
+
+.reply-form textarea {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.reply-form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.reply-form button:hover {
+    background-color: #0056b3;
+}
+
+#modifybutton {
+    align-items: center;
+}
+</style>
