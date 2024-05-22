@@ -12,7 +12,6 @@
                     <span> , altitude: {{ ms.altitude }}</span>
                     <span> , course: {{ ms.course }} </span>
                     <span> , point: {{ ms.point }}</span>
-                    <!-- <RouterLink :to="{ name: 'MountainDetailPage', params: { mountainSerial: '1' } }">1</RouterLink> -->
                 </router-link>
             </li>
         </ul>

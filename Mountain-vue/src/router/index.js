@@ -43,11 +43,11 @@ const router = createRouter({
           name: 'MountainMainView',
           component: MountainMainPage,
         },
-        {
-          path: ':state',
-          name: 'MountainListPage',
-          component: MountainListPage,
-        },
+        // {
+        //   path: ':state',
+        //   name: 'MountainListPage',
+        //   component: MountainListPage,
+        // },
         {
           path: 'state/:state',
           name: 'MountainStatePage',
