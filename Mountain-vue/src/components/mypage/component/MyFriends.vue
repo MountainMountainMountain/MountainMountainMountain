@@ -12,6 +12,11 @@
                         style="color: white"></i></button>
             </div>
         </div>
+        
+        <div v-for="friend in userStore.UserList" :key="friend.serial">
+            {{ friend.name }}
+        </div>
+        <h1>following</h1>
 
         <div v-for="friend in userStore.UserList" :key="friend.serial">
             {{ friend.name }}
@@ -58,6 +63,8 @@ const mountainList = ref([
         'name': '관악산',
     }
 ])
+
+const name = ref('')
 
 const searchFriendList = () => {
     userStore.getUserByName(name.value, userSerial.value);

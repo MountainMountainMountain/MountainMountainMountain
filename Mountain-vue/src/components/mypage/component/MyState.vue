@@ -59,9 +59,33 @@
                                 </div>
                             </div>
                         </div>
+                                          <div class="media-body ms-md-5 m-0 mt-4 mt-md-0 text-md-start text-center">
+                    <h5 class="font-weight-bold d-inline-block me-2">{{ userName }}님</h5>
+                    <!-- <div class="progress">
+                      <div class="progress-bar bg-warning" role="progressbar" :style="{ width: progressWidth + '%' }" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                        <strong>{{ progressWidth }}%</strong>
+                      </div>
+                    </div> -->
+  
+                    <div class="zt-span6 last">
+                      <p>&nbsp;</p>
+                      <p>&nbsp;</p>
+                      <h3><strong>진행율 바</strong></h3>
+                      <div class="zt-skill-bar">
+                        <div :style="{ width: progressWidth + '%' }">point<span>{{ progressWidth }}%</span></div>
+                      </div>
                     </div>
+  
+                    <a v-if="level != '3'" class="text-decoration-none d-inline-block text-primary">
+                      <strong>팔로워 {{ userStore.FollowerList.length }}</strong> <span class="text-muted"></span>
+                    </a>
+                    <br>
+                    <a v-if="level != '3'" class="text-decoration-none d-inline-block text-primary">
+                      <strong>팔로잉 {{ userStore.FollowingList.length }}</strong> <span class="text-muted"></span>
+                    </a>
+                  </div>
                 </div>
-
+              </div>
             </div>
             <!-- <MyInfo /> -->
             <RouterLink :to="{ name: 'MyInfoMain', params: { userId: `${route.params.userId}` } }">내 정보</RouterLink> |
@@ -69,6 +93,11 @@
             <RouterLink :to="{ name: 'MyComplete', params: { userId: `${route.params.userId}` } }">정복 산</RouterLink>
             <RouterView />
         </div>
+        <RouterLink :to="{ name: 'MyInfoMain', params: { userId: route.params.userId } }">내 정보</RouterLink> |
+        <RouterLink :to="{ name: 'MyFriends', params: { userId: route.params.userId } }">친구관리</RouterLink> |
+        <RouterLink :to="{ name: 'MyComplete', params: { userId: route.params.userId } }">정복 산</RouterLink>
+        <RouterView />
+      </div>
     </div>
 </template>
 
@@ -106,40 +135,88 @@ onMounted(() => {
     checkLoginStatus();
     userStore.getfollwerList(userSerial.value);
     userStore.getfollwingList(userSerial.value);
-    // userStore.getUserByid();
-    // userStore.getfollwingList(userStore.User);
-    // userStore.getfollwerList(userStore.User);
-})
-
-// const { User, FollowingList, FollowerList } = userStore;
-
-const user = computed(() => userStore.User);
-
-// const UserStore = useUserStore();
-
-// onMounted(() => {
-//     UserStore.getUser();
-// })
-</script>
-
-<style scoped>
-.container {
+  })
+  
+  const user = computed(() => userStore.User);
+  
+  const progressWidth = computed(() => {
+    // 포인트에 따른 프로그레스 바의 퍼센티지 계산 (예시)
+    const point = userStore.User.point;
+    return Math.min((point / 1000) * 100, 100); // 최대 100%를 넘지 않도록 설정
+  });
+  </script>
+  
+  <style scoped>
+  .container {
     display: flex;
     height: auto;
     background-color: white;
     border: 1px solid rgb(209, 209, 209);
     width: auto;
     padding: 50px;
-}
-
-.box {
+  }
+  
+  .box {
     text-align: left;
-    /* border: 1px solid rgb(204, 211, 236); */
     padding: 50px;
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
     background-color: white;
     height: 100%;
     width: 100%;
-
-}
-</style>
+  }
+  
+  .progress {
+    height: 30px;
+    margin-bottom: 20px;
+  }
+  
+  /* .progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: black;
+  } */
+  
+  .zt-skill-bar {
+    color: #fff;
+    font-size: 10px;
+    line-height: 5px;
+    height: 15px;
+    margin-bottom: 5px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+  }
+  
+  .zt-skill-bar div {
+    background-color: #ffc600;
+    position: relative;
+    padding-left: 25px;
+    width: 0;
+    border-radius: 2px;
+    transition: width 0.5s ease;
+  }
+  
+  .zt-skill-bar span {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 15px;
+    padding: 0 5px 0 10px;
+    background-color: #e02323;
+    border-radius: 0 2px 2px 0;
+  }
+  
+  .zt-skill-bar span:before {
+    content: "";
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    top: 50%;
+    left: -3px;
+    margin-top: -3px;
+    background-color: #c01a1a;
+    transform: rotate(45deg);
+  }
+  </style>
+  
