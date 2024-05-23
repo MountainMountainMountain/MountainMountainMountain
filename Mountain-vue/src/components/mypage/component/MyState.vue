@@ -12,8 +12,8 @@
                     class="rounded-circle">
                 </div>
                 <div v-else-if="1000 > userStore.User.point && userStore.User.point >= 800">
-                  <img src="@/assets/images/godgod.png" alt="프로필" style="width: 130px; height: 120px; margin-left: 30px;"
-                    class="rounded-circle">
+                  <img src="@/assets/images/godgod.png" alt="프로필"
+                    style="width: 130px; height: 120px; margin-left: 30px;" class="rounded-circle">
                 </div>
                 <div v-else-if="800 > userStore.User.point && userStore.User.point >= 600">
                   <img src="@/assets/images/glass.png" alt="프로필" style="width: 180px; height: 280px;"
@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="media-body ms-md-5 m-0 mt-4 mt-md-0 text-md-start text-center">
-                  <h5 class="font-weight-bold d-inline-block me-2"> </h5>{{ userStore.User.name }}님
+                  <h5 class="font-weight-bold d-inline-block me-2" style="font-weight: bolder;">{{ userStore.User.name }}님</h5>
                   <br>
                   <!-- 여기 이름 {{  }} 들어와야 해 -->
                   <!-- 팔로워 팔로워 수 떠야 해 -->
@@ -44,46 +44,30 @@
                     <strong>팔로잉 {{ userStore.FollowingList.length }}</strong> <span class="text-muted"></span> </a>
                 </div>
               </div>
-            </div>
-            <div class="media-body ms-md-5 m-0 mt-4 mt-md-0 text-md-start text-center">
-              <!-- <div class="progress">
-                      <div class="progress-bar bg-warning" role="progressbar" :style="{ width: progressWidth + '%' }" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                        <strong>{{ progressWidth }}%</strong>
-                      </div>
-                    </div> -->
-
-              <div class="zt-span6 last">
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <h3><strong>진행율 바</strong></h3>
-                <div class="zt-skill-bar">
-                  <div :style="{ width: progressWidth + '%' }">point<span>{{ progressWidth }}%</span></div>
-                </div>
-              </div>
-
-            </div>
-            <div class="media-body ms-md-5 m-0 mt-4 mt-md-0 text-md-start text-center">
-              <div class="zt-span6 last">
-                <h3><strong>point</strong></h3>
-                <div :class="['zt-skill-bar', progressClass]">
-                  <div :style="{ width: progressWidth + '%' }">point<span>{{ progressWidth }}%</span></div>
+              <div class="media-body ms-md-5 m-0 mt-4 mt-md-0 text-md-start text-center">
+                <div class="zt-span6 last">
+                  <h3><strong>point</strong></h3>
+                  <div :class="['zt-skill-bar', progressClass]">
+                    <div :style="{ width: progressWidth + '%' }">point<span>{{ progressWidth }}%</span></div>
+                  </div>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
       <!-- <MyInfo /> -->
       <div v-if="userId == userStore.User.id">
-        <RouterLink :to="{ name: 'MyInfoMain', params: { userId: `${route.params.userId}` } }">내 정보</RouterLink> |
-        <RouterLink :to="{ name: 'MyFriends', params: { userId: `${route.params.userId}` } }">친구관리</RouterLink> |
-        <RouterLink :to="{ name: 'MyComplete', params: { userId: `${route.params.userId}` } }">정복 산</RouterLink>
+        <div class="infobar">
+          <RouterLink :to="{ name: 'MyInfoMain', params: { userId: `${route.params.userId}` } }" class="nav-link">내 정보
+          </RouterLink>
+          <RouterLink :to="{ name: 'MyFriends', params: { userId: `${route.params.userId}` } }" class="nav-link">친구관리
+          </RouterLink>
+          <RouterLink :to="{ name: 'MyComplete', params: { userId: `${route.params.userId}` } }" class="nav-link">정복 산
+          </RouterLink>
+        </div>
       </div>
-      <!-- <div v-else class="text-end">
-        <router-link class="nav-link" :to="{ name: 'MyInfoMain', params: { userId: userId } }">
-          <button>내 정보 보기</button>
-        </router-link>
-      </div> -->
       <RouterView />
     </div>
   </div>
@@ -151,6 +135,7 @@ const progressClass = computed(() => {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: auto;
   padding: 20px;
+  font-family: "Gowun Dodum", sans-serif;
 }
 
 .mytext {
@@ -176,7 +161,7 @@ const progressClass = computed(() => {
   color: black;
   display: inline-block;
   padding: 10px 15px;
-  border-top: 2px solid transparent; /* 상단 테두리로 변경 */
+  border-top: 2px solid transparent;
   transition: border-color 0.3s ease;
 }
 
@@ -189,9 +174,10 @@ const progressClass = computed(() => {
 .zt-skill-bar {
   color: #fff;
   font-size: 10px;
-  line-height: 5px;
-  height: 15px;
-  margin-bottom: 5px;
+  line-height: 22px;
+  height: 22px;
+  width: 90%;
+  margin-bottom: 10px;
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 2px;
 }

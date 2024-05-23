@@ -134,7 +134,7 @@ onMounted(() => {
 .Infocontainer {
   display: flex;
   flex-direction: column;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(248, 249, 253);
   border: 3px solid rgba(43, 97, 247, 0.68);
   padding: 30px;
   font-family: "Gowun Dodum", sans-serif;

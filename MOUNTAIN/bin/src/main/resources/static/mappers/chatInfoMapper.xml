@@ -15,6 +15,12 @@
 		FROM ChatInfo
 		WHERE mountain_serial = #{mountainSerial} AND date = #{date};
 	</select>
+	
+	<select id="selectMyChatInfoByMap" parameterType="Map" resultType="ChatInfo">
+		SELECT *
+		FROM ChatInfo
+		WHERE user_serial = #{userSerial}
+	</select>
 
 	<select id="selectChatInfoByChatInfoSerial" parameterType="int" resultType="ChatInfo">
 		SELECT *
