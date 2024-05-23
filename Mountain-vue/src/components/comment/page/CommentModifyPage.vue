@@ -39,13 +39,19 @@ const mountainStore = useMountainStore();
 const userName = ref(''); // 사용자 이름
 const userSerial = ref(''); // 사용자 serial
 
-const checkUserSerial = () => {
-    if (token !== null) {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        userName.value = payload.name;
-        userSerial.value = payload.serial;
-        userStore.getUserByid(userSerial.value);
+const checkLoginStatus = () => {
+  const token = sessionStorage.getItem('access-token');
+  if (token) {
+    try {
+      const tokenPayload = JSON.parse(decodeURIComponent(escape(atob(token.split('.')[1]))));
+      userName.value = tokenPayload['name'];
+      userSerial.value = tokenPayload['serial'];
+      userId.value = tokenPayload['id'];
+    } catch (error) {
+      console.error('Failed to decode token:', error);
     }
+  } else {
+  }
 };
 
 const backButton = function () {
@@ -75,7 +81,7 @@ const confirmupdateBoard = () => {
 };
 
 onMounted(() => {
-    checkUserSerial();
+    checkLoginStatus();
 });
 </script>
 

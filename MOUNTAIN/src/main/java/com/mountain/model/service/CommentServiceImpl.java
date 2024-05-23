@@ -34,6 +34,11 @@ public class CommentServiceImpl implements CommentService {
 		// selectCommentByMountain 사용할지 말지 나중에 고민
 		return commentDao.selectCommentByMountain(mountainSerial);
 	}
+	
+	@Override
+	public List<CommentResponse> selectCommentByUserSerial(int userSerial) {
+		return commentDao.selectCommentByUserSerial(userSerial);
+	}
 
 	@Override
 	public CommentResponse selectOne(int commentSerial) {

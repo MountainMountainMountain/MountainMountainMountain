@@ -43,10 +43,12 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const getUserByid = function (id) {
+    console.log(id)
     return new Promise((resolve, reject) => {
       axios.get(`${REST_USER_API}/user/search/id/${id}`)
         .then((response) => {
           User.value = response.data
+          console.log(User.value)
           resolve();
         })
         .catch(() => {

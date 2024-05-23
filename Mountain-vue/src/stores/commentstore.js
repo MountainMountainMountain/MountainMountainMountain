@@ -9,6 +9,7 @@ export const useCommentStore = defineStore('comment', () => {
 
   const Comment = ref({})
   const CommentList = ref([])
+  const MyCommentList = ref([])
   const MountainStarList = ref([])
 
   const getCommentList = function (mountainSerial) {
@@ -70,5 +71,17 @@ export const useCommentStore = defineStore('comment', () => {
     });
   }
 
-  return { Comment, CommentList, MountainStarList, getCommentList, getComment, getCommentStar, searchCommentList, createComment, updateComment }
+  const completeComment = function (userSerial) {
+    console.log(userSerial)
+    axios.get(`${REST_COMMENT_API}/comment/userSerial/${userSerial}`)
+      .then((response) => {
+        MyCommentList.value = response.data
+        console.log(MyCommentList.value)
+      }).catch((error) => {
+        console.log(MyCommentList.value)
+        console.log(error)
+      })
+  }
+
+  return { Comment, CommentList, MyCommentList, MountainStarList, getCommentList, getComment, getCommentStar, searchCommentList, createComment, updateComment, completeComment }
 })
