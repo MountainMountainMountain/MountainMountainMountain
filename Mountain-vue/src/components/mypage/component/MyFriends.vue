@@ -1,27 +1,21 @@
 <template>
     <div>
-        <h1>friends</h1>
-
-
-        <div class="search">
+        <div class="searchbar">
             <div>
                 <label><input type="text" class="form-control" v-model="name" placeholder="이름을 입력하세요" /></label>
-            </div>
-            <div>
                 <button class="btn btn-primary" @click="searchFriendList"><i class="fas fa-search"
                         style="color: white"></i></button>
             </div>
         </div>
-        
+
         <div v-for="friend in userStore.UserList" :key="friend.serial">
             {{ friend.name }}
         </div>
-        <h1>following</h1>
 
         <div v-for="friend in userStore.UserList" :key="friend.serial">
             {{ friend.name }}
             <button @click="confirmFollowFriend(friend)">친구 신청하기</button>
-        </div>
+        </div>                                                                                                                                                                      
         <h1>following</h1>
 
         <div v-for="following in userStore.FollowingList" :key="following.serial">
@@ -161,4 +155,9 @@ onMounted(() => {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.searchbar {
+    align-items: center;
+    text-align: center;
+}
+</style>
