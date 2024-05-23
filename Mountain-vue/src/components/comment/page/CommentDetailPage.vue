@@ -376,3 +376,4 @@ const backButton = function () {
 .back-button {
     margin-right: 20px;
 }
+</style>

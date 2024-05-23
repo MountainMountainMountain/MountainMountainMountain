@@ -36,7 +36,10 @@ import Swal from 'sweetalert2';
 const userStore = useUserStore();
 const route = useRoute();
 const router = useRouter();
-
+const backButton = function () {
+    router.go(-1);
+    // router.back();
+};
 const password = ref('');
 
 const updateUser = () => {

@@ -22,21 +22,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <router-link :to="{ name: 'MyInfoMainModify', params: { userId: userId.value } }">
+                            <!-- <router-link :to="{ name: 'MyInfoMainModify', params: { userId: userId.value } }">
                                 <button>정보 수정</button>
                             </router-link>
 
-                            <button @click="confirmDeleteUser">회원 탈퇴</button>
+                            <button @click="confirmDeleteUser">회원 탈퇴</button> -->
                         </div>
                     </div>
-                    <div class="info-item">
-                      <i class="bi bi-envelope"></i>
-                      <a> 이메일: {{ userStore.User.email }}</a>
-                    </div>
-                    <div class="info-item">
-                      <i class="bi bi-person"></i>
-                      <a> 이름: {{ userStore.User.name }}</a>
-                    </div>
+                    
                   </div>
                 </div>
                 <div class="button-group">
@@ -48,10 +41,7 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      
   </template>
 <script setup>
 import { useRoute, useRouter } from "vue-router";
@@ -125,7 +115,7 @@ onMounted(() => {
             });
     }
   });
-};
+
 
 onMounted(() => {
   checkUserSerial();
@@ -152,15 +142,16 @@ onMounted(() => {
 
 .title {
   align-self: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   font-weight: bold;
 }
 
 .Infobox {
   text-align: left;
-  padding: 50px;
+  padding: 0px;
   background-color: white;
   width: 100%;
+  height: 200px;
 }
 
 .info-item {
