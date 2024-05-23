@@ -10,41 +10,47 @@
                     <tr>
                         <td class="label-cell"><label class="mb-4 form-label" for="userId">아이디</label></td>
                         <td class="input-cell">
-                            <input v-model="user.id" @change="idCheck" id="userId" type="text" class="mb-4 form-control form-control-lg" />
+                            <input v-model="user.id" @change="idCheck" id="userId" type="text"
+                                class="mb-4 form-control form-control-lg" />
                             <div v-if="!userIdChk" class="error-message">* 중복된 아이디가 존재합니다</div>
                         </td>
                     </tr>
                     <tr>
                         <td class="label-cell"><label class="mb-4 form-label" for="userPassword">비밀번호</label></td>
                         <td class="input-cell">
-                            <input v-model="user.password" id="userPassword" type="password" class="mb-4 form-control form-control-lg" />
+                            <input v-model="user.password" @change="passwordCheck" @input="passwordLengthCheck" id="userPassword" type="password"
+                                class="mb-4 form-control form-control-lg" />
+                            <div v-if="!userPwdLengthChk" class="error-message">* 비밀번호를 8자 이상 입력해주세요.</div>
                         </td>
                     </tr>
                     <tr>
                         <td class="label-cell"><label class="mb-4 form-label" for="userRePassword">비밀번호 확인</label></td>
                         <td class="input-cell">
                             <input v-model="user.repassword" @change="passwordCheck" id="userRePassword" type="password"
-                                   :class="['mb-4', 'form-control', 'form-control-lg', { 'is-invalid': !userPwdChk }]" />
+                                :class="['mb-4', 'form-control', 'form-control-lg', { 'is-invalid': !userPwdChk }]" />
                             <div v-if="!userPwdChk" class="error-message">* 비밀번호가 일치하지 않습니다.</div>
                         </td>
                     </tr>
                     <tr>
                         <td class="label-cell"><label class="mb-4 form-label" for="userEmail">이메일</label></td>
                         <td class="input-cell">
-                            <input v-model="user.email" @change="emailCheck" id="userEmail" type="email" class="mb-4 form-control form-control-lg" placeholder="you@example.com" />
+                            <input v-model="user.email" @change="emailCheck" id="userEmail" type="email"
+                                class="mb-4 form-control form-control-lg" placeholder="you@example.com" />
                             <div v-if="!userEmailChk" class="error-message">* 유효한 이메일 주소를 입력하세요</div>
                         </td>
                     </tr>
                     <tr>
                         <td class="label-cell"><label class="mb-4 form-label" for="userName">이름</label></td>
                         <td class="input-cell">
-                            <input v-model="user.name" id="userName" type="text" class="mb-4 form-control form-control-lg" />
+                            <input v-model="user.name" id="userName" type="text"
+                                class="mb-4 form-control form-control-lg" />
                         </td>
                     </tr>
                     <tr>
                         <td class="label-cell"><label class="mb-4 form-label" for="userBirthDate">생일</label></td>
                         <td class="input-cell">
-                            <input v-model="user.birthDate" id="userBirthDate" type="date" class="mb-4 form-control form-control-lg" />
+                            <input v-model="user.birthDate" id="userBirthDate" type="date"
+                                class="mb-4 form-control form-control-lg" />
                         </td>
                     </tr>
                     <tr>
@@ -85,6 +91,7 @@ const user = ref({
 
 const userIdChk = ref(true);
 const userPwdChk = ref(true);
+const userPwdLengthChk = ref(true);
 const userEmailChk = ref(true);
 
 const userStore = useUserStore();
@@ -100,7 +107,11 @@ const idCheck = () => {
 };
 
 const passwordCheck = () => {
-    userPwdChk.value = user.value.password === user.value.repassword;
+    userPwdChk.value = (user.value.password === user.value.repassword);
+};
+
+const passwordLengthCheck = () => {
+    userPwdLengthChk.value = user.value.password.length >= 8;
 };
 
 const emailCheck = () => {
@@ -109,7 +120,10 @@ const emailCheck = () => {
 };
 
 const createUser = () => {
-    if (userIdChk.value && userPwdChk.value && userEmailChk.value) {
+    passwordCheck();
+    passwordLengthCheck();
+
+    if (userIdChk.value && userPwdChk.value && userPwdLengthChk.value && userEmailChk.value) {
         userStore.createUser(user.value)
             .then(() => {
                 Swal.fire({

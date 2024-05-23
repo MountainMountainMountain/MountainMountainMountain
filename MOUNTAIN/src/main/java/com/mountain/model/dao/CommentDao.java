@@ -13,6 +13,9 @@ public interface CommentDao {
 
 	// 산의 게시글 조회
 	List<CommentResponse> selectCommentByMountain(int mountainSerial);
+	
+	// 유저의 게시글 조회
+	List<CommentResponse> selectCommentByUserSerial(int userSerial);
 
 	// Serial에 해당하는 게시글 하나 가져오기
 	CommentResponse selectOne(int commentSerial);

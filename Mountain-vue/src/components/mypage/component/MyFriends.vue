@@ -7,11 +7,6 @@
                         style="color: white"></i></button>
             </div>
         </div>
-
-        <div v-for="friend in userStore.UserList" :key="friend.serial">
-            {{ friend.name }}
-        </div>
-
         <div v-for="friend in userStore.UserList" :key="friend.serial">
             {{ friend.name }}
             <button @click="confirmFollowFriend(friend)">친구 신청하기</button>
@@ -47,7 +42,6 @@ import { ref, computed, onMounted } from 'vue';
 
 const userStore = useUserStore();
 const isLoggedIn = ref(false);
-const name = ref('')
 
 const mountainList = ref([
     {
@@ -131,25 +125,28 @@ const confirmCancelFollowFriend = (following) => {
     });
 }
 
-const checkInfo = (following, mountainList) => {
+const checkInfo = (following) => {
     Swal.fire({
-        title: following.name,
-        text: '등산한 산의 정보' + mountainList.name,
+        title: following.name + "의 정보를 보시겠습니까?",
         showCancelButton: true,
         cancelButtonText: '취소'
     }).then((result) => {
         if (result.isConfirmed) {
-            deleteFriend(following);
-            Swal.fire('친구가 삭제되었습니다!', '', 'success');
+            commentStore.completeComment(following.serial);
+            router.push({
+                name: 'MyComplete',
+                params: { userId: following.id }
+            })
         }
     });
 }
 
 onMounted(() => {
     checkLoginStatus();
+    userStore.getUserByid(route.params.userId);
     userStore.getfollwerList(userSerial.value);
     userStore.getfollwingList(userSerial.value);
-    userStore.getUserByid(`${route.params.userId}`);
+    // userStore.getUserByid(`${route.params.userId}`);
     userStore.UserList = null;
 })
 

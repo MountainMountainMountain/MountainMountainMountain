@@ -66,17 +66,19 @@ onMounted(() => {
   month = month < 10 ? "0" + month : month;
   day = day < 10 ? "0" + day : day;
   const todayStr = `${year}${month}${day}`;
-  const nx = 78; // 예시로 설정된 값
-  const ny = 124; // 예시로 설정된 값
+  console.log(mountainStore.mountain.weatherNX)
+  const nx = mountainStore.mountain.weatherNX; // 예시로 설정된 값
+  const ny = mountainStore.mountain.weatherNY; // 예시로 설정된 값
 
   axios
     .get(API_URL, {
       params: {
-        ServiceKey: import.meta.env.VITE_WEATHER_API_KEY,
+        serviceKey: import.meta.env.VITE_WEATHER_API_KEY,
         dataType: "JSON",
         base_date: todayStr,
-        base_time: "0500",
-        numOfRows: 50,
+        base_time: "0200",
+        // base_time: ["0200", "0500", "0800", "1100", "1400", "1700", "2000", "2300" ],
+        numOfRows: 100,
         nx: nx,
         ny: ny,
       },
@@ -85,7 +87,7 @@ onMounted(() => {
       return response.data.response.body.items.item;
     })
     .then((data) => {
-      console.log(data); // 응답 데이터를 콘솔에 출력하여 확인
+      // console.log(data); // 응답 데이터를 콘솔에 출력하여 확인
       const dailyForecast = {};
       data.forEach((item) => {
         const date = item.fcstDate;

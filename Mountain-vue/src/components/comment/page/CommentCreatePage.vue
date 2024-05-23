@@ -2,18 +2,20 @@
     <div>
         <div class="commentbox mx-auto">
             <h3>{{ mountainStore.mountain.name }}</h3>
-            <fieldset class="rate">
-                <input type="radio" id="rating5" name="rating" value="5" v-model="comment.star"><label for="rating5"
-                    title="5점"></label>
-                <input type="radio" id="rating4" name="rating" value="4" v-model="comment.star"><label for="rating4"
-                    title="4점"></label>
-                <input type="radio" id="rating3" name="rating" value="3" v-model="comment.star"><label for="rating3"
-                    title="3점"></label>
-                <input type="radio" id="rating2" name="rating" value="2" v-model="comment.star"><label for="rating2"
-                    title="2점"></label>
-                <input type="radio" id="rating1" name="rating" value="1" v-model="comment.star"><label for="rating1"
-                    title="1점"></label>
-            </fieldset>
+
+            <div class="rate">
+                <input type="radio" id="rating5" name="rating" value="5" v-model="comment.star"
+                    @click="updateStar(5)"><label for="rating5" title="5점"></label>
+                <input type="radio" id="rating4" name="rating" value="4" v-model="comment.star"
+                    @click="updateStar(4)"><label for="rating4" title="4점"></label>
+                <input type="radio" id="rating3" name="rating" value="3" v-model="comment.star"
+                    @click="updateStar(3)"><label for="rating3" title="3점"></label>
+                <input type="radio" id="rating2" name="rating" value="2" v-model="comment.star"
+                    @click="updateStar(2)"><label for="rating2" title="2점"></label>
+                <input type="radio" id="rating1" name="rating" value="1" v-model="comment.star"
+                    @click="updateStar(1)"><label for="rating1" title="1점"></label>
+
+            </div>
 
             <div class="form-floating mb-3">
                 <input type="text" class="form-control form-control-sm" id="title" placeholder="제목"
@@ -46,6 +48,7 @@
                 <button class="btn btn-outline-primary me-2" @click="confirmCreateComment">등록</button>
                 <button class="btn btn-light back-button" @click="backButton">취소</button>
             </div>
+
         </div>
     </div>
 </template>
@@ -72,7 +75,7 @@ const comment = ref({
     content: "",
     calorie: "",
     turnaround: "",
-    star: "",
+    star: 0,
 })
 
 const userName = ref(''); // 사용자 이름
@@ -96,6 +99,7 @@ const createComment = function () {
     comment.value.userSerial = userSerial.value;
     comment.value.writer = userSerial.value;
     comment.value.mountainSerial = route.params.mountainSerial;
+    console.log(comment.value)
     CommentStore.createComment(comment.value)
         .then(() => {
             router.push({
@@ -124,6 +128,10 @@ const confirmCreateComment = () => {
             Swal.fire('등록 완료!', '리뷰가 성공적으로 등록되었습니다.', 'success');
         }
     });
+};
+
+const updateStar = (value) => {
+    comment.value.star = value;
 };
 
 const backButton = function () {

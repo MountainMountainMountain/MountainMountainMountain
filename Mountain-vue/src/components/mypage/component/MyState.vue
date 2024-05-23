@@ -33,8 +33,10 @@
                 </div>
 
                 <div class="media-body ms-md-5 m-0 mt-4 mt-md-0 text-md-start text-center">
-                  <h5 class="font-weight-bold d-inline-block me-2"><strong> {{ userName }}님</strong></h5>
+                  <h5 class="font-weight-bold d-inline-block me-2"> </h5>{{ userStore.User.name }}님
                   <br>
+                  <!-- 여기 이름 {{  }} 들어와야 해 -->
+                  <!-- 팔로워 팔로워 수 떠야 해 -->
                   <a v-if="level != '3'" class="text-decoration-none d-inline-block text-primary">
                     <strong>팔로워 {{ userStore.FollowerList.length }}</strong> <span class="text-muted"></span> </a>
                   <br>
@@ -42,6 +44,23 @@
                     <strong>팔로잉 {{ userStore.FollowingList.length }}</strong> <span class="text-muted"></span> </a>
                 </div>
               </div>
+            </div>
+            <div class="media-body ms-md-5 m-0 mt-4 mt-md-0 text-md-start text-center">
+              <!-- <div class="progress">
+                      <div class="progress-bar bg-warning" role="progressbar" :style="{ width: progressWidth + '%' }" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                        <strong>{{ progressWidth }}%</strong>
+                      </div>
+                    </div> -->
+
+              <div class="zt-span6 last">
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <h3><strong>진행율 바</strong></h3>
+                <div class="zt-skill-bar">
+                  <div :style="{ width: progressWidth + '%' }">point<span>{{ progressWidth }}%</span></div>
+                </div>
+              </div>
+
             </div>
             <div class="media-body ms-md-5 m-0 mt-4 mt-md-0 text-md-start text-center">
               <div class="zt-span6 last">
@@ -54,11 +73,17 @@
           </div>
         </div>
       </div>
-      <div class="infobar">
-        <RouterLink :to="{ name: 'MyInfoMain', params: { userId: `${route.params.userId}` } }" class="nav-link">내 정보</RouterLink>
-        <RouterLink :to="{ name: 'MyFriends', params: { userId: `${route.params.userId}` } }" class="nav-link">친구관리</RouterLink>
-        <RouterLink :to="{ name: 'MyComplete', params: { userId: `${route.params.userId}` } }" class="nav-link">정복 산</RouterLink>
+      <!-- <MyInfo /> -->
+      <div v-if="userId == userStore.User.id">
+        <RouterLink :to="{ name: 'MyInfoMain', params: { userId: `${route.params.userId}` } }">내 정보</RouterLink> |
+        <RouterLink :to="{ name: 'MyFriends', params: { userId: `${route.params.userId}` } }">친구관리</RouterLink> |
+        <RouterLink :to="{ name: 'MyComplete', params: { userId: `${route.params.userId}` } }">정복 산</RouterLink>
       </div>
+      <!-- <div v-else class="text-end">
+        <router-link class="nav-link" :to="{ name: 'MyInfoMain', params: { userId: userId } }">
+          <button>내 정보 보기</button>
+        </router-link>
+      </div> -->
       <RouterView />
     </div>
   </div>
@@ -66,15 +91,18 @@
 
 <script setup>
 import { useUserStore } from '@/stores/userstore';
+import { useCommentStore } from '@/stores/commentstore';
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
 const router = useRouter();
 const userStore = useUserStore();
+const commentStore = useCommentStore();
 
 const userName = ref(''); // 사용자 이름
 const userSerial = ref(''); // 사용자 serial
+const userId = ref(''); // 사용자 serial
 
 const checkLoginStatus = () => {
   const token = sessionStorage.getItem('access-token');
@@ -83,21 +111,26 @@ const checkLoginStatus = () => {
       const tokenPayload = JSON.parse(decodeURIComponent(escape(atob(token.split('.')[1]))));
       userName.value = tokenPayload['name'];
       userSerial.value = tokenPayload['serial'];
+      userId.value = tokenPayload['id'];
     } catch (error) {
       console.error('Failed to decode token:', error);
     }
   }
 };
 
-onMounted(() => {
-  checkLoginStatus();
-  userStore.getfollwerList(userSerial.value);
-  userStore.getfollwingList(userSerial.value);
-});
+onMounted(async () => {
+  await checkLoginStatus();
+  userStore.getUserByid(`${route.params.userId}`).then(() => {
+    commentStore.completeComment(userStore.User.serial);
+    userStore.getfollwerList(userStore.User.serial);
+    userStore.getfollwingList(userStore.User.serial);
+  })
+})
 
 const user = computed(() => userStore.User);
 
 const progressWidth = computed(() => {
+  // 포인트에 따른 프로그레스 바의 퍼센티지 계산 (예시)
   const point = userStore.User.point;
   return Math.min((point / 1000) * 100, 100); // 최대 100%를 넘지 않도록 설정
 });
@@ -156,10 +189,9 @@ const progressClass = computed(() => {
 .zt-skill-bar {
   color: #fff;
   font-size: 10px;
-  line-height: 22px;
-  height: 22px;
-  width: 90%;
-  margin-bottom: 10px;
+  line-height: 5px;
+  height: 15px;
+  margin-bottom: 5px;
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 2px;
 }
