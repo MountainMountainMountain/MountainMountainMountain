@@ -154,11 +154,12 @@ body {
 }
 
 .weather-container {
-  width: 30%;
+  width: 28%;
   padding: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  margin-right: 10px;
+  margin-right: 80px;
+  background-color: #fff;
 }
 
 .calendar-container {

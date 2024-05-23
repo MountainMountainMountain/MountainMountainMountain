@@ -1,31 +1,21 @@
 <template>
-  <div class="bookbox">
-    <div class="weather-app">
-      <div class="weather-header">
+  <div class="weather-app">
+    <div class="weather-header"></div>
+    <div class="weather-body">
+      <div class="weather-icon">
+        <img src="@/assets/weather/rain.gif" alt="">
       </div>
-      
-      <div class="weather-body">
-        <div class="weather-info">
-          <h1 style="text-align: center;">날씨 앱</h1>
-          <h4>날씨정보</h4>
-          <p>산 이름: {{ mountainStore.mountain.name }}</p>
-          <p>기온 : {{ tmp }}℃</p>
-          <p>최고 기온 : {{ tmax }}℃</p>
-          <p>최저 기온 : {{ tmin }}℃</p>
-          <p>하늘상태 : {{ sky }}</p>
-        </div>
-        <div class="weather-icon">
-          <img :src="getWeatherIcon(sky)" alt="날씨아이콘">
-        </div>
-      </div>
-
-      <div class="forecast">
-        <h4>5일 예보</h4>
-        <div class="forecast-day" v-for="(day, index) in forecast" :key="index">
-          <p>{{ day.date }}</p>
-          <img :src="getWeatherIcon(day.sky)" alt="날씨아이콘">
-          <p>{{ day.tmp }}℃</p>
-        </div>
+      <div class="weather-info">
+        <span><h4>날씨정보</h4></span>
+        <br>
+        <hr>
+        <br>
+        <p>산 이름: {{ mountainStore.mountain.name }}</p>
+        <p>기온 : {{ tmp }}℃</p>
+        <p>최고 기온 : {{ tmax }}℃</p>
+        <p>최저 기온 : {{ tmin }}℃</p>
+        <!-- <p>하늘상태 : {{ sky }}</p> -->
+        <p>하늘상태 : 비 </p>
       </div>
     </div>
   </div>
@@ -46,23 +36,28 @@ const tmax = ref(null);
 const tmin = ref(null);
 const sky = ref(null);
 const forecast = ref([]);
+const weatherIcon = ref(null);
 
 const getWeatherIcon = (sky) => {
+  console.log(sky);
   switch (sky) {
     case "1":
-      return '/assets/images/daram.jpg';
+      weatherIcon.value = '@/assets/images/daram.jpg';
+      break;
     case "3":
-      return "/assets/images/daram.jpg" ;
+      weatherIcon.value = "@/assets/images/daram.jpg";
+      break;
     case "4":
-      return '/assets/weather/rain.gif';
+      weatherIcon.value = '/assets/weather/rain.gif';
+      break;
     default:
-      return '/assets/weather/rain.gif';
+      weatherIcon.value = '/assets/weather/rain.gif';
   }
 };
 
 onMounted(() => {
   mountainStore.getMountainSerial(route.params.mountainSerial);
-  
+
   const API_URL = `http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst`;
   const today = new Date();
   let year = today.getFullYear();
@@ -90,6 +85,7 @@ onMounted(() => {
       return response.data.response.body.items.item;
     })
     .then((data) => {
+      console.log(data); // 응답 데이터를 콘솔에 출력하여 확인
       const dailyForecast = {};
       data.forEach((item) => {
         const date = item.fcstDate;
@@ -108,10 +104,13 @@ onMounted(() => {
       });
 
       const todayForecast = dailyForecast[todayStr];
+      console.log(todayForecast); // 오늘의 예보 데이터를 콘솔에 출력하여 확인
       tmp.value = todayForecast.tmp;
       tmax.value = todayForecast.tmax;
       tmin.value = todayForecast.tmin;
       sky.value = todayForecast.sky;
+
+      getWeatherIcon(sky.value);
 
       const forecastArray = [];
       for (const date in dailyForecast) {
@@ -122,6 +121,9 @@ onMounted(() => {
         });
       }
       forecast.value = forecastArray.slice(0, 5); // 5일 예보
+    })
+    .catch((error) => {
+      console.error("Error fetching weather data:", error);
     });
 });
 </script>
@@ -144,37 +146,15 @@ body {
   background: rgb(246, 246, 246);
 }
 
-.bookbox {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  background: rgb(246, 246, 246);
-  height: auto;
-  padding: 20px;
-}
-
-.weather-app {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  text-align: center;
-  width: 500px;
-}
-
-.weather-header h1 {
-  font-size: 24px;
-  margin: 0;
-}
-
 .weather-body {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-top: 20px;
+  justify-content: center;
 }
 
 .weather-info {
+  margin-left: 120px;
+  font-size: larger;
   text-align: left;
   padding: 10px;
 }
@@ -182,6 +162,8 @@ body {
 .weather-icon img {
   width: 100px;
   height: 100px;
+  margin-bottom: 70px;
+  margin-top: 80px;
 }
 
 .forecast {
@@ -197,5 +179,10 @@ body {
 
 .forecast-day p {
   margin: 0 10px;
+}
+
+span {
+  display: inline-block;
+  box-shadow: inset 0 -13px 0 #bfffa1;
 }
 </style>
