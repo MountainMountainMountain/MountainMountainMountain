@@ -22,19 +22,18 @@
                 <div class="detail-item content-item">
                     <strong>내용</strong>
                     <div class="content">
-                        <img v-if="commentStore.Comment.image" :src="commentStore.Comment.image" alt="Comment Image"
-                            class="content-image">
+                        <img v-if="commentStore.Comment.image" :src="commentStore.Comment.image" alt="Comment Image" class="content-image">
                         <p>{{ commentStore.Comment.content }}</p>
                     </div>
                 </div>
                 <div v-if="commentStore.Comment.userSerial == userSerial" class="detail-item">
-                    <button id="modifybutton">
+                    <button class="review-button" id="modifybutton">
                         <RouterLink
-                            :to="{ name: 'CommentModifyPage', params: { commentSerial: route.params.commentSerial } }">
-                            리뷰 수정
+                            :to="{ name: 'CommentModifyPage', params: { commentSerial: route.params.commentSerial } }"
+                            class="router-link">리뷰 수정
                         </RouterLink>
                     </button>
-                    <button @click="confirmDeleteComment">리뷰 삭제</button>
+                    <button class="review-d-button" @click="confirmDeleteComment">리뷰 삭제</button>
                 </div>
             </div>
             <div class="replybox">
@@ -43,15 +42,14 @@
                         <span id="replyname">{{ reply.name }}</span>
                         <br>
                         <span>{{ reply.content }}</span>
-                        <button v-if="reply.userSerial == userSerial" @click="confirmDeleteReply(reply)">댓글 삭제</button>
-
-                        <button v-if="reply.userSerial == userSerial" @click="confirmDeleteReply(reply)">등록</button>
+                        <button class="common-delete-button" v-if="reply.userSerial == userSerial"
+                            @click="confirmDeleteReply(reply)">댓글 삭제</button>
                     </li>
                 </ul>
-                <button v-if="token !== null" @click="showReplyForm = true">댓글 작성하기</button>
+                <button class="common-button small-button" v-if="token !== null" @click="showReplyForm = true">댓글 작성하기</button>
                 <div v-if="showReplyForm" class="reply-form">
                     <textarea v-model="reply.content" placeholder="댓글 내용을 입력하세요"></textarea>
-                    <button @click="postReply">댓글 작성</button>
+                    <button class="common-button" @click="postReply">댓글 작성</button>
                 </div>
             </div>
         </div>
@@ -122,8 +120,7 @@ const confirmDeleteComment = () => {
         title: '리뷰를 삭제하시겠습니까?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: '삭제',
-        cancelButtonText: '취소'
+        
     }).then((result) => {
         if (result.isConfirmed) {
             deleteComment();
@@ -162,11 +159,11 @@ const postReply = function () {
 };
 
 const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = (1 + date.getMonth()).toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
-  return `${year}년 ${month}월 ${day}일`;
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = (1 + date.getMonth()).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}년 ${month}월 ${day}일`;
 };
 
 </script>
@@ -271,6 +268,7 @@ const formatDate = (dateString) => {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    position: relative;
 }
 
 #replyname {
@@ -290,21 +288,69 @@ const formatDate = (dateString) => {
     border: 1px solid #ccc;
 }
 
-.reply-form button {
+.common-button {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     background-color: #007bff;
     color: white;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.reply-form button:hover {
+.common-button:hover {
     background-color: #0056b3;
 }
 
-#modifybutton {
-    align-items: center;
+.common-delete-button {
+    border-radius: 5px;
+    background-color: #dcdee0;
+    color: rgb(73, 73, 73);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: none;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+.common-delete-button:hover {
+    background-color: #b8b7b7;
+}
+
+.review-d-button {
+    border-radius: 5px;
+    background-color: #dcdee0;
+    color: rgb(73, 73, 73);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: none;
+}
+
+.review-d-button:hover {
+    background-color: #b8b7b7;
+}
+
+.review-button {
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: none;
+}
+
+.review-button:hover {
+    background-color: #0056b3;
+}
+
+.review-button .router-link {
+    color: white;
+    text-decoration: none;
+}
+
+.small-button {
+    padding: 8px 16px;
 }
 
 .reply-item button {

@@ -15,7 +15,7 @@
             <label for="content">Content</label>
         </div>
         <div class="d-flex justify-content-end">
-            <button class="btn btn-outline-success mx-3" @click="updateBoard">수정</button>
+            <button class="btn btn-outline-success mx-3" @click="confirmupdateBoard">수정</button>
             <button class="btn btn-outline-danger" @click="backButton">뒤로</button>
         </div>
     </div>
@@ -27,21 +27,14 @@ import { useUserStore } from '@/stores/userstore';
 import { useMountainStore } from '@/stores/mountainstore';
 import { useRouter } from 'vue-router';
 import { ref, onMounted } from 'vue';
-const commentStore = useCommentStore()
-const userStore = useUserStore()
-const router = useRouter()
+import Swal from 'sweetalert2';
+
+const commentStore = useCommentStore();
+const userStore = useUserStore();
+const router = useRouter();
 
 const token = sessionStorage.getItem('access-token');
 const mountainStore = useMountainStore();
-const updateBoard = function () {
-    commentStore.updateComment()
-        .then(() => {
-            router.push({
-                name: 'CommentDetailPage',
-                params: { commentSerial: commentStore.Comment.serial }
-            })
-        })
-}
 
 const userName = ref(''); // 사용자 이름
 const userSerial = ref(''); // 사용자 serial
@@ -53,12 +46,33 @@ const checkUserSerial = () => {
         userSerial.value = payload.serial;
         userStore.getUserByid(userSerial.value);
     }
-}
+};
 
 const backButton = function () {
     router.go(-1);
-    // router.back();
-}
+};
+
+const updateBoard = function () {
+    commentStore.updateComment()
+        .then(() => {
+            router.push({
+                name: 'CommentDetailPage',
+                params: { commentSerial: commentStore.Comment.serial }
+            });
+        });
+};
+
+const confirmupdateBoard = () => {
+    Swal.fire({
+        title: '리뷰 수정이 완료되었습니다',
+        icon: 'success',
+        confirmButtonText: '확인'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            updateBoard();
+        }
+    });
+};
 
 onMounted(() => {
     checkUserSerial();

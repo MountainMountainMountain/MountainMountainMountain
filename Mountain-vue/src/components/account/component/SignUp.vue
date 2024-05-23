@@ -60,9 +60,7 @@
                 </table>
                 <hr>
                 <div class="underbar">
-                    <router-link :to="{ name: 'Login' }">
-                        <button @click.prevent="createUser" type="button" class="btn btn-primary">회원가입</button>
-                    </router-link>
+                    <button @click.prevent="createUser" type="button" class="btn btn-primary">회원가입</button>
                 </div>
             </fieldset>
         </form>
@@ -73,6 +71,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/userstore';
+import Swal from 'sweetalert2';
 
 const user = ref({
     id: '',
@@ -113,7 +112,13 @@ const createUser = () => {
     if (userIdChk.value && userPwdChk.value && userEmailChk.value) {
         userStore.createUser(user.value)
             .then(() => {
-                router.push({ name: 'Login' });
+                Swal.fire({
+                    title: '회원가입이 완료되었습니다',
+                    icon: 'success',
+                    confirmButtonText: '확인'
+                }).then(() => {
+                    router.push({ name: 'Login' });
+                });
             })
             .catch(() => {
                 alert('회원가입 중 오류가 발생했습니다.');

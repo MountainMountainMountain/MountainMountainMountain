@@ -29,10 +29,15 @@ export const useUserStore = defineStore('user', () => {
       })
   }
 
-  const getUserByName = function (name) {
-    axios.get(`${REST_USER_API}/user/search/name/${name}`)
+  const getUserByName = function (name, serial) {
+    axios.get(`${REST_USER_API}/user/search/name/${name}/${serial}`)
       .then((response) => {
         UserList.value = response.data
+      })
+      .catch((error) => {
+        console.log(name)
+        console.log(serial)
+        console.log(error)
       })
   }
 
@@ -43,7 +48,7 @@ export const useUserStore = defineStore('user', () => {
           User.value = response.data
           resolve();
         })
-        .catch(()=>{
+        .catch(() => {
           reject();
         })
     });
