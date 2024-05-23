@@ -244,10 +244,10 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 INSERT INTO User (id, password, name, birth_date, gender, email, point)
 VALUES
 ('user1', 'password1', 'John Doe', '1990-01-01', 'M', 'john@example.com', 100),
-('user2', 'password2', 'Jane Doe 가나', '1992-05-15', 'F', 'jane@example.com', 150),
-('user3', 'password3', 'Alice Smith', '1985-11-20', 'F', 'alice@example.com', 200),
-('user4', 'password4', 'Bob Johnson', '1988-03-10', 'M', 'bob@example.com', 120),
-('user5', 'password5', 'Charlie Brown', '1995-07-05', 'M', 'charlie@example.com', 180),
+('user2', 'password2', 'Jane Doe 가나', '1992-05-15', 'F', 'jane@example.com', 400),
+('user3', 'password3', 'Alice Smith', '1985-11-20', 'F', 'alice@example.com', 600),
+('user4', 'password4', 'Bob Johnson', '1988-03-10', 'M', 'bob@example.com', 800),
+('user5', 'password5', 'Charlie Brown', '1995-07-05', 'M', 'charlie@example.com', 1180),
 ('user6', 'password6', 'Emma Watson', '1983-09-30', 'F', 'emma@example.com', 220),
 ('user7', 'password7', 'Michael Jordan', '1990-02-17', 'M', 'michael@example.com', 300),
 ('user8', 'password8', 'Taylor Swift', '1989-12-13', 'F', 'taylor@example.com', 250),

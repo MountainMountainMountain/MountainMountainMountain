@@ -1,43 +1,36 @@
 <template>
   <div class="container">
     <div class="box">
-      <p class="text-primary">마이 페이지</p>
+      <p class="mytext">| 마이 페이지 |</p>
       <div class="row">
         <div class="col-12">
           <div class="card">
             <div class="card-body">
               <div class="d-flex align-items-center flex-column flex-md-row">
-
-
                 <div v-if="userStore.User.point > 1000">
-                  <img src="@/assets/images/daram.jpg" alt="프로필" style="width: 140px; height: 140px;"
-                    class="rounded-circle"> 하늘다람쥐
+                  <img src="@/assets/images/sqq.jpeg" alt="프로필" style="width: 200px; height: 120px; margin-top: 30px;"
+                    class="rounded-circle">
                 </div>
                 <div v-else-if="1000 > userStore.User.point && userStore.User.point >= 800">
-                  <img src="@/assets/images/daram.jpg" alt="프로필" style="width: 140px; height: 140px;"
-                    class="rounded-circle"> 산신령
+                  <img src="@/assets/images/godgod.png" alt="프로필" style="width: 130px; height: 120px; margin-left: 30px;"
+                    class="rounded-circle">
                 </div>
                 <div v-else-if="800 > userStore.User.point && userStore.User.point >= 600">
-                  <img src="@/assets/images/daram.jpg" alt="프로필" style="width: 140px; height: 140px;"
-                    class="rounded-circle"> 모자, 선글라스, 스틱
+                  <img src="@/assets/images/glass.png" alt="프로필" style="width: 180px; height: 280px;"
+                    class="rounded-circle">
                 </div>
                 <div v-else-if="600 > userStore.User.point && userStore.User.point >= 400">
-                  <img src="@/assets/images/daram.jpg" alt="프로필" style="width: 140px; height: 140px;"
-                    class="rounded-circle"> 모자 선글라스
+                  <img src="@/assets/images/glassonly.png" alt="프로필" style="width: 190px; height: 280px;"
+                    class="rounded-circle">
                 </div>
                 <div v-else-if="400 > userStore.User.point && userStore.User.point >= 200">
-                  <img src="@/assets/images/daram.jpg" alt="프로필" style="width: 140px; height: 140px;"
-                    class="rounded-circle"> 모자
+                  <img src="@/assets/images/cap.png" alt="프로필" style="width: 190px; height: 280px;"
+                    class="rounded-circle">
                 </div>
                 <div v-else-if="200 > userStore.User.point && userStore.User.point >= 0">
-                  <img src="@/assets/images/daram.jpg" alt="프로필" style="width: 140px; height: 140px;"
-                    class="rounded-circle"> 원형
+                  <img src="@/assets/images/dora2.jpg" alt="프로필" style="width: 200px; height: 280px;"
+                    class="rounded-circle">
                 </div>
-
-                <!-- <img src="@/assets/images/daram.jpg" alt="프로필" style="width: 140px; height: 140px;"
-                                    class="rounded-circle"> -->
-
-
 
                 <div class="media-body ms-md-5 m-0 mt-4 mt-md-0 text-md-start text-center">
                   <h5 class="font-weight-bold d-inline-block me-2"> </h5>{{ userStore.User.name }}님
@@ -71,13 +64,11 @@
             </div>
             <div class="media-body ms-md-5 m-0 mt-4 mt-md-0 text-md-start text-center">
               <div class="zt-span6 last">
-
                 <h3><strong>point</strong></h3>
                 <div :class="['zt-skill-bar', progressClass]">
                   <div :style="{ width: progressWidth + '%' }">point<span>{{ progressWidth }}%</span></div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -103,7 +94,6 @@ import { useUserStore } from '@/stores/userstore';
 import { useCommentStore } from '@/stores/commentstore';
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import MyInfo from './MyInfo.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -113,9 +103,6 @@ const commentStore = useCommentStore();
 const userName = ref(''); // 사용자 이름
 const userSerial = ref(''); // 사용자 serial
 const userId = ref(''); // 사용자 serial
-
-// let id = JSON.parse(atob(token[1]))['id'];
-
 
 const checkLoginStatus = () => {
   const token = sessionStorage.getItem('access-token');
@@ -128,7 +115,6 @@ const checkLoginStatus = () => {
     } catch (error) {
       console.error('Failed to decode token:', error);
     }
-  } else {
   }
 };
 
@@ -154,7 +140,6 @@ const progressClass = computed(() => {
   if (point >= 1) return 'zt-skill-bar-high';
   return 'zt-skill-bar-very-low';
 });
-
 </script>
 
 <style scoped>
@@ -163,8 +148,15 @@ const progressClass = computed(() => {
   height: auto;
   background-color: white;
   border: 1px solid rgb(209, 209, 209);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: auto;
-  padding: 50px;
+  padding: 20px;
+}
+
+.mytext {
+  font-size: larger;
+  color: blue;
+  font-family: "Gowun Dodum", sans-serif;
 }
 
 .box {
@@ -175,18 +167,24 @@ const progressClass = computed(() => {
   width: 100%;
 }
 
-.progress {
-  height: 30px;
-  margin-bottom: 20px;
+.infobar {
+  margin-top: 20px;
 }
 
-/* .progress-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    color: black;
-  } */
+.nav-link {
+  text-decoration: none;
+  color: black;
+  display: inline-block;
+  padding: 10px 15px;
+  border-top: 2px solid transparent; /* 상단 테두리로 변경 */
+  transition: border-color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: rgb(23, 26, 245);
+  font-weight: bold;
+  border-top: 3px solid #e21b1b;
+}
 
 .zt-skill-bar {
   color: #fff;
@@ -212,7 +210,7 @@ const progressClass = computed(() => {
   position: absolute;
   right: 0;
   top: 0;
-  height: 15px;
+  height: 22px;
   padding: 0 5px 0 10px;
   background-color: #e02323;
   border-radius: 0 2px 2px 0;
