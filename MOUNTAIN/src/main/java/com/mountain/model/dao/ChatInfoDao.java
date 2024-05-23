@@ -1,5 +1,6 @@
 package com.mountain.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import com.mountain.model.dto.ChatInfo;
@@ -15,6 +16,9 @@ public interface ChatInfoDao {
 
 	// 채팅 1개 찾기
 	ChatInfo selectChatInfoByMap(Map<String, Object> paramMap);
+
+	// 내 채팅 찾기
+	List<ChatInfo> selectMyChatInfoByMap(Map<String, Object> paramMap);
 
 	// 채팅
 	ChatInfo selectChatInfoByChatInfoSerial(int chatInfoSerial);

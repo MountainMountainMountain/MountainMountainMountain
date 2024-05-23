@@ -135,5 +135,6 @@ export const useChatStore = defineStore('chat', () => {
 
 
 
+
     return { Chat, ChatList, ChatLog, ChatLogList, ChatInfo, ChatInfoList, ChatUserManager, ChatUserManagerList, getChat, getChatInfo, getChatUserManager, getChatListByChatInfoSerial, createChat, createChatInfo, createChatUserManager, updateChat, updateChatInfo, updateChatUserManager }
 })

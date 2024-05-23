@@ -75,9 +75,11 @@ public class UserRESTController {
 	}
 
 	// 사용자 이름 검색
-	@GetMapping("/user/search/name/{name}")
-	public ResponseEntity<?> searchByName(@PathVariable("name") String name) {
-		List<User> userList = userService.searchByName(name);
+	@GetMapping("/user/search/name/{name}/{serial}")
+	public ResponseEntity<?> searchByName(@PathVariable("name") String name, @PathVariable("serial") int serial) {
+		System.out.println(name);
+		System.out.println(serial);
+		List<User> userList = userService.searchByName(name, serial);
 		if (userList == null) {
 			// 검색했는데 없다면
 			return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
@@ -147,10 +149,21 @@ public class UserRESTController {
 		return new ResponseEntity<>(result, status);
 	}
 
+	// 포인트 업데이트
+	@GetMapping("/user/point/{userSerial}/{mountainSerial}")
+	public ResponseEntity<Void> updateUserPoint(@PathVariable("userSerial") int userSerial,
+			@PathVariable("mountainSerial") int mountainSerial) {
+		userService.updateUserPoint(userSerial, mountainSerial);
+
+		return new ResponseEntity<Void>(HttpStatus.CREATED);
+	}
+
 	// 팔로우 하기
 	@GetMapping("/follow/{fromFollow}/{toFollow}")
 	public ResponseEntity<?> createFollow(@PathVariable("fromFollow") int fromFollow,
 			@PathVariable("toFollow") int toFollow) {
+		System.out.println(fromFollow);
+		System.out.println(toFollow);
 
 		if (userService.checkAlreadyFollowing(fromFollow, toFollow)) {
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);

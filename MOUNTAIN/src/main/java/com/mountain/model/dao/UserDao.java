@@ -17,7 +17,7 @@ public interface UserDao {
 	User selectUserById(String userId);
 
 	// 사용자 이름 검색
-	List<User> selectUserByName(String userName);
+	List<User> selectUserByName(Map<String, Object> paramMap);
 
 	// 사용자 수정
 	void modifyUser(User user);
@@ -34,4 +34,6 @@ public interface UserDao {
 	// 로그인
 	User login(Map<String, String> info);
 
+	// 점수 업데이트
+	void modifyUserPoint(int serial, int intmountainPoint);
 }

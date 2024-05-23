@@ -394,7 +394,8 @@ SELECT * FROM Reply;
 SELECT * FROM CommentFile;
 
 -- Follow 테이블 조회
-SELECT * FROM Follow;
+SELECT * FROM Follow
+LIMIT 1000;
 
 -- ChatUserManager 테이블 조회
 SELECT * FROM ChatUserManager;

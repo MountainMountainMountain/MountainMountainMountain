@@ -110,4 +110,19 @@ public class ChatServiceImpl implements ChatService {
 		chatUserManagerDao.leaveChat(chatUserManagerSerial, userSerial);
 	}
 
+	// 채팅 참여
+	@Override
+	public void joinChatUserManager(int chatInfoSerial, int chatUserSerial) {
+		chatUserManagerDao.joinChat(chatInfoSerial, chatUserSerial);
+	}
+
+	// 채팅 참여 리스트 불러오기
+	@Override
+	public List<ChatInfo> selectMyChatInfo(int userSerial) {
+		Map<String, Object> paramMap = new HashMap<>();
+
+		paramMap.put("userSerial", userSerial);
+
+		return chatInfoDao.selectMyChatInfoByMap(paramMap);
+	}
 }

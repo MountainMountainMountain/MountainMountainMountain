@@ -42,8 +42,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> searchByName(String name) {
-		return userDao.selectUserByName(name);
+	public List<User> searchByName(String name, int mySerial) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("userName", name);
+		paramMap.put("mySerial", mySerial);
+
+		return userDao.selectUserByName(paramMap);
 	}
 
 	@Override
@@ -70,9 +74,15 @@ public class UserServiceImpl implements UserService {
 		info.put("password", password);
 		return userDao.login(info);
 	}
+	
+	@Override
+	public void updateUserPoint(int serial, int mountainPoint) {
+		userDao.modifyUserPoint(serial, mountainPoint);
+	}
 
 	@Override
 	public boolean checkAlreadyFollowing(int fromFollow, int toFollow) {
+		System.out.println(followDao.checkAlreadyFollowing(fromFollow, toFollow));
 		return followDao.checkAlreadyFollowing(fromFollow, toFollow) == 1;
 	}
 

@@ -42,8 +42,8 @@
                         <span id="replyname">{{ reply.name }}</span>
                         <br>
                         <span>{{ reply.content }}</span>
-                        <button class="common-delete-button" v-if="reply.userSerial == userSerial"
-                            @click="confirmDeleteReply(reply)">댓글 삭제</button>
+
+                        <button v-if="reply.userSerial == userSerial" @click="confirmDeleteReply(reply)">댓글 삭제</button>
                     </li>
                 </ul>
                 <button class="common-button small-button" v-if="token !== null" @click="showReplyForm = true">댓글 작성하기</button>
@@ -52,6 +52,9 @@
                     <button class="common-button" @click="postReply">댓글 작성</button>
                 </div>
             </div>
+        </div>
+        <div class="back-button-container">
+            <button class="btn btn-light back-button" @click="backButton">목록으로 돌아가기</button>
         </div>
     </div>
 </template>
@@ -75,7 +78,6 @@ const userStore = useUserStore();
 
 const userName = ref('');
 const userSerial = ref('');
-const token = sessionStorage.getItem('access-token');
 const showReplyForm = ref(false);
 const reply = ref({
     userSerial: '',
@@ -84,13 +86,16 @@ const reply = ref({
 });
 
 const checkUserSerial = () => {
-    if (token !== null) {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        userName.value = payload.name;
-        userSerial.value = payload.serial;
-        userStore.getUserByid(userSerial.value);
-        reply.value.userSerial = userSerial.value;
-        reply.value.commentSerial = route.params.commentSerial;
+    const token = sessionStorage.getItem('access-token');
+    if (token) {
+        try {
+            const tokenPayload = JSON.parse(decodeURIComponent(escape(atob(token.split('.')[1]))));
+            userName.value = tokenPayload['name'];
+            userSerial.value = tokenPayload['serial'];
+        } catch (error) {
+            console.error('Failed to decode token:', error);
+        }
+    } else {
     }
 };
 
@@ -153,6 +158,7 @@ onMounted(() => {
 const postReply = function () {
     replyStore.createReply(reply.value)
         .then(() => {
+            reply.value.content = null
             replyStore.getReplyList(route.params.commentSerial);
         });
     showReplyForm.value = false;
@@ -166,6 +172,10 @@ const formatDate = (dateString) => {
     return `${year}년 ${month}월 ${day}일`;
 };
 
+const backButton = function () {
+    router.go(-1);
+    // router.back();
+};
 </script>
 
 <style scoped>
@@ -357,4 +367,12 @@ const formatDate = (dateString) => {
     align-self: center;
     margin-top: 10px;
 }
-</style>
+
+.back-button-container {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.back-button {
+    margin-right: 20px;
+}

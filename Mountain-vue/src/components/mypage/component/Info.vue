@@ -1,16 +1,33 @@
 <template>
     <div>
-      <div class="Infocontainer">
-        <a class="title" style="text-decoration: none; color: black; font-size: larger">기본 정보</a>
-        <div class="Infobox">
-          <div class="row">
-            <div class="col-12">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex flex-column align-items-start">
-                    <div class="info-item">
-                      <i class="bi bi-person-circle fs-7"></i>
-                      <a> 아이디: {{ userStore.User.id }}</a>
+        <div class="Infocontainer">
+            <a class="title" style="text-decoration: none; color: black; font-size: larger">기본 정보</a>
+            <div class="Infobox">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex flex-column align-items-start">
+                                    <div class="info-item">
+                                        <i class="bi bi-person-circle fs-7"></i>
+                                        <a> 아이디: {{ userStore.User.id }}</a>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="bi bi-envelope"></i>
+                                        <a> 이메일: {{ userStore.User.email }}</a>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="bi bi-person"></i>
+                                        <a> 이름: {{ userStore.User.name }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <router-link :to="{ name: 'MyInfoMainModify', params: { userId: userId.value } }">
+                                <button>정보 수정</button>
+                            </router-link>
+
+                            <button @click="confirmDeleteUser">회원 탈퇴</button>
+                        </div>
                     </div>
                     <div class="info-item">
                       <i class="bi bi-envelope"></i>
@@ -78,20 +95,34 @@ const deleteComment = function () {
 };
 
 const confirmDeleteUser = () => {
-  Swal.fire({
-    title: '유저를 삭제하시겠습니까?',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonText: '삭제',
-    cancelButtonText: '취소'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      deleteComment();
-      Swal.fire('삭제되었습니다!', '', 'success')
-        .then(() => {
-          checkUserSerial();
-          location.replace('/');
-        })
+    Swal.fire({
+        title: '유저를 삭제하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '삭제',
+        cancelButtonText: '취소'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            deleteComment();
+            Swal.fire('삭제되었습니다!', '', 'success')
+                .then(() => {
+                    checkUserSerial();
+                    location.replace('/');
+                })
+        }
+    });
+};
+
+onMounted(() => {
+    checkUserSerial();
+    if (userId.value) {
+        userStore.getUserByid(userId.value)
+            .then(() => {
+                console.log('사용자 정보 로드 완료');
+            })
+            .catch((error) => {
+                console.error('사용자 정보 로드 중 오류 발생:', error);
+            });
     }
   });
 };
