@@ -7,81 +7,118 @@
 
 	<select id="selectAll" resultType="CommentResponse">
 		SELECT
-		c.serial AS serial,
-		c.title AS title,
-		c.mountain_serial AS mountainSerial,
-		c.user_serial AS userSerial,
-		u.id AS id,
-		u.name AS name,
-		u.gender AS gender,
-		u.point AS point,
-		c.content AS content,
-		c.reg_date AS regDate,
-		c.update_date AS updateDate,
-		c.calorie AS calorie,
-		c.turnaround AS turnaround,
-		c.view_count AS viewCount -- view_count에서 viewCount로 수정
+		    c.serial AS serial,
+		    c.title AS title,
+		    c.mountain_serial AS mountainSerial,
+		    m.name AS mountainName,
+		    c.user_serial AS userSerial,
+		    u.id AS id,
+		    u.name AS name,
+		    u.gender AS gender,
+		    u.point AS point,
+		    c.content AS content,
+		    c.reg_date AS regDate,
+		    c.update_date AS updateDate,
+		    c.calorie AS calorie,
+		    c.turnaround AS turnaround,
+		    c.view_count AS viewCount
 		FROM
-		comment c
+		    comment c
 		JOIN
-		user u ON c.user_serial = u.serial
+		    user u ON c.user_serial = u.serial
+		JOIN
+		    mountain m ON c.mountain_serial = m.serial
 	</select>
 
 	<select id="selectCommentByMountain" parameterType="int"
 		resultType="CommentResponse">
 		SELECT
-		c.serial AS serial,
-		c.title AS title,
-		c.mountain_serial AS mountainSerial,
-		c.user_serial AS userSerial,
-		u.id AS id,
-		u.name AS name,
-		u.gender AS gender,
-		u.point AS point,
-		c.content AS content,
-		c.reg_date AS regDate,
-		c.update_date AS updateDate,
-		c.calorie AS calorie,
-		c.turnaround AS turnaround,
-		c.view_count AS viewCount -- view_count에서 viewCount로 수정
+		    c.serial AS serial,
+		    c.title AS title,
+		    c.mountain_serial AS mountainSerial,
+		    m.name AS mountainName,
+		    c.user_serial AS userSerial,
+		    u.id AS id,
+		    u.name AS name,
+		    u.gender AS gender,
+		    u.point AS point,
+		    c.content AS content,
+		    c.reg_date AS regDate,
+		    c.update_date AS updateDate,
+		    c.calorie AS calorie,
+		    c.turnaround AS turnaround,
+		    c.view_count AS viewCount
 		FROM
-		comment c
+		    comment c
 		JOIN
-		user u ON c.user_serial = u.serial
-		WHERE mountain_serial =
-		#{mountainSerial}
+		    user u ON c.user_serial = u.serial
+		JOIN
+		    mountain m ON c.mountain_serial = m.serial
+		WHERE
+		    mountain_serial = #{mountainSerial}
 	</select>
 
 	<select id="selectOne" parameterType="int"
 		resultType="CommentResponse">
 		SELECT
-		c.serial AS serial,
-		c.title AS title,
-		c.mountain_serial AS mountainSerial,
-		c.user_serial AS userSerial,
-		u.id AS id,
-		u.name AS name,
-		u.gender AS gender,
-		u.point AS point,
-		c.content AS content,
-		c.reg_date AS regDate,
-		c.update_date AS updateDate,
-		c.calorie AS calorie,
-		c.turnaround AS turnaround,
-		c.view_count AS viewCount -- view_count에서 viewCount로 수정
+		    c.serial AS serial,
+		    c.title AS title,
+		    c.mountain_serial AS mountainSerial,
+		    m.name AS mountainName,
+		    c.user_serial AS userSerial,
+		    u.id AS id,
+		    u.name AS name,
+		    u.gender AS gender,
+		    u.point AS point,
+		    c.content AS content,
+		    c.reg_date AS regDate,
+		    c.update_date AS updateDate,
+		    c.calorie AS calorie,
+		    c.turnaround AS turnaround,
+		    c.view_count AS viewCount
 		FROM
-		comment c
+		    comment c
 		JOIN
-		user u ON c.user_serial = u.serial
+		    user u ON c.user_serial = u.serial
+		JOIN
+		    mountain m ON c.mountain_serial = m.serial
 		WHERE c.serial = #{commentSerial}
+	</select>
+
+	<select id="selectCommentByUserSerial" parameterType="int"
+		resultType="CommentResponse">
+		SELECT
+		    c.serial AS serial,
+		    c.title AS title,
+		    c.mountain_serial AS mountainSerial,
+		    m.name AS mountainName,
+		    c.user_serial AS userSerial,
+		    u.id AS id,
+		    u.name AS name,
+		    u.gender AS gender,
+		    u.point AS point,
+		    c.content AS content,
+		    c.reg_date AS regDate,
+		    c.update_date AS updateDate,
+		    c.calorie AS calorie,
+		    c.turnaround AS turnaround,
+		    c.view_count AS viewCount
+		FROM
+		    comment c
+		JOIN
+		    user u ON c.user_serial = u.serial
+		JOIN
+		    mountain m ON c.mountain_serial = m.serial
+		WHERE c.user_serial = #{userSerial};
+
 	</select>
 
 	<insert id="createComment">
 		INSERT INTO Comment (title, mountain_serial,
-		user_serial, content, calorie, turnaround)
+		user_serial, content, calorie, turnaround, star)
 		VALUE (#{title},
 		#{mountainSerial}, #{userSerial}, #{content}, #{calorie},
-		#{turnaround})
+		#{turnaround}, #{star})
 	</insert>
 
 	<delete id="deleteComment" parameterType="int">
@@ -107,24 +144,27 @@
 	<select id="selectCommentBySearch"
 		parameterType="SearchConditionForComment" resultType="CommentResponse">
 		SELECT
-			c.serial AS serial,
-			c.title AS title,
-			c.mountain_serial AS mountainSerial,
-			c.user_serial AS userSerial,
-			u.id AS id,
-			u.name AS name,
-			u.gender AS gender,
-			u.point AS point,
-			c.content AS content,
-			c.reg_date AS regDate,
-			c.update_date AS updateDate,
-			c.calorie AS calorie,
-			c.turnaround AS turnaround,
-			c.view_count AS viewCount -- view_count에서 viewCount로 수정
+		    c.serial AS serial,
+		    c.title AS title,
+		    c.mountain_serial AS mountainSerial,
+		    m.name AS mountainName,
+		    c.user_serial AS userSerial,
+		    u.id AS id,
+		    u.name AS name,
+		    u.gender AS gender,
+		    u.point AS point,
+		    c.content AS content,
+		    c.reg_date AS regDate,
+		    c.update_date AS updateDate,
+		    c.calorie AS calorie,
+		    c.turnaround AS turnaround,
+		    c.view_count AS viewCount
 		FROM
-			comment c
+		    comment c
 		JOIN
-			user u ON c.user_serial = u.serial
+		    user u ON c.user_serial = u.serial
+		JOIN
+		    mountain m ON c.mountain_serial = m.serial
 		<where>
 			<!-- 동적쿼리(검색 조건) -->
 			<if test="key != ''">

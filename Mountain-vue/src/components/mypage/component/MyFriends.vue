@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="friendcontainer">
+        <a class="title" style="text-decoration: none; color: black; font-size: larger; font-weight: bolder;">친구 관리</a>
         <div class="searchbar">
             <div>
                 <label><input type="text" class="form-control" v-model="name" placeholder="이름을 입력하세요" /></label>
@@ -9,17 +10,20 @@
         </div>
         <div v-for="friend in userStore.UserList" :key="friend.serial">
             {{ friend.name }}
-            <button @click="confirmFollowFriend(friend)">친구 신청하기</button>
-        </div>                                                                                                                                                                      
-        <h1>following</h1>
+            <button @click="confirmFollowFriend(friend)" class="btn btn-success">친구 신청하기</button>
+        </div>
 
-        <div v-for="following in userStore.FollowingList" :key="following.serial">
+        <h4 style="font-weight: bold;">following</h4>
+
+        <div class="followlist" v-for="following in userStore.FollowingList" :key="following.serial">
             <!-- {{ following.serial }} -->
             {{ following.name }}
-            <button @click="confirmCancelFollowFriend(following)">친구 삭제하기</button>
-            <button @click="checkInfo(following, mountainList)">정보 보기</button>
+            <div class="friendbutton">
+                <button @click="confirmCancelFollowFriend(following)" class="btn btn-danger">친구 삭제하기</button>
+                <button @click="checkInfo(following, mountainList)" class="btn btn-success">정보 보기</button>
+            </div>
         </div>
-        <h1>follower</h1>
+        <h4 style="font-weight: bold;">follower</h4>
         <div v-for="follower in userStore.FollowerList" :key="follower.serial">
             <!-- {{ follower.serial }} -->
             {{ follower.name }}
@@ -43,15 +47,7 @@ import { ref, computed, onMounted } from 'vue';
 const userStore = useUserStore();
 const isLoggedIn = ref(false);
 
-const mountainList = ref([
-    {
-        'name': '한라산',
-    },
-    {
-        'name': '관악산',
-    }
-])
-
+const name = ref('');
 
 const searchFriendList = () => {
     userStore.getUserByName(name.value, userSerial.value);
@@ -157,4 +153,52 @@ onMounted(() => {
     align-items: center;
     text-align: center;
 }
+
+.friendcontainer {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(248, 249, 253);
+    border: 3px solid rgba(43, 97, 247, 0.68);
+    padding: 30px;
+    font-family: "Gowun Dodum", sans-serif;
+    font-size: larger;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.followlist {
+    margin-left: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.friendbutton {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    background-color: #44af56;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+}
+
+.btn-success {
+    background-color: #44af56;
+}
+
+.btn:hover {
+    background-color: #1e8b32;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
 </style>
