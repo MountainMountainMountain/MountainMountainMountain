@@ -12,12 +12,14 @@
                 <label for="name">이름</label>
             </div>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="email" placeholder="이메일" v-model="userStore.User.email" @change="emailCheck">
+                <input type="text" class="form-control" id="email" placeholder="이메일" v-model="userStore.User.email"
+                    @change="emailCheck">
                 <label for="email">이메일</label>
                 <div v-if="!isEmailValid" class="error-message">* 유효한 이메일 주소를 입력하세요</div>
             </div>
             <div class="form-floating mb-3">
-                <input type="password" class="form-control" id="password" placeholder="비밀번호" v-model="password" @change="passwordCheck">
+                <input type="password" class="form-control" id="password" placeholder="비밀번호" v-model="password"
+                    @change="passwordCheck">
                 <label for="password">새로운 비밀번호</label>
                 <div v-if="!isPasswordValid" class="error-message">* 비밀번호는 8자 이상이어야 합니다</div>
             </div>
@@ -38,10 +40,6 @@ import Swal from 'sweetalert2';
 const userStore = useUserStore();
 const route = useRoute();
 const router = useRouter();
-const backButton = function () {
-    router.go(-1);
-    // router.back();
-};
 const password = ref('');
 const isPasswordValid = ref(true);
 const isEmailValid = ref(true);

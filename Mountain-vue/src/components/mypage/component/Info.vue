@@ -1,49 +1,44 @@
 <template>
-    <div>
-        <div class="Infocontainer">
-            <a class="title" style="text-decoration: none; color: black; font-size: larger">기본 정보</a>
-            <div class="Infobox">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex flex-column align-items-start">
-                                    <div class="info-item">
-                                        <i class="bi bi-person-circle fs-7"></i>
-                                        <a> 아이디: {{ userStore.User.id }}</a>
-                                    </div>
-                                    <div class="info-item">
-                                        <i class="bi bi-envelope"></i>
-                                        <a> 이메일: {{ userStore.User.email }}</a>
-                                    </div>
-                                    <div class="info-item">
-                                        <i class="bi bi-person"></i>
-                                        <a> 이름: {{ userStore.User.name }}</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- <router-link :to="{ name: 'MyInfoMainModify', params: { userId: userId.value } }">
+  <div>
+    <div class="Infocontainer">
+      <a class="title" style="text-decoration: none; color: black; font-size: larger">기본 정보</a>
+      <div class="Infobox">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex flex-column align-items-start">
+                  <div class="info-item">
+                    <i class="bi bi-person-circle fs-7"></i>
+                    <a> 아이디: {{ userStore.User.id }}</a>
+                  </div>
+                  <div class="info-item">
+                    <i class="bi bi-envelope"></i>
+                    <a> 이메일: {{ userStore.User.email }}</a>
+                  </div>
+                  <div class="info-item">
+                    <i class="bi bi-person"></i>
+                    <a> 이름: {{ userStore.User.name }}</a>
+                  </div>
+                </div>
+              </div>
+              <!-- <router-link :to="{ name: 'MyInfoMainModify', params: { userId: userId.value } }">
                                 <button>정보 수정</button>
                             </router-link>
 
                             <button @click="confirmDeleteUser">회원 탈퇴</button> -->
-                        </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="button-group">
-        <router-link :to="{ name: 'MyInfoMainModify', params: { userId: userId.value } }">
-          <button class="edit-btn">정보 수정</button>
-        </router-link>
-
-        <button class="delete-btn" @click="confirmDeleteUser">회원 탈퇴</button>
-      </div>
     </div>
+  </div>
+  <div class="button-group">
+    <router-link :to="{ name: 'MyInfoMainModify', params: { userId: userId.value } }">
+      <button class="edit-btn">정보 수정</button>
+    </router-link>
+
+    <button class="delete-btn" @click="confirmDeleteUser">회원 탈퇴</button>
   </div>
 </template>
 <script setup>
@@ -105,7 +100,7 @@ const confirmDeleteUser = () => {
         })
     }
   });
-
+}
 
 onMounted(() => {
   checkUserSerial();
