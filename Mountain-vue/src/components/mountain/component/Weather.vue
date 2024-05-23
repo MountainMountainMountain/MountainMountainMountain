@@ -3,19 +3,18 @@
     <div class="weather-header"></div>
     <div class="weather-body">
       <div class="weather-icon">
-        <img src="@/assets/weather/rain.gif" alt="">
+        <img :src="weatherIcon" alt="Weather Icon">
       </div>
       <div class="weather-info">
-        <span><h4>날씨정보</h4></span>
+        <span>
+          <h4>날씨정보</h4>
+        </span>
         <br>
         <hr>
         <br>
-        <p>산 이름: {{ mountainStore.mountain.name }}</p>
-        <p>기온 : {{ tmp }}℃</p>
-        <p>최고 기온 : {{ tmax }}℃</p>
-        <p>최저 기온 : {{ tmin }}℃</p>
-        <!-- <p>하늘상태 : {{ sky }}</p> -->
-        <p>하늘상태 : 비 </p>
+        <p>{{ mountainStore.mountain.name }}</p>
+        <p>{{ tmp }}℃</p>
+        <p>{{ skyDescription }}</p>
       </div>
     </div>
   </div>
@@ -30,103 +29,112 @@ import { useMountainStore } from "@/stores/mountainstore";
 const route = useRoute();
 const mountainStore = useMountainStore();
 
-const mountainName = ref('');
 const tmp = ref(null);
-const tmax = ref(null);
-const tmin = ref(null);
-const sky = ref(null);
-const forecast = ref([]);
 const weatherIcon = ref(null);
+const skyDescription = ref('');
+
+// 하늘 상태에 따라 아이콘과 설명을 설정하는 함수
+import sunnyImage from '@/assets/weather/sunny.gif';
+import rainyImage from '@/assets/weather/rain.gif';
+import cloudyImage from '@/assets/weather/cloud.gif';
+//import unknownImage from '@/assets/weather/unknown.jpg';
 
 const getWeatherIcon = (sky) => {
-  console.log(sky);
   switch (sky) {
     case "1":
-      weatherIcon.value = '@/assets/images/daram.jpg';
+      weatherIcon.value = sunnyImage;
+      skyDescription.value = '맑음';
       break;
     case "3":
-      weatherIcon.value = "@/assets/images/daram.jpg";
+      weatherIcon.value = cloudyImage;
+      skyDescription.value = '구름 많음';
       break;
     case "4":
-      weatherIcon.value = '/assets/weather/rain.gif';
+      weatherIcon.value = rainyImage;
+      skyDescription.value = '비';
       break;
     default:
-      weatherIcon.value = '/assets/weather/rain.gif';
+      weatherIcon.value = unknownImage;
+      skyDescription.value = '알 수 없음';
   }
 };
 
-onMounted(() => {
-  mountainStore.getMountainSerial(route.params.mountainSerial);
+onMounted(async () => {
+  try {
+    await mountainStore.getMountainSerial(route.params.mountainSerial);
 
-  const API_URL = `http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst`;
-  const today = new Date();
-  let year = today.getFullYear();
-  let month = today.getMonth() + 1;
-  let day = today.getDate();
-  month = month < 10 ? "0" + month : month;
-  day = day < 10 ? "0" + day : day;
-  const todayStr = `${year}${month}${day}`;
-  console.log(mountainStore.mountain.weatherNX)
-  const nx = mountainStore.mountain.weatherNX; // 예시로 설정된 값
-  const ny = mountainStore.mountain.weatherNY; // 예시로 설정된 값
+    const nx = mountainStore.mountain.weatherNX;
+    const ny = mountainStore.mountain.weatherNY;
+    const API_URL = `http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst`;
+    const today = new Date();
+    let year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    let day = today.getDate();
+    month = month < 10 ? "0" + month : month;
+    day = day < 10 ? "0" + day : day;
+    const todayStr = `${year}${month}${day}`;
 
-  axios
-    .get(API_URL, {
+    const currentHour = today.getHours();
+    let baseTime;
+
+    // 현재 시간을 기준으로 base_time 설정
+    if (currentHour >= 2 && currentHour < 5) {
+      baseTime = "0200";
+    } else if (currentHour >= 5 && currentHour < 8) {
+      baseTime = "0500";
+    } else if (currentHour >= 8 && currentHour < 11) {
+      baseTime = "0800";
+    } else if (currentHour >= 11 && currentHour < 14) {
+      baseTime = "1100";
+    } else if (currentHour >= 14 && currentHour < 17) {
+      baseTime = "1400";
+    } else if (currentHour >= 17 && currentHour < 20) {
+      baseTime = "1700";
+    } else if (currentHour >= 20 && currentHour < 23) {
+      baseTime = "2000";
+    } else {
+      // currentHour이 23시 이후인 경우 다음 날로 예보를 받을 수 있으므로, 가장 가까운 시간인 23시로 설정
+      baseTime = "2300";
+    }
+
+    const response = await axios.get(API_URL, {
       params: {
         serviceKey: import.meta.env.VITE_WEATHER_API_KEY,
         dataType: "JSON",
         base_date: todayStr,
-        base_time: "0200",
-        // base_time: ["0200", "0500", "0800", "1100", "1400", "1700", "2000", "2300" ],
-        numOfRows: 100,
+        base_time: baseTime,
+        numOfRows: 12,
         nx: nx,
         ny: ny,
       },
-    })
-    .then((response) => {
-      return response.data.response.body.items.item;
-    })
-    .then((data) => {
-      // console.log(data); // 응답 데이터를 콘솔에 출력하여 확인
-      const dailyForecast = {};
-      data.forEach((item) => {
-        const date = item.fcstDate;
-        if (!dailyForecast[date]) {
-          dailyForecast[date] = {};
-        }
-        if (item.category === "TMP") {
-          dailyForecast[date].tmp = item.fcstValue;
-        } else if (item.category === "TMX") {
-          dailyForecast[date].tmax = item.fcstValue;
-        } else if (item.category === "TMN") {
-          dailyForecast[date].tmin = item.fcstValue;
-        } else if (item.category === "SKY") {
-          dailyForecast[date].sky = item.fcstValue;
-        }
-      });
-
-      const todayForecast = dailyForecast[todayStr];
-      console.log(todayForecast); // 오늘의 예보 데이터를 콘솔에 출력하여 확인
-      tmp.value = todayForecast.tmp;
-      tmax.value = todayForecast.tmax;
-      tmin.value = todayForecast.tmin;
-      sky.value = todayForecast.sky;
-
-      getWeatherIcon(sky.value);
-
-      const forecastArray = [];
-      for (const date in dailyForecast) {
-        forecastArray.push({
-          date,
-          tmp: dailyForecast[date].tmp,
-          sky: dailyForecast[date].sky,
-        });
-      }
-      forecast.value = forecastArray.slice(0, 5); // 5일 예보
-    })
-    .catch((error) => {
-      console.error("Error fetching weather data:", error);
     });
+
+    const data = response.data.response.body.items.item;
+    const dailyForecast = {};
+
+    data.forEach((item) => {
+      const date = item.fcstDate;
+      if (!dailyForecast[date]) {
+        dailyForecast[date] = {};
+      }
+      if (item.category === "TMP") {
+        dailyForecast[date].tmp = item.fcstValue;
+      } else if (item.category === "TMX") {
+        dailyForecast[date].tmax = item.fcstValue;
+      } else if (item.category === "TMN") {
+        dailyForecast[date].tmin = item.fcstValue;
+      } else if (item.category === "SKY") {
+        dailyForecast[date].sky = item.fcstValue;
+      }
+    });
+
+    const todayForecast = dailyForecast[todayStr];
+    tmp.value = todayForecast.tmp;
+    getWeatherIcon(todayForecast.sky);
+
+  } catch (error) {
+    console.error("Error fetching weather data:", error);
+  }
 });
 </script>
 

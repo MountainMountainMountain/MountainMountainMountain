@@ -46,13 +46,17 @@ export const useMountainStore = defineStore('mountain', () => {
   };
 
   const getMountainSerial = function (mountainSerial) {
-    axios.get(`${REST_MOUNTAIN_API}${mountainSerial}`)
-      .then((response) => {
-        mountain.value = response.data;
-      })
-      .catch((err) => {
-        console.error('Error fetching mountain data', err);
-      });
+    return new Promise((resolve, reject) => {
+      axios.get(`${REST_MOUNTAIN_API}${mountainSerial}`)
+        .then((response) => {
+          mountain.value = response.data;
+          resolve();
+        })
+        .catch((err) => {
+          console.error('Error fetching mountain data', err);
+          reject();
+        });
+    })
   };
 
   const getMountainState = function (mountainState) {
@@ -64,15 +68,15 @@ export const useMountainStore = defineStore('mountain', () => {
         .catch((err) => {
           console.error(err);
         });
-        else {
-          axios.get(REST_MOUNTAIN_API)
-            .then((response) => {
-              mountainList.value = response.data;
-            })
-            .catch((err) => {
-              console.error(err);
-            });
-        }
+    else {
+      axios.get(REST_MOUNTAIN_API)
+        .then((response) => {
+          mountainList.value = response.data;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
     // return new Promise((resolve, reject) => {
     //   axios.get(`${REST_MOUNTAIN_API}state/${mountainState}`)
     //     .then((response) => {

@@ -2,7 +2,7 @@
   <div class="userBar">
     <div class="brand">
       <router-link class="navbar-brand" to="/">
-        <img style="width: 64px;" src="@/assets/images/Mlogo.png" alt="이미지">
+        <img style="width: 120px;" src="@/assets/images/back1.png" alt="이미지">
       </router-link>
     </div>
     <div class="links">

@@ -5,7 +5,7 @@
             <span class="error animated tada" id="msg"></span>
             <form id="login" @submit.prevent="login" name="form1" class="box">
                 <router-link to="/">
-                    <h4><span><img style="width: 64px;" src="@/assets/images/Mlogo.png" alt="이미지"></span></h4>
+                    <h4><span><img style="width: 200px;" src="@/assets/images/back1.png" alt="이미지"></span></h4>
                 </router-link>
                 <br>
                 <h5>계정에 로그인하세요.</h5>

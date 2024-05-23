@@ -243,11 +243,11 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- User 테이블 데이터 삽입
 INSERT INTO User (id, password, name, birth_date, gender, email, point)
 VALUES
-('user1', 'password1', 'John Doe', '1990-01-01', 'M', 'john@example.com', 100),
-('user2', 'password2', 'Jane Doe 가나', '1992-05-15', 'F', 'jane@example.com', 400),
-('user3', 'password3', 'Alice Smith', '1985-11-20', 'F', 'alice@example.com', 600),
-('user4', 'password4', 'Bob Johnson', '1988-03-10', 'M', 'bob@example.com', 800),
-('user5', 'password5', 'Charlie Brown', '1995-07-05', 'M', 'charlie@example.com', 1180),
+('user1', 'password1', '아에', '1990-01-01', 'M', 'john@example.com', 100),
+('user2', 'password2', 'Jane Doe 가나', '1992-05-15', 'F', 'jane@example.com', 150),
+('user3', 'password3', 'Alice Smith', '1985-11-20', 'F', 'alice@example.com', 200),
+('user4', 'password4', 'Bob Johnson', '1988-03-10', 'M', 'bob@example.com', 120),
+('user5', 'password5', 'Charlie Brown', '1995-07-05', 'M', 'charlie@example.com', 180),
 ('user6', 'password6', 'Emma Watson', '1983-09-30', 'F', 'emma@example.com', 220),
 ('user7', 'password7', 'Michael Jordan', '1990-02-17', 'M', 'michael@example.com', 300),
 ('user8', 'password8', 'Taylor Swift', '1989-12-13', 'F', 'taylor@example.com', 250),
@@ -257,7 +257,7 @@ VALUES
 -- Mountain 테이블에 한국에 있는 실제 산 데이터 삽입 및 날씨 관측소의 동경과 북위 좌표 추가
 INSERT INTO Mountain (name, latitude, longitude, altitude, course, difficulty, fee, state, town, point, weather_NX, weather_NY)
 VALUES
-('한라산', 33.3617, 126.5292, 1950, 1, 6.0, 3000, '제주도', '서귀포시', 300, 60, 127),
+('한라산', 33.36191487, 126.5333176, 1950, 1, 6.0, 3000, '제주도', '서귀포시', 300, 60, 127),
 ('지리산', 35.354167, 127.730833, 1915, 2, 7.0, 2000, '경상도', '산청군', 280, 63, 124),
 ('설악산', 38.1192, 128.4658, 1708, 3, 6.5, 3500, '강원도', '양양군', 320, 66, 131),
 ('덕유산', 35.908333, 127.740833, 1614, 4, 5.5, 1500, '전라도', '무주군', 250, 67, 129),
@@ -268,6 +268,7 @@ VALUES
 ('치악산', 37.414722, 128.033056, 1288, 9, 6.0, 2000, '강원도', '원주시', 280, 73, 107),
 ('가야산', 35.783056, 128.102222, 799, 10, 3.5, 500, '경상도', '김해시', 120, 73, 123),
 ('명지산', 37.9552, 127.5250, 1267, 11, 5.0, 0, '수도권', '가평군', 250, 69, 134);
+
 
 
 -- ChatInfo 테이블 데이터 삽입
@@ -385,8 +386,7 @@ SELECT * FROM ChatInfo;
 SELECT * FROM Chat;
 
 -- Comment 테이블 조회
-SELECT * FROM Comment
-LIMIT 300;
+SELECT * FROM Comment;
 
 -- Reply 테이블 조회
 SELECT * FROM Reply;
@@ -460,25 +460,28 @@ INSERT INTO User (id, password, name, birth_date, gender, email)
 VALUES ('aecvxdr', 'qwerasdfzxcv', '가나다라마', '1990-01-01 09:00:00.0', 'F', 'fc@awefds.da');
 
 
-		SELECT
-		c.serial AS serial,
-		c.title AS title,
-		c.mountain_serial AS mountainSerial,
-		m.name AS mountainName,
-		c.user_serial AS userSerial,
-		u.id AS id,
-		u.name AS name,
-		u.gender AS gender,
-		u.point AS point,
-		c.content AS content,
-		c.reg_date AS regDate,
-		c.update_date AS updateDate,
-		c.calorie AS calorie,
-		c.turnaround AS turnaround,
-		c.view_count AS viewCount -- view_count에서 viewCount로 수정
-		FROM
-		comment c
-		JOIN
-		user u ON c.user_serial = u.serial
-		JOIN
-			mountain m ON c.mountain_serial = m.serial;
+SELECT
+    u.serial AS userSerial,
+    u.name AS name,
+    u.gender AS gender,
+    u.email AS email,
+    u.point AS userPoint,
+    m.serial AS mountainSerial,
+    m.name AS mountainName,
+    m.course AS course,
+    m.difficulty AS difficulty,
+    m.fee AS fee,
+    m.state AS state,
+    m.town AS town,
+    m.point AS mountainPoint,
+    ci.date AS hikingDate
+FROM
+    `finalMountainPJT`.`User` u
+JOIN
+    `finalMountainPJT`.`ChatUserManager` cum ON u.serial = cum.user_serial
+JOIN
+    `finalMountainPJT`.`ChatInfo` ci ON cum.chatInfo_serial = ci.serial
+JOIN
+    `finalMountainPJT`.`Mountain` m ON ci.mountain_serial = m.serial
+
+WHERE u.serial = 2;
