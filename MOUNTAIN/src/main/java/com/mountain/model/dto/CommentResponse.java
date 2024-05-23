@@ -6,6 +6,7 @@ public class CommentResponse {
 	private int serial;
 	private String title;
 	private int mountainSerial;
+	private String mountainName;
 	private int userSerial;
 	private String id;
 	private String name;
@@ -23,12 +24,14 @@ public class CommentResponse {
 	public CommentResponse() {
 	}
 
-	public CommentResponse(int serial, String title, int mountainSerial, int userSerial, String id, String name,
-			String gender, int point, String content, Timestamp regDate, Timestamp updateDate, int calorie,
-			int turnaround, int view_count) {
+	public CommentResponse(int serial, String title, int mountainSerial, String mountainName, int userSerial, String id,
+			String name, String gender, int point, String content, Timestamp regDate, Timestamp updateDate, int calorie,
+			int turnaround, int viewCount) {
+		super();
 		this.serial = serial;
 		this.title = title;
 		this.mountainSerial = mountainSerial;
+		this.mountainName = mountainName;
 		this.userSerial = userSerial;
 		this.id = id;
 		this.name = name;
@@ -39,30 +42,7 @@ public class CommentResponse {
 		this.updateDate = updateDate;
 		this.calorie = calorie;
 		this.turnaround = turnaround;
-		this.viewCount = view_count;
-//		this.fileId = fileId;
-//		this.fileName = fileName;
-	}
-
-	public CommentResponse(int serial, String title, int mountainSerial, int userSerial, String id, String name,
-			String gender, int point, String content, Timestamp regDate, Timestamp updateDate, int calorie,
-			int turnaround, int view_count, String fileId, String fileName) {
-		this.serial = serial;
-		this.title = title;
-		this.mountainSerial = mountainSerial;
-		this.userSerial = userSerial;
-		this.id = id;
-		this.name = name;
-		this.gender = gender;
-		this.point = point;
-		this.content = content;
-		this.regDate = regDate;
-		this.updateDate = updateDate;
-		this.calorie = calorie;
-		this.turnaround = turnaround;
-		this.viewCount = view_count;
-//		this.fileId = fileId;
-//		this.fileName = fileName;
+		this.viewCount = viewCount;
 	}
 
 	public int getSerial() {
@@ -87,6 +67,14 @@ public class CommentResponse {
 
 	public void setMountainSerial(int mountainSerial) {
 		this.mountainSerial = mountainSerial;
+	}
+
+	public String getMountainName() {
+		return mountainName;
+	}
+
+	public void setMountainName(String mountainName) {
+		this.mountainName = mountainName;
 	}
 
 	public int getUserSerial() {
@@ -173,35 +161,18 @@ public class CommentResponse {
 		return viewCount;
 	}
 
-	public void setViewCount(int view_count) {
-		this.viewCount = view_count;
+	public void setViewCount(int viewCount) {
+		this.viewCount = viewCount;
 	}
-
-//	public String getFileId() {
-//		return fileId;
-//	}
-//
-//	public void setFileId(String fileId) {
-//		this.fileId = fileId;
-//	}
-
-//	public String getFileName() {
-//		return fileName;
-//	}
-//
-//	public void setFileName(String fileName) {
-//		this.fileName = fileName;
-//	}
 
 	@Override
 	public String toString() {
 		return "CommentResponse [serial=" + serial + ", title=" + title + ", mountainSerial=" + mountainSerial
-				+ ", userSerial=" + userSerial + ", id=" + id + ", name=" + name + ", gender=" + gender + ", point="
-				+ point + ", content=" + content + ", regDate=" + regDate + ", updateDate=" + updateDate + ", calorie="
-				+ calorie + ", turnaround=" + turnaround + ", viewCount=" + viewCount
-//				+ ", fileId=" + fileId
-//				+ ", fileName=" + fileName
-				+ "]";
+				+ ", mountainName=" + mountainName + ", userSerial=" + userSerial + ", id=" + id + ", name=" + name
+				+ ", gender=" + gender + ", point=" + point + ", content=" + content + ", regDate=" + regDate
+				+ ", updateDate=" + updateDate + ", calorie=" + calorie + ", turnaround=" + turnaround + ", viewCount="
+				+ viewCount + "]";
 	}
+
 
 }

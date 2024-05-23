@@ -93,6 +93,14 @@ public class CommentRESTController {
 		return new ResponseEntity<List<CommentResponse>>(list, HttpStatus.OK);
 	}
 
+	// 간 산 모음
+	@GetMapping("/comment/userSerial/{userSerial}")
+	// ModelAttribute로 할지 param으로 할지 나중에 정하기
+	public ResponseEntity<?> selectCommentByComplete(@PathVariable("userSerial") int userSerial) {
+		List<CommentResponse> list = commentService.selectCommentByUserSerial(userSerial);
+		return new ResponseEntity<List<CommentResponse>>(list, HttpStatus.OK);
+	}
+
 	// 게시글 평점
 	@GetMapping("/comment/star/{mountainSerial}")
 	public ResponseEntity<?> selectStar(@PathVariable("mountainSerial") int mountainSerial) {

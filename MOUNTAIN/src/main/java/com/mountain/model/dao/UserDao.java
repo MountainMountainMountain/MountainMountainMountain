@@ -35,5 +35,5 @@ public interface UserDao {
 	User login(Map<String, String> info);
 
 	// 점수 업데이트
-	void modifyUserPoint(int serial, int intmountainPoint);
+	void modifyUserPoint(int serial, int mountainPoint);
 }

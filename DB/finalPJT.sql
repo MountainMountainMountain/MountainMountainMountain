@@ -385,7 +385,8 @@ SELECT * FROM ChatInfo;
 SELECT * FROM Chat;
 
 -- Comment 테이블 조회
-SELECT * FROM Comment;
+SELECT * FROM Comment
+LIMIT 300;
 
 -- Reply 테이블 조회
 SELECT * FROM Reply;
@@ -457,3 +458,27 @@ JOIN
 
 INSERT INTO User (id, password, name, birth_date, gender, email)
 VALUES ('aecvxdr', 'qwerasdfzxcv', '가나다라마', '1990-01-01 09:00:00.0', 'F', 'fc@awefds.da');
+
+
+		SELECT
+		c.serial AS serial,
+		c.title AS title,
+		c.mountain_serial AS mountainSerial,
+		m.name AS mountainName,
+		c.user_serial AS userSerial,
+		u.id AS id,
+		u.name AS name,
+		u.gender AS gender,
+		u.point AS point,
+		c.content AS content,
+		c.reg_date AS regDate,
+		c.update_date AS updateDate,
+		c.calorie AS calorie,
+		c.turnaround AS turnaround,
+		c.view_count AS viewCount -- view_count에서 viewCount로 수정
+		FROM
+		comment c
+		JOIN
+		user u ON c.user_serial = u.serial
+		JOIN
+			mountain m ON c.mountain_serial = m.serial;

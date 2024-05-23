@@ -13,6 +13,7 @@ public class Comment {
 	private int calorie;
 	private int turnaround;
 	private int view_count;
+	private int star;
 	private String fileId;
 	private String fileName;
 
@@ -20,7 +21,8 @@ public class Comment {
 	}
 
 	public Comment(int serial, String title, int mountainSerial, int userSerial, String content, Timestamp regDate,
-			Timestamp updateDate, int calorie, int turnaround, int view_count, String fileId, String fileName) {
+			Timestamp updateDate, int calorie, int turnaround, int view_count, int star, String fileId,
+			String fileName) {
 		this.serial = serial;
 		this.title = title;
 		this.mountainSerial = mountainSerial;
@@ -31,6 +33,7 @@ public class Comment {
 		this.calorie = calorie;
 		this.turnaround = turnaround;
 		this.view_count = view_count;
+		this.star = star;
 		this.fileId = fileId;
 		this.fileName = fileName;
 	}
@@ -115,6 +118,14 @@ public class Comment {
 		this.view_count = view_count;
 	}
 
+	public int getStar() {
+		return star;
+	}
+
+	public void setStar(int star) {
+		this.star = star;
+	}
+
 	public String getFileId() {
 		return fileId;
 	}
@@ -135,8 +146,8 @@ public class Comment {
 	public String toString() {
 		return "Comment [serial=" + serial + ", title=" + title + ", mountainSerial=" + mountainSerial + ", userSerial="
 				+ userSerial + ", content=" + content + ", regDate=" + regDate + ", updateDate=" + updateDate
-				+ ", calorie=" + calorie + ", turnaround=" + turnaround + ", view_count=" + view_count + ", fileId="
-				+ fileId + ", fileName=" + fileName + "]";
+				+ ", calorie=" + calorie + ", turnaround=" + turnaround + ", view_count=" + view_count + ", star="
+				+ star + ", fileId=" + fileId + ", fileName=" + fileName + "]";
 	}
 
 }

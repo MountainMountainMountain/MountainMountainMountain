@@ -22,7 +22,8 @@
                 <div class="detail-item content-item">
                     <strong>내용</strong>
                     <div class="content">
-                        <img v-if="commentStore.Comment.image" :src="commentStore.Comment.image" alt="Comment Image" class="content-image">
+                        <img v-if="commentStore.Comment.image" :src="commentStore.Comment.image" alt="Comment Image"
+                            class="content-image">
                         <p>{{ commentStore.Comment.content }}</p>
                     </div>
                 </div>
@@ -43,10 +44,12 @@
                         <br>
                         <span>{{ reply.content }}</span>
 
-                        <button v-if="reply.userSerial == userSerial" @click="confirmDeleteReply(reply)">댓글 삭제</button>
+                        <button class="btn btn-outline-danger" v-if="reply.userSerial == userSerial"
+                            @click="confirmDeleteReply(reply)">댓글 삭제</button>
                     </li>
                 </ul>
-                <button class="common-button small-button" v-if="token !== null" @click="showReplyForm = true">댓글 작성하기</button>
+                <button class="common-button small-button" v-if="token !== null" @click="showReplyForm = true">댓글
+                    작성하기</button>
                 <div v-if="showReplyForm" class="reply-form">
                     <textarea v-model="reply.content" placeholder="댓글 내용을 입력하세요"></textarea>
                     <button class="common-button" @click="postReply">댓글 작성</button>
@@ -78,6 +81,7 @@ const userStore = useUserStore();
 
 const userName = ref('');
 const userSerial = ref('');
+const token = sessionStorage.getItem('access-token');
 const showReplyForm = ref(false);
 const reply = ref({
     userSerial: '',
@@ -86,16 +90,13 @@ const reply = ref({
 });
 
 const checkUserSerial = () => {
-    const token = sessionStorage.getItem('access-token');
-    if (token) {
-        try {
-            const tokenPayload = JSON.parse(decodeURIComponent(escape(atob(token.split('.')[1]))));
-            userName.value = tokenPayload['name'];
-            userSerial.value = tokenPayload['serial'];
-        } catch (error) {
-            console.error('Failed to decode token:', error);
-        }
-    } else {
+    if (token !== null) {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        userName.value = payload.name;
+        userSerial.value = payload.serial;
+        userStore.getUserByid(userSerial.value);
+        reply.value.userSerial = userSerial.value;
+        reply.value.commentSerial = route.params.commentSerial;
     }
 };
 
@@ -125,7 +126,8 @@ const confirmDeleteComment = () => {
         title: '리뷰를 삭제하시겠습니까?',
         icon: 'warning',
         showCancelButton: true,
-        
+        confirmButtonText: '삭제',
+        cancelButtonText: '취소'
     }).then((result) => {
         if (result.isConfirmed) {
             deleteComment();
@@ -158,7 +160,7 @@ onMounted(() => {
 const postReply = function () {
     replyStore.createReply(reply.value)
         .then(() => {
-            reply.value.content = null
+            reply.value.content = null;
             replyStore.getReplyList(route.params.commentSerial);
         });
     showReplyForm.value = false;
@@ -376,3 +378,4 @@ const backButton = function () {
 .back-button {
     margin-right: 20px;
 }
+</style>

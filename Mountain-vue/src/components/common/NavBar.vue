@@ -56,8 +56,8 @@ const logout = () => {
   location.replace('/');
 };
 
-onMounted(() => {
-  checkLoginStatus();
+onMounted(async () => {
+  await checkLoginStatus();
 });
 </script>
 
