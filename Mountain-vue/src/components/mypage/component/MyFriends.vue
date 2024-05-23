@@ -58,7 +58,6 @@ const mountainList = ref([
     }
 ])
 
-const name = ref('')
 
 const searchFriendList = () => {
     userStore.getUserByName(name.value, userSerial.value);

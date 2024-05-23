@@ -69,6 +69,16 @@
               </div>
 
             </div>
+            <div class="media-body ms-md-5 m-0 mt-4 mt-md-0 text-md-start text-center">
+              <div class="zt-span6 last">
+
+                <h3><strong>point</strong></h3>
+                <div :class="['zt-skill-bar', progressClass]">
+                  <div :style="{ width: progressWidth + '%' }">point<span>{{ progressWidth }}%</span></div>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
       </div>
@@ -138,6 +148,13 @@ const progressWidth = computed(() => {
   const point = userStore.User.point;
   return Math.min((point / 1000) * 100, 100); // 최대 100%를 넘지 않도록 설정
 });
+
+const progressClass = computed(() => {
+  const point = userStore.User.point;
+  if (point >= 1) return 'zt-skill-bar-high';
+  return 'zt-skill-bar-very-low';
+});
+
 </script>
 
 <style scoped>
@@ -211,5 +228,13 @@ const progressWidth = computed(() => {
   margin-top: -3px;
   background-color: #c01a1a;
   transform: rotate(45deg);
+}
+
+.zt-skill-bar-high div {
+  background-color: #ffc600;
+}
+
+.zt-skill-bar div {
+  min-width: 20px;
 }
 </style>

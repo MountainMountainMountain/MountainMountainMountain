@@ -1,24 +1,34 @@
 <template>
-  <div>
-    <div class="Infocontainer">
-      <a class="title" style="text-decoration: none; color: black; font-size: larger">기본 정보</a>
-      <div class="Infobox">
-        <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-body">
-                <div class="d-flex flex-column align-items-start">
-                  <div class="info-item">
-                    <i class="bi bi-person-circle fs-7"></i>
-                    <a> 아이디: {{ userStore.User.id }}</a>
-                  </div>
-                  <div class="info-item">
-                    <i class="bi bi-envelope"></i>
-                    <a> 이메일: {{ userStore.User.email }}</a>
-                  </div>
-                  <div class="info-item">
-                    <i class="bi bi-person"></i>
-                    <a> 이름: {{ userStore.User.name }}</a>
+    <div>
+        <div class="Infocontainer">
+            <a class="title" style="text-decoration: none; color: black; font-size: larger">기본 정보</a>
+            <div class="Infobox">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex flex-column align-items-start">
+                                    <div class="info-item">
+                                        <i class="bi bi-person-circle fs-7"></i>
+                                        <a> 아이디: {{ userStore.User.id }}</a>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="bi bi-envelope"></i>
+                                        <a> 이메일: {{ userStore.User.email }}</a>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="bi bi-person"></i>
+                                        <a> 이름: {{ userStore.User.name }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <router-link :to="{ name: 'MyInfoMainModify', params: { userId: userId.value } }">
+                                <button>정보 수정</button>
+                            </router-link>
+
+                            <button @click="confirmDeleteUser">회원 탈퇴</button> -->
+                        </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -95,7 +105,7 @@ const confirmDeleteUser = () => {
         })
     }
   });
-};
+
 
 onMounted(() => {
   checkUserSerial();
@@ -136,15 +146,16 @@ onMounted(() => {
 
 .title {
   align-self: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   font-weight: bold;
 }
 
 .Infobox {
   text-align: left;
-  padding: 50px;
+  padding: 0px;
   background-color: white;
   width: 100%;
+  height: 200px;
 }
 
 .info-item {
