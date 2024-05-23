@@ -6,13 +6,8 @@ public class SearchConditionForComment {
 	private String orderBy;
 	private String orderByDir;
 	private int mountainSerial;
-	// 주석처리와 같이 하려면 mapper의 if문 안에 'none'으로 바꿔야함
-//	private String orderBy = "none";
-//	private String orderByDir = "none";
 
 	public SearchConditionForComment() {
-//		this.orderBy = "none";
-//		this.orderByDir = "none";
 	}
 
 	public SearchConditionForComment(String key, String word, int mountainSerial) {

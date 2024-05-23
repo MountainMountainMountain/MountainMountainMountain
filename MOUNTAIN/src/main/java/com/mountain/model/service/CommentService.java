@@ -18,7 +18,7 @@ public interface CommentService {
 	// Serial에 해당하는 게시글 하나 가져오기
 	public CommentResponse selectOne(int commentSerial);
 
-	// 
+	// 유저 시리얼 통해 게시글 조회
 	public List<CommentResponse> selectCommentByUserSerial(int userSerial);
 	
 	// 게시글 등록

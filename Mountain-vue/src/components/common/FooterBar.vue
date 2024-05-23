@@ -36,13 +36,6 @@
 </script>
 
 <style scoped>
-/* .container {
-    font-size: 0.8rem;
-    color: #808080;
-    margin-left: 30px;
-    margin-right: 30px;
-} */
-
 footer {
     width: 100%;
     height: 90px;

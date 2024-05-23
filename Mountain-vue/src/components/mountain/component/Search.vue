@@ -5,7 +5,6 @@
     </div>
     <div class="search">
       <div class="search-bar">
-        <!-- <label>검색 기준 :</label> -->
         <select v-model="searchInfo.key" style="height: 30px;">
           <option value=''>검색기준</option>
           <option value="name">산 이름</option>
@@ -23,7 +22,7 @@
         <tr>
           <th>이름</th>
           <th>고도</th>
-          <th>코스</th>
+          <th>난이도</th>
           <th>포인트</th>
         </tr>
       </thead>
@@ -35,7 +34,7 @@
             </router-link>
           </td>
           <td>{{ ms.altitude }}</td>
-          <td>{{ ms.course }}</td>
+          <td>{{ ms.difficulty }}</td>
           <td>{{ ms.point }}</td>
         </tr>
       </tbody>

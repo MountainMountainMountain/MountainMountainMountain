@@ -11,8 +11,6 @@
           class="fas fa-user-plus"></i></router-link>
       <router-link v-if="isLoggedIn" class="nav-link" :to="{ name: 'MyInfoMain', params: { userId: userId } }">{{
         userName }}님</router-link>
-      <!-- <router-link v-if="isLoggedIn" class="nav-link" :to="{ name: 'ChatList' }"><i
-          class="fas fa-comments"></i></router-link> -->
       <router-link v-if="isLoggedIn" class="nav-link" :to="{ name: 'MyComplete', params: { userId: userId } }"><i class="fa-solid fa-mountain-sun"></i></router-link>
           
       <a v-if="isLoggedIn" class="nav-link" @click="logout">로그아웃</a>

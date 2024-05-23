@@ -40,7 +40,6 @@ public class ChatRESTController {
 	// 채팅 1개 조회
 	@GetMapping("/chat/{chatSerial}")
 	public ResponseEntity<?> selectOneChat(@PathVariable("chatSerial") int chatSerial) {
-		// responsebody에 User 정보(유저 이름, point) Mountain 정보(산 이름, 산 시리얼) 더 필요함
 		ChatLogResponse chat = chatService.selectChat(chatSerial);
 
 		return new ResponseEntity<ChatLogResponse>(chat, HttpStatus.OK);
@@ -66,8 +65,6 @@ public class ChatRESTController {
 	// 채팅 infoserial 통해서 리스트 가져오기
 	@GetMapping("/chat/bychatinfo/{chatInfoSerial}")
 	public ResponseEntity<?> selectChatByChatInfoSerial(@PathVariable("chatInfoSerial") int chatInfoSerial) {
-		System.out.println(chatInfoSerial);
-		// responsebody에 User 정보(유저 이름, point) Mountain 정보(산 이름, 산 시리얼) 더 필요함
 		List<ChatLogResponse> list = chatService.selectChatByChatInfoSerial(chatInfoSerial);
 
 		return new ResponseEntity<List<ChatLogResponse>>(list, HttpStatus.OK);
@@ -136,7 +133,6 @@ public class ChatRESTController {
 	// 채팅Manager 삭제
 	@DeleteMapping("/chatManager/{chatManagerSerial}")
 	public ResponseEntity<?> deleteChatManager(@PathVariable("chatManagerSerial") int chatManagerSerial) {
-		// 로그인 계정 필요함 그래서 오른쪽 int에 userSerial을 넣어야함
 		chatService.deleteChatUserManager(chatManagerSerial, chatManagerSerial);
 
 		return new ResponseEntity<Void>(HttpStatus.OK);

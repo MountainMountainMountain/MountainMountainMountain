@@ -6,13 +6,8 @@ public class SearchConditionForMountain {
 	private String orderBy;
 	private String orderByDir;
 	private String state;
-	// 주석처리와 같이 하려면 mapper의 if문 안에 'none'으로 바꿔야함
-//	private String orderBy = "none";
-//	private String orderByDir = "none";
 
 	public SearchConditionForMountain() {
-//		this.orderBy = "none";
-//		this.orderByDir = "none";
 	}
 
 	public SearchConditionForMountain(String key, String word, String state) {

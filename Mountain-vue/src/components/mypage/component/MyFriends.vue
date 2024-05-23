@@ -25,7 +25,6 @@
         <div class="friendbutton">
           <button @click="checkInfo(following, mountainList)" class="btn btn-success">정보 보기</button>
           <button @click="confirmCancelFollowFriend(following)" class="btn btn-danger">친구 삭제하기</button>
-          <!-- <i class="bi bi-person-fill-dash fs-5" @click="confirmCancelFollowFriend(following)"></i>/ -->
         </div>
       </div>
       <br>

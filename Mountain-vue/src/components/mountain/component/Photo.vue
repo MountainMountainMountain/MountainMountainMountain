@@ -2,9 +2,6 @@
     <div class="photoContainer">
     <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-            <!-- <div class="carousel-item active">
-                <img src="@/assets/images/mountainCR1.jpeg" class="d-block w-100" alt="image1">
-            </div> -->
             <div class="carousel-item active">
                 <img src="@/assets/images/mountain10.png" class="d-block w-100" alt="...">
             </div>

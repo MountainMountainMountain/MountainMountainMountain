@@ -24,7 +24,6 @@
 <script setup>
 import Photo from '@/components/mountain/component/Photo.vue';
 
-import { useReplyStore } from "@/stores/replystore";
 import { useRouter } from 'vue-router';
 const router = useRouter();
 import { ref, computed, onMounted } from 'vue';
@@ -43,7 +42,6 @@ const checkUserSerial = () => {
 }
 const backButton = function () {
     router.go(-1);
-    // router.back();
 }
 onMounted(() => {
   checkUserSerial();
@@ -78,7 +76,6 @@ onMounted(() => {
   text-align: center;
   line-height: 30px;
   cursor: pointer;
-  /* justify-content: space-between; */
 }
 
 #index_wrap ul p {

@@ -9,10 +9,6 @@ public interface ChatInfoDao {
 
 	// 채팅 만들기
 	void createChatInfo(Map<String, Object> paramMap);
-	// 아래처럼 해야 함
-	// paramMap.put("intValue", 123); // int 값 설정
-	// paramMap.put("timestampValue", Timestamp.valueOf(LocalDateTime.now())); //
-	// Timestamp 값 설정
 
 	// 채팅 1개 찾기
 	ChatInfo selectChatInfoByMap(Map<String, Object> paramMap);

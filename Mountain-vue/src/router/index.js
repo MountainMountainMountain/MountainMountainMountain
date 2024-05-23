@@ -10,7 +10,6 @@ import MountainInfo from "@/components/mountain/component/MountainInfo.vue";
 import MountainLocation from "@/components/mountain/component/MountainLocation.vue";
 import Book from "@/components/mountain/component/Book.vue";
 
-import MypageView from "@/views/MypageView.vue";
 import MyPage from "@/components/mypage/page/MyPage.vue";
 import MyInfo from "@/components/mypage/component/MyInfo.vue";
 import Info from "@/components/mypage/component/Info.vue";
@@ -45,11 +44,6 @@ const router = createRouter({
           name: 'MountainMainView',
           component: MountainMainPage,
         },
-        // {
-        //   path: ':state',
-        //   name: 'MountainListPage',
-        //   component: MountainListPage,
-        // },
         {
           path: 'state/:state',
           name: 'MountainStatePage',
@@ -111,11 +105,6 @@ const router = createRouter({
           name: 'MyComplete',
           component: MyComplete,
         },
-        // { 이거는 모달이나 그 자체에서 바꿀까?
-        //   path: 'modifyInfo',
-        //   name: 'modifyInfo',
-        //   component: ModifyInfo,
-        // },
       ],
     },
     {

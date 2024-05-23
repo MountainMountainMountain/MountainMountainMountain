@@ -2,10 +2,6 @@
     <div>
         <router-view />
     </div>
-
-
-
-    
 </template>
 
 <script setup>
@@ -34,9 +30,6 @@ const checkUserSerial = () => {
 
 onMounted(() => {
     checkUserSerial();
-    // userStore.getUserByid();
-    // userStore.getfollwingList(userStore.User);
-    // userStore.getfollwerList(userStore.User);
 })
 
 </script>

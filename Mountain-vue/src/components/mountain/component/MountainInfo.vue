@@ -46,9 +46,6 @@
         </div>
         <CommentStar />
         <CommentList />
-        <button v-if="token != null">
-            <RouterLink :to="{ name: 'CommentCreatePage' }">CommentCreatePage</RouterLink>
-        </button>
     </div>
 </template>
 
@@ -85,7 +82,7 @@ onMounted(() => {
 }
 
 .mountainbody {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow to mountainbody */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 20px;
     background-color: white;
     border-radius: 10px;

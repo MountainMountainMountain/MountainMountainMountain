@@ -16,15 +16,15 @@ export default {
 <style scoped>
 .image-container {
     position: relative;
-    width: 100vw; /* Viewport width */
-    height: 160vh; /* Viewport height */
-    overflow: hidden; /* Hide overflow to prevent scrolling */
+    width: 100vw;
+    height: 160vh;
+    overflow: hidden;
 }
 
 .background-image {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Cover the entire container without stretching */
+    object-fit: cover;
     opacity: 0.88;
 }
 
@@ -33,9 +33,9 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    max-width: 90%; /* Max width to ensure it doesn't overflow */
-    max-height: 90%; /* Max height to ensure it doesn't overflow */
-    pointer-events: all; /* Make the image clickable */
+    max-width: 90%;
+    max-height: 90%;
+    pointer-events: all; 
     cursor: pointer;
 }
 </style>

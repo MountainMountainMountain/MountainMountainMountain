@@ -35,8 +35,6 @@
                 <div class="media-body ms-md-5 m-0 mt-4 mt-md-0 text-md-start text-center">
                   <h5 class="font-weight-bold d-inline-block me-2" style="font-weight: bolder;" >{{ userStore.User.name }}님</h5>
                   <br>
-                  <!-- 여기 이름 {{  }} 들어와야 해 -->
-                  <!-- 팔로워 팔로워 수 떠야 해 -->
                   <a v-if="level != '3'" class="text-decoration-none d-inline-block text-primary">
                     <strong>팔로워 {{ userStore.FollowerList.length }}</strong> <span class="text-muted"></span> </a>
                   <!-- <br> -->
@@ -57,7 +55,6 @@
           </div>
         </div>
       </div>
-      <!-- <MyInfo /> -->
       <div v-if="userId == userStore.User.id">
         <div class="infobar">
           <RouterLink :to="{ name: 'MyInfoMain', params: { userId: `${route.params.userId}` } }" class="nav-link">내 정보

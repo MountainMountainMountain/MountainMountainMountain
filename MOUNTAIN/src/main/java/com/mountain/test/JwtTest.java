@@ -17,16 +17,16 @@ public class JwtTest {
 	public static void main(String[] args) throws InterruptedException {
 		Map<String, String> headers = new HashMap<>();
 		headers.put("typ", "JWT");
-		headers.put("email", "dndhk");
+		headers.put("email", "dndhk@asdf.com");
 		headers.put("namename", "asdfasdfasdf");
 
 		String key = "SSAFY_NonMajor_JavaTrack_SecretKey";
 		SecretKey secretKey = Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8));
 
 		// JWT 3가지 파트 헤더 / 페이로드 / 서명
-		String token = Jwts.builder() // JWT를 만들 수 있는 빌더 인스턴스야
-				.header() // 빌더 헤더 객체가 되었다.
-				.add("name", "yang").add(headers).and().claim("id", "idid") // and() 메서드를 JWT 빌더로 돌아간다.
+		String token = Jwts.builder()
+				.header()
+				.add("name", "choi").add(headers).and().claim("id", "idid")
 				.subject("ssafy").expiration(new Date(System.currentTimeMillis() + 3000)).signWith(secretKey).compact();
 
 		System.out.println();

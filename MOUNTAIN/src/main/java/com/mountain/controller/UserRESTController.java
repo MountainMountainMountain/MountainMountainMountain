@@ -45,7 +45,6 @@ public class UserRESTController {
 	// 사용자 등록
 	@PostMapping("/user/join")
 	public ResponseEntity<?> signup(@RequestBody User user) {
-		System.out.println(user);
 		userService.signup(user);
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
@@ -53,8 +52,6 @@ public class UserRESTController {
 	// 사용자 수정
 	@PutMapping("/user/{userSerial}")
 	public ResponseEntity<?> putMethodName(@PathVariable("userSerial") int userSerial, @RequestBody User user) {
-		System.out.println(user);
-		System.out.println(userSerial);
 		user.setSerial(userSerial);
 		userService.modifyUser(user);
 
@@ -69,7 +66,6 @@ public class UserRESTController {
 			// 검색했는데 없다면
 			return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
 		} else {
-			System.out.println(user);
 			return new ResponseEntity<User>(user, HttpStatus.OK);
 		}
 	}
@@ -77,8 +73,6 @@ public class UserRESTController {
 	// 사용자 이름 검색
 	@GetMapping("/user/search/name/{name}/{serial}")
 	public ResponseEntity<?> searchByName(@PathVariable("name") String name, @PathVariable("serial") int serial) {
-		System.out.println(name);
-		System.out.println(serial);
 		List<User> userList = userService.searchByName(name, serial);
 		if (userList == null) {
 			// 검색했는데 없다면
@@ -98,7 +92,6 @@ public class UserRESTController {
 	// 사용자 아이디 확인
 	@GetMapping("/user/join/check/id/{id}")
 	public ResponseEntity<?> checkId(@PathVariable("id") String id) {
-		System.out.println(id);
 		// 아이디가 존재합니다.
 		if (userService.checkId(id)) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
@@ -121,25 +114,18 @@ public class UserRESTController {
 	}
 
 	// 로그인
-	// 수정해야 해 jwt 해야 해
 	@PostMapping("/user/login")
 	public ResponseEntity<?> login(@RequestBody User user) {
 
-		System.out.println(user);
-
 		HttpStatus status = null;
 		Map<String, Object> result = new HashMap<>();
-		// 서비스 -> 다오 -> DB
-		// 엄청난 검증을 끝내고 온거다.
 		User loginUser = userService.login(user.getId(), user.getPassword());
 
 		if (loginUser.getSerial() != 0) {
 
-			// 토큰 만들어서 줘야되는데?
 			result.put("message", SUCCESS);
 			result.put("access-token", jwtUtil.createToken(loginUser));
 
-			// id도 같이 넘겨주면 번거로운 작업을 할 필요는 없어
 			status = HttpStatus.ACCEPTED;
 		} else {
 			result.put("message", FAIL);

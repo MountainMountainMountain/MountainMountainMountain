@@ -36,7 +36,7 @@
                 <div class="form-floating mb-3" style="width: 48%;">
                     <input type="text" class="form-control form-control-sm" id="turnaround" placeholder="시간"
                         v-model="comment.turnaround">
-                    <label for="turnaround">총 시간</label>
+                    <label for="turnaround">총 시간(분)</label>
                 </div>
             </div>
             <div class="form-floating mb-3">

@@ -1,66 +1,62 @@
 <template>
     <div>
         <div class="table-responsive">
-            <h3 class="card-title">{{ mountainStore.mountain.name }} Review</h3>
+            <div class="" style="display: flex; justify-content: space-between; height: 50px;">
+                <div class="">
+                    <h3 class="card-title">{{ mountainStore.mountain.name }} Review</h3>
+                </div>
+                <div class="">
+                    <button class="button btnPush btnBlueGreen" v-if="token != null" style="width: 100px; ">
+                        <RouterLink class="no-underline" :to="{ name: 'CommentCreatePage', params: { mountainSerial: route.params.mountainSerial } }" style="color: white;">글 작성
+                        </RouterLink>
+                    </button>
+                </div>
+            </div>
             <hr>
             <br>
             <div class="search">
-                <div>
-                    <label>검색 기준 :</label>
-                    <select v-model="searchInfo.key">
-                        <option value=''>없음</option>
+                <div class="search-bar">
+                    <select v-model="searchInfo.key" style="height: 30px;">
+                        <option value=''>검색기준</option>
                         <option value="name">작성자</option>
                         <option value="title">제목</option>
                         <option value="content">내용</option>
                     </select>
                 </div>
-                <div>
-                    <label>정렬 기준 :</label>
-                    <select v-model="searchInfo.orderBy">
-                        <option value=''>없음</option>
-                        <option value="name">글쓰니</option>
-                        <option value="title">제목</option>
-                        <option value="viewCount">조회수</option>
-                    </select>
-                </div>
-                <div>
-                    <label>검색 내용 :</label>
-                    <input type="text" v-model="searchInfo.word" />
-                </div>
-                <div>
-                    <label>정렬 방향 :</label>
-                    <select v-model="searchInfo.orderByDir">
-                        <option value="asc">오름차순</option>
-                        <option value="desc">내림차순</option>
-                    </select>
-                </div>
-                <div>
-                    <button @click="searchCommentList">검색</button>
-                </div>
+                <input class="form-control" type="text" v-model="searchInfo.word" style="width: 250px;"
+                    placeholder="검색 내용을 입력하세요" />
+                <button class="btn btn-primary" @click="searchCommentList"><i class="fas fa-search"
+                        style="color: white"></i></button>
             </div>
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">제목</th>
+                        <th scope="col">별점</th>
                         <th scope="col">작성자</th>
                         <th scope="col">조회 수</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(comment, index) in commentStore.CommentList" :key="comment.serial">
-                        <router-link
+                        <router-link class="no-underline"
                             :to="{ name: 'CommentDetailPage', params: { commentSerial: `${comment.serial}` } }">
                             <th scope="row">{{ index + 1 }}</th>
                         </router-link>
                         <td>
-                            <router-link
+                            <router-link class="no-underline"
                                 :to="{ name: 'CommentDetailPage', params: { commentSerial: `${comment.serial}` } }">
                                 {{ comment.title }}
                             </router-link>
                         </td>
-                        <td>{{ comment.name }}</td>
-                        <td>{{ comment.viewCount }}</td>
+                        <td>{{ comment.star }}</td>
+                        <td><router-link class="no-underline"
+                                :to="{ name: 'CommentDetailPage', params: { commentSerial: `${comment.serial}` } }">{{
+                                    comment.name }}</router-link></td>
+                        <td><router-link class="no-underline"
+                                :to="{ name: 'CommentDetailPage', params: { commentSerial: `${comment.serial}` } }">{{
+                                    comment.viewCount }}</router-link></td>
                     </tr>
                 </tbody>
             </table>
@@ -79,6 +75,7 @@ const route = useRoute();
 const commentStore = useCommentStore();
 const mountainStore = useMountainStore();
 const mountainSerial = route.params.mountainSerial;
+const token = sessionStorage.getItem('access-token');
 
 const searchInfo = ref({
     key: '',
@@ -98,6 +95,39 @@ onMounted(() => {
 </script>
 
 <style scoped>
+div.button {
+    display: block;
+    position: relative;
+    float: left;
+    width: 120px;
+    padding: 0;
+    margin: 10px 20px 10px 0;
+    font-weight: 600;
+    text-align: center;
+    line-height: 50px;
+    color: #FFF;
+    border-radius: 5px;
+    transition: all 0.2s;
+}
+
+.btnBlueGreen {
+    background: #00AE68;
+}
+
+.btnBlueGreen.btnPush {
+    box-shadow: 0px 5px 0px 0px #007144;
+    border-radius: 4px;
+}
+
+.btnPush:hover {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.btnBlueGreen.btnPush:hover {
+    box-shadow: 0px 0px 0px 0px #007144;
+}
+
 .table-responsive {
     margin: 20px;
 }
@@ -131,44 +161,24 @@ onMounted(() => {
 
 .search {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    align-content: center;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
-.search div {
-    flex: 1;
-    min-width: 150px;
+.search-bar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100px;
 }
 
-.search label {
-    display: block;
-    margin-bottom: 0.5rem;
-}
-
-.search input,
-.search select {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #dee2e6;
-    border-radius: 4px;
-}
-
-.search button {
-    padding: 0.5rem 1rem;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.search button:hover {
-    background-color: #0056b3;
-}
-.card-title{
+.card-title {
     font-family: "Nanum Myeongjo", serif;
     font-weight: bold;
+}
+
+.no-underline {
+    text-decoration: none;
+    color: inherit;
 }
 </style>

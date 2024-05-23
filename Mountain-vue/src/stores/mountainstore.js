@@ -77,17 +77,6 @@ export const useMountainStore = defineStore('mountain', () => {
           console.error(err);
         });
     }
-    // return new Promise((resolve, reject) => {
-    //   axios.get(`${REST_MOUNTAIN_API}state/${mountainState}`)
-    //     .then((response) => {
-    //       mountainList.value = response.data;
-    //       resolve();
-    //     })
-    //     .catch((err) => {
-    //       console.error(err);
-    //       reject();
-    //     });
-    // });
   };
 
   const updateMountain = function () {

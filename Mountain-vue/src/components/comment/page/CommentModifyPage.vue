@@ -1,6 +1,5 @@
 <template>
-    <div>
-        <h1>commentmodify</h1>
+    <div class="container">
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="title" placeholder="제목" v-model="commentStore.Comment.title">
             <label for="title">Title</label>
@@ -8,6 +7,18 @@
         <div class="form-floating mb-3">
             <input type="text" class="form-control form-control-sm" placeholder="작성자" :value="userName" readonly>
             <label for="writer">작성자</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="title" placeholder="평점" v-model="commentStore.Comment.star">
+            <label for="title">평점</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="title" placeholder="소요시간" v-model="commentStore.Comment.turnaround">
+            <label for="title">소요 시간(분)</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="title" placeholder="칼로리" v-model="commentStore.Comment.calorie">
+            <label for="title">칼로리</label>
         </div>
         <div class="form-floating mb-3">
             <textarea class="form-control" id="content" placeholder="내용" style="height: 200px"
@@ -85,4 +96,6 @@ onMounted(() => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>

@@ -59,7 +59,7 @@ const showForgotPasswordModal = () => {
         cancelButtonText: '취소'
     }).then((result) => {
         if (result.isConfirmed) {
-            // 이메일 전송 로직
+            // 이메일 전송 로직 구현 못 함
             sendResetPasswordEmail(result.value);
         }
     });

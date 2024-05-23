@@ -93,8 +93,8 @@ const displayMarker = function (markerPositions) {
 <style scoped>
 #map {
   width: 60%;
-  height: calc(80vw * 0.6 / 10 * 7); /* 가로 10 세로 8 비율로 설정 */
-  margin: 0 auto; /* 가운데 정렬 */
+  height: calc(80vw * 0.6 / 10 * 7); 
+  margin: 0 auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 .mapbox {

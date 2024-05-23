@@ -21,6 +21,6 @@ import SignUp from "../component/SignUp.vue"
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f0f0f0; /* 페이지 배경 색상 */
+    background-color: #f0f0f0;
 }
 </style>

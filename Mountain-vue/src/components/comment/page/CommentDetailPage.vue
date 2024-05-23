@@ -8,15 +8,22 @@
                 <div class="detail-item">
                     <strong>제목</strong>
                     <span class="detail-content">{{ commentStore.Comment.title }}</span>
-                    <span class="view-count">조회 수 {{ commentStore.Comment.viewCount }}</span>
+                    <span class="view-count"><strong>조회 수</strong> {{ commentStore.Comment.viewCount }}</span>
                 </div>
                 <div class="detail-item">
                     <strong>작성자</strong>
                     <span class="detail-content">{{ commentStore.Comment.name }}</span>
+                    <span class="view-count"><strong>평점</strong> {{ commentStore.Comment.star }}</span>
                 </div>
                 <div class="detail-item">
                     <strong>작성시간</strong>
                     <span class="detail-content">{{ formatDate(commentStore.Comment.regDate) }}</span>
+                    <span class="view-count"><strong>칼로리</strong> {{ commentStore.Comment.calorie }}</span>
+                </div>
+                <div class="detail-item">
+                    <strong>수정 시간</strong>
+                    <span class="detail-content">{{ formatDate(commentStore.Comment.updateDate) }}</span>
+                    <span class="view-count"><strong>소요시간(분)</strong> {{ commentStore.Comment.turnaround }}</span>
                 </div>
 
                 <div class="detail-item content-item">

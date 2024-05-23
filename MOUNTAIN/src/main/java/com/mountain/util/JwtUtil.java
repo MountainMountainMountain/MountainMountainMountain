@@ -19,8 +19,6 @@ public class JwtUtil {
 	private String key = "SSAFY_NonMajor_JavaTrack_SecretKey";
 	private SecretKey secretKey = Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8));
 
-	// 다양한 데이터를 Map으로 받아서 처리를 할수 도 있지만,
-	// 심플하게 ID만 받아서 토큰을 만들어보자~~
 	public String createToken(User user) {
 		Date exp = new Date(System.currentTimeMillis() + 1000 * 60 * 60); // 1시간
 		return Jwts.builder().header().add("typ", "JWT").and().claim("serial", user.getSerial())

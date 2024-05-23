@@ -29,9 +29,7 @@
                 <option value="desc">내림차순</option>
             </select>
         </div>
-        <!-- <div> -->
             <button @click="searchBoardList">검색</button>
-        <!-- </div> -->
     </div>
 </template>
 

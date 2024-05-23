@@ -22,11 +22,6 @@
                   </div>
                 </div>
               </div>
-              <!-- <router-link :to="{ name: 'MyInfoMainModify', params: { userId: userId.value } }">
-                                <button>정보 수정</button>
-                            </router-link>
-
-                            <button @click="confirmDeleteUser">회원 탈퇴</button> -->
             </div>
           </div>
         </div>
@@ -105,29 +100,8 @@ const confirmDeleteUser = () => {
 onMounted(() => {
   checkUserSerial();
   userStore.getUserByid(route.params.userId);
-  // if (userId.value) {
-  //   userStore.getUserByid(userId.value)
-  //     .then(() => {
-  //       console.log('사용자 정보 로드 완료');
-  //     })
-  //     .catch((error) => {
-  //       console.error('사용자 정보 로드 중 오류 발생:', error);
-  //     });
-  // }
 });
 
-// onMounted(() => {
-//   checkUserSerial();
-//   if (userId.value) {
-//     userStore.getUserByid(userId.value)
-//       .then(() => {
-//         console.log('사용자 정보 로드 완료');
-//       })
-//       .catch((error) => {
-//         console.error('사용자 정보 로드 중 오류 발생:', error);
-//       });
-//   }
-// });
 </script>
 
 <style scoped>

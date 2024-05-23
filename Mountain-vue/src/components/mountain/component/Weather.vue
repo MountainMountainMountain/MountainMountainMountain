@@ -37,7 +37,6 @@ const skyDescription = ref('');
 import sunnyImage from '@/assets/weather/sunny.gif';
 import rainyImage from '@/assets/weather/rain.gif';
 import cloudyImage from '@/assets/weather/cloud.gif';
-//import unknownImage from '@/assets/weather/unknown.jpg';
 
 const getWeatherIcon = (sky) => {
   switch (sky) {
@@ -93,7 +92,6 @@ onMounted(async () => {
     } else if (currentHour >= 20 && currentHour < 23) {
       baseTime = "2000";
     } else {
-      // currentHour이 23시 이후인 경우 다음 날로 예보를 받을 수 있으므로, 가장 가까운 시간인 23시로 설정
       baseTime = "2300";
     }
 

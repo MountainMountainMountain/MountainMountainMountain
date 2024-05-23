@@ -43,7 +43,6 @@ public class MountainRESTController {
 	// 산 도를 검색하여 조회
 	@GetMapping("/state/{mountainState}")
 	public ResponseEntity<?> getMountainsByState(@PathVariable("mountainState") String mountainState) {
-		System.out.println(mountainState);
 		List<Mountain> list = mountainService.selectMountainByState(mountainState);
 
 		if (list == null || list.size() == 0) {
@@ -78,27 +77,15 @@ public class MountainRESTController {
 	// 산 생성
 	@PostMapping("/")
 	public ResponseEntity<?> createMountain(@RequestBody Mountain mountain) {
-//		if((mountain.getAltitude()==null||
-//		mountain.getCourse()
-//		mountain.getDifficulty()
-//		mountain.getFee()
-//		mountain.getLatitude()
-//		mountain.getLongitude()
-//		mountain.getName()
-//		mountain.getState()
-//		mountain.getTown()
-//		if(mountain.get)
 
 		mountainService.createMountain(mountain);
 
 		return new ResponseEntity<Mountain>(mountain, HttpStatus.OK);
-//		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 	}
 
 	// 산 searchcondition에 따라 조회
 	@GetMapping("/mountain")
 	public ResponseEntity<?> getMountainBySearchCondition(@ModelAttribute SearchConditionForMountain searchCondition) {
-		System.out.println(searchCondition);
 		List<Mountain> list = mountainService.selectMountainBySearch(searchCondition);
 		if (list == null || list.size() == 0)
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
@@ -115,7 +102,6 @@ public class MountainRESTController {
 		mountainService.modifyMountain(mountain);
 
 		return new ResponseEntity<Mountain>(mountain, HttpStatus.OK);
-//		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 	}
 
 	// 산 삭제

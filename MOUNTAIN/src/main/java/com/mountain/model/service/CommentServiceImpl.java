@@ -27,11 +27,6 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	public List<CommentResponse> selectCommentByMountainSerial(int mountainSerial) {
-//		SearchCondition searchCondition = new SearchCondition();
-//		searchCondition.setKey(mountainSerial + "");
-//		searchCondition.setWord(mountainSerial + "");
-//		return commentDao.selectCommentBySearch(searchCondition);
-		// selectCommentByMountain 사용할지 말지 나중에 고민
 		return commentDao.selectCommentByMountain(mountainSerial);
 	}
 	

@@ -10,7 +10,6 @@
             <p>아직 등록한 코멘트가 없습니다.</p>
         </div>
         <div v-else class="row">
-            <!-- 내 코멘트 표시 -->
             <div v-for="mountain in commentStore.MyCommentList" :key="mountain.serial" class="col-md-4 mb-3">
                 <div class="card mx-auto" style="width: 9rem;">
                     <div class="card-body">
@@ -71,7 +70,6 @@ onMounted(() => {
 
 <style scoped>
 .container {
-    /* /* max-width: 600px; */
     margin: 10px; 
     display: flex;
     flex-direction: column;
