@@ -17,9 +17,6 @@
             </form>
             <router-link :to="{ name: 'SignUp' }" class="dnthave">계정이 없으신가요? 회원가입</router-link>
         </div>
-        <div class="footer">
-            <span>Made with <i class="fa fa-heart pulse"></i> by <a href="https://codepen.io/lordgamer2354">Anees Khan</a></span>
-        </div>
     </div>
 </template>
 
